@@ -5,12 +5,19 @@ import com.palmergames.bukkit.towny.TownyEconomyHandler;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyTimerHandler;
+import com.palmergames.bukkit.towny.event.teleport.CancelledTownyTeleportEvent;
+import com.palmergames.bukkit.towny.event.teleport.CancelledTownyTeleportEvent.CancelledTeleportReason;
+import com.palmergames.bukkit.towny.event.teleport.SuccessfulTownyTeleportEvent;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TeleportWarmupParticle;
 import com.palmergames.bukkit.towny.object.TeleportRequest;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.object.economy.Account;
+import com.palmergames.bukkit.towny.utils.SpawnUtil;
+import com.palmergames.bukkit.util.BukkitTools;
+
 import io.papermc.lib.PaperLib;
 
 import org.bukkit.Location;
@@ -60,9 +67,15 @@ public class TeleportWarmupTimerTask extends TownyTimerTask {
 				// Only teleport & add cooldown if player is valid
 				if (player == null)
 					continue;
-				
-				PaperLib.teleportAsync(player, request.destinationLocation(), TeleportCause.COMMAND);
-				
+
+				// Teleporting a player can cause the chunk to unload too fast, abandoning pets.
+				SpawnUtil.addAndRemoveChunkTicket(WorldCoord.parseWorldCoord(player.getLocation()));
+
+				PaperLib.teleportAsync(player, request.destinationLocation(), TeleportCause.COMMAND).thenAccept(successfulTeleport -> {
+					if (successfulTeleport)
+						BukkitTools.fireEvent(new SuccessfulTownyTeleportEvent(resident, request.destinationLocation(), request.teleportCost()));
+				});
+
 				if (request.cooldown() > 0)
 					CooldownTimerTask.addCooldownTimer(resident.getName(), "teleport", request.cooldown());
 				continue;
@@ -79,8 +92,8 @@ public class TeleportWarmupTimerTask extends TownyTimerTask {
 			// Send a particle that drops from above the player to their feet over the course of the warmup.
 			if (TownySettings.isTeleportWarmupShowingParticleEffect()) {
 				double progress = (double) (teleportWarmupTime - seconds) / teleportWarmupTime;
-				double offset = 2.0 + (progress * -2.0);
-				new TeleportWarmupParticle(resident.getPlayer().getLocation().add(0.0, offset, 0.0));
+				double yOffset = 2.0 + (progress * -2.0);
+				TeleportWarmupParticle.drawParticles(resident.getPlayer(), yOffset);
 			}
 		}
 	}
@@ -109,6 +122,17 @@ public class TeleportWarmupTimerTask extends TownyTimerTask {
 	 */
 	@Contract("null -> false")
 	public static boolean abortTeleportRequest(@Nullable Resident resident) {
+		return abortTeleportRequest(resident, CancelledTeleportReason.UNKNOWN);
+	}
+
+	/**
+	 * Aborts the current active teleport request for the given resident.
+	 * @param resident The resident to abort the request for.
+	 * @param reason   The CancelledSpawnReason this player has had their teleport request cancel.
+	 * @return Whether the resident had an active teleport request.
+	 */
+	@Contract("null, _ -> false")
+	public static boolean abortTeleportRequest(@Nullable Resident resident, CancelledTeleportReason reason) {
 		if (resident == null)
 			return false;
 
@@ -117,9 +141,11 @@ public class TeleportWarmupTimerTask extends TownyTimerTask {
 			return false;
 
 		if (request.teleportCost() != 0 && TownyEconomyHandler.isActive() && request.teleportAccount() != null) {
-			TownyEconomyHandler.economyExecutor().execute(() -> request.teleportAccount().payTo(request.teleportCost(), resident.getAccount(), Translation.of("msg_cost_spawn_refund")));
+			TownyEconomyHandler.economyExecutor().execute(() -> request.teleportAccount().payTo(request.teleportCost(), resident, Translation.of("msg_cost_spawn_refund")));
 			TownyMessaging.sendMsg(resident, Translatable.of("msg_cost_spawn_refund"));
 		}
+
+		BukkitTools.fireEvent(new CancelledTownyTeleportEvent(resident, request.destinationLocation(), request.teleportCost(), reason));
 
 		return true;
 	}

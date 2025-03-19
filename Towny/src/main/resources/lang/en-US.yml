@@ -2,8 +2,7 @@ name: Towny
 language: english
 author: ElgarL
 website: 'https://townyadvanced.github.io/'
-description: >
-    Language file for all game messages for this Locale.
+description: Language file for all game messages for this Locale.
 
 # A note on editing this file.
 # ----------------------------
@@ -42,7 +41,7 @@ description: >
 # and formatting. Learn about MiniMessage formatting here:
 # https://docs.adventure.kyori.net/minimessage/format.html
 #
-# 
+#
 
 default_towny_prefix: '&6[Towny] &b'
 default_town_prefix: '&6[%s] &b'
@@ -202,8 +201,8 @@ nation_set_help_5: "Set the title or surname of one of your residents."
 nation_set_help_6: "Set the nation tag."
 nation_set_help_7: "Set the nation board message."
 nation_set_help_8: "Set the nation spawn point."
-nation_set_help_9: "Set the cost to use /n spawn." 
-nation_set_help_10: "Set the mapcolor used in Mapping plugins." 
+nation_set_help_9: "Set the cost to use /n spawn."
+nation_set_help_10: "Set the mapcolor used in Mapping plugins."
 
 nation_toggle_help_0: "Toggles peaceful status of the nation."
 nation_toggle_help_1: "Toggles public status, allowing non-residents to use /n spawn."
@@ -229,10 +228,6 @@ res_1: 'Your status'
 res_2: '[resident]'
 res_3: 'Target player''s status'
 res_4: 'List all active players'
-res_5: 'for help'
-res_6: 'Online match'
-res_7: 'Exact name'
-res_8: 'Just a humble farmer'
 res_9: "How much tax you will pay per day."
 res_10: "See /res jail ? for help."
 res_11: "See /res toggle ? for help."
@@ -250,6 +245,7 @@ res_toggle_help_7: "Toggle the ability to see plot notifications."
 res_toggle_help_8: "Toggle the ability to claim where you walk."
 res_toggle_help_9: "Toggle the ability to see the map when you change plots."
 res_toggle_help_10: "Remove all modes."
+res_toggle_help_10.5: "Remove all modes and re-applies your defaults."
 res_toggle_help_11: "Spy on chat channels."
 res_toggle_help_12: "Toggle the ability to add plots to a plotgroup you have started."
 res_toggle_help_13: "Toggle the ability to see title messages when you change plots."
@@ -391,6 +387,7 @@ ta_resident_help_0: "Rename a resident."
 ta_resident_help_1: "Add or remove a friend."
 ta_resident_help_2: "List or clear the friend list."
 ta_resident_help_3: "Delete a resident from the database."
+ta_resident_help_4: "Removes a players about line."
 
 ta_toggle_help_0: "Turn on/off the ability to use the Wilderness in all worlds."
 ta_toggle_help_1: "Turn on/off the regeneration features in all worlds."
@@ -429,7 +426,16 @@ ta_reload_help_2: "Reloads language files."
 ta_reload_help_3: "Reloads Towny permissions."
 ta_reload_help_4: "Reloads all components of Towny."
 
+ta_eco_resetbanks_help: "Resets town and nation banks to the given amount or 0."
+ta_eco_convert_modern_help: "Converts your Towny accounts into our modern variety, able to use Vault's OfflinePlayer."
+ta_eco_convert_help: "Converts your Towny accounts to the target economy implementation, useful for transferring data between economy plugins."
+ta_eco_info_help: "Gives information about economy accounts on the server."
 ta_depositall_help_0: "Deposit the given amount into all town and nation banks."
+
+ta_info_help_0: "View eco info for the given nation."
+ta_info_help_1: "View eco info for the given resident."
+ta_info_help_2: "View eco info for the towny server account."
+ta_info_help_3: "View eco info for the given town."
 
 plot_help_0: "Turns on the plot info HUD."
 plot_help_1: "Removes the owner of the plot."
@@ -442,6 +448,11 @@ plot_help_7: "Adds default permission overrides for a player."
 plot_help_8: "Opens the permission editor gui."
 plot_help_9: "Adds a resident as Trusted in the plot."
 plot_help_10: "Removes a resident as Trusted in the plot."
+
+plot_district_help_0: "Ex: /plot district new ExpensivePlots"
+plot_district_help_1: "Removes a plot from the specified district."
+plot_district_help_2: "Deletes a district completely."
+plot_district_help_3: "Renames the district you are standing in."
 
 plot_group_help_0: "Ex: /plot group new ExpensivePlots"
 plot_group_help_1: "Removes a plot from the specified group."
@@ -504,9 +515,8 @@ msg_couldnt_pay_taxes: '&b%s couldn''t pay taxes and was kicked from the %s.'
 msg_couldnt_pay_plot_taxes: '&b%s couldn''t pay taxes and lost ownership of a plot.'
 msg_you_couldnt_pay_plot_tax: '&bYou couldn''t pay the plot tax of %s and lost ownership of the plot at %s.'
 msg_you_couldnt_pay_town_tax: '&bYou couldn''t pay the town tax of %s and have been removed from %s.'
-msg_payed_town_tax: '&bPayed town tax of '
-msg_payed_plot_cost: '&bPayed %s for %s plots in %s'
-msg_payed_resident_tax: '&bPayed resident tax of '
+msg_you_paid_town_tax: '&bYou paid your town a tax of %s.'
+msg_you_paid_plottax_to_town: '&bYou paid plot taxes totalling %s to the town of %s.'
 msg_bankrupt_town: ' couldn''t afford to remain a town.'
 msg_bankrupt_nation: ' couldn''t afford to remain a nation.'
 msg_nation_not_peaceful: '&bNation couldn''t afford it''s peaceful state.'
@@ -754,7 +764,6 @@ msg_err_not_percentage: '&cPercentages must be below 100.'
 msg_err_no_economy: '&cEconomy has not been turned on.'
 msg_err_not_block_type: '&cThat is not a valid plot type!'
 msg_not_allowed_join: '&c%s is not permitted to join a town.'
-msg_offline_no_join: '&c%s is offline but using permissions so can''t join a town.'
 msg_err_cannot_perform_action: '&cCannot perform this action in the %s.'
 msg_npc_flag: '&bNPC flag is now %s for %s.'
 
@@ -788,6 +797,7 @@ msg_you_have_been_given_rank: 'You have been granted the %s rank of %s.'
 msg_you_have_given_rank: 'You have granted the %s rank of %s to %s.'
 msg_resident_not_your_town: 'That resident isn''t a member of a town!'
 msg_resident_already_has_rank: '%s already holds this %s rank.'
+msg_town_or_nation_level_not_high_enough_for_this_rank: "Your %s level is not high enough to assign the %s rank. Your %s's Level: %s/%s required."
 msg_you_have_had_rank_taken: 'You have been demoted from the %s rank of %s.'
 msg_you_have_taken_rank_from: 'You have removed the %s rank of %s from %s.'
 msg_resident_doesnt_have_rank: '%s doesn''t hold this %s rank.'
@@ -843,6 +853,8 @@ msg_you_have_undeclared_an_outlaw: '%s is no longer an outlaw in %s.'
 msg_err_player_not_an_outlaw: 'That player was not listed as an outlaw.'
 msg_err_outlaw_in_open_town: 'You cannot join an open town that has deemed you an outlaw.'
 msg_you_are_an_outlaw_in_this_town: '&4Be careful %s considers you an outlaw, dying here could mean jail.'
+msg_you_are_an_outlaw_in_this_town_jail_time: '&4Outlaws are jailed for %s hours.'
+msg_you_are_an_outlaw_in_this_town_bail_amount: 'Your bail would cost %s.'
 msg_err_town_not_close_enough_to_nation: '%s''s homeblock isn''t near enough to your capital''s homeblock to join your nation.'
 msg_nation_town_moved_their_homeblock_too_far: '%s''s homeblock was moved too far away from your nation''s capital''s homeblock and has been removed from your nation.'
 
@@ -944,6 +956,9 @@ you_have_been_requested_to_ally: 'You have been requested to ally '
 this_message_will_expire: 'This will auto-expire in 20 seconds'
 player_sing: 'Player'
 nation_zone_this_area_under_protection_of: 'This part of the %s is under the protection of %s'
+nation_zone_conquered_status_denies_use: "Your town's conquered status prevents you from using this nation zone."
+nation_zone_conquered_status_denies_use_2: "Your are unable to use this conquered town's nation zone."
+nation_spawn_not_allowed_for_conquered_towns: "Your town's conquered status prevents you from spawning to your nation's spawn point."
 
 # Added in 0.42
 you_have_been_invited_to_join2: 'You have been invited to join %s'
@@ -998,10 +1013,16 @@ msg_err_over_outposts_limit: 'You cannot teleport to your outpost, you are over 
 # These are translated because we may (or may not) be handling longer words in a smart way.
 # If you are a translator feel free to skip over this section, as it may or may not appear very nice
 # in game. It would be best to see what the changes look like in game before you PR it to github.
-outlaws: 'Outlaws:'                    # Used on /t outlawlist
+
+# Used on /t outlawlist
+outlaws: 'Outlaws:'
 online: '&a(Online)'
-registered_last_online: '&2Registered: &a%s &8| &2Last Online: &a%s' #Used in mayor hover text in /town status screen.
-status_perm: 'Perm:'                     # Used on /plot perm, /res
+
+#Used in mayor hover text in /town status screen.
+registered_last_online: '&2Registered: &a%s &8| &2Last Online: &a%s'
+
+# Used on /plot perm, /res
+status_perm: 'Perm:'
 status_on: '&4ON'
 status_off: '&aOFF'
 status_on_good: '&aON'
@@ -1101,6 +1122,7 @@ msg_err_public_nation_spawn_forbidden: '&cPublic spawn travel to other nations i
 msg_err_public_nation_spawn_forbidden_war: '&cPublic spawn travel to other nations is only allowed during war.'
 msg_err_public_nation_spawn_forbidden_peace: '&cPublic spawn travel to other nations is forbidden during war.'
 msg_spawn_cost_set_to: '&b%s has set the price of using /%s spawn to %s'
+msg_spawn_fail_safe_teleport: '&cTeleportation failed, the location is not safe, ask the mayor of your town to change the teleport location.'
 msg_err_cannot_set_spawn_cost_more_than: '&cYou cannot set the spawn cost higher than %s'
 msg_err_ally_isnt_public: '&cYour ally, %s, does not have public spawning enabled. Teleport denied.'
 msg_nation_changed_public: '&cThe Nation''s public status is now %s.'
@@ -1143,11 +1165,15 @@ msg_total_townblocks: 'Total TownBlocks: '
 
 # Added in 0.50
 friend_list: 'Friends List'
-                         # The following formatting lists apply to friends lists on the /res screen; townranks lists on the /town screen;
-                         # nationranks lists on the /nation screen; and probably more lists of residents.
-res_format_list_1: '&2'  #First colour applied to Resident lists, ex: on /res, the friend list's Friends section.
-res_format_list_2: '&a'  #Second colour applied to Resident lists, ex: on /res, the friend list's [1] section.
-res_format_list_3: '&f'  #Third colour applied to Resident lists, ex: on /res, the friend list's list of friends' names section.
+
+# The following formatting lists apply to friends lists on the /res screen; townranks lists on the /town screen;
+# nationranks lists on the /nation screen; and probably more lists of residents.
+#First colour applied to Resident lists, ex: on /res, the friend list's Friends section.
+res_format_list_1: '&2'
+#Second colour applied to Resident lists, ex: on /res, the friend list's [1] section.
+res_format_list_2: '&a'
+#Third colour applied to Resident lists, ex: on /res, the friend list's list of friends' names section.
+res_format_list_3: '&f'
 townboard_message_colour_1: '&6'
 townboard_message_colour_2: '&e'
 nationboard_message_colour_1: '&6'
@@ -1523,7 +1549,8 @@ msg_town_destroyed_by_nation_tax_multiple: '&bThe following conquered towns coul
 msg_your_town_was_exempt_from_the_nation_tax: '&bYour town was exempt from the nation tax.'
 
 #Added in 0.97
-status_perm_line_format: '&a%s=&7' # The Build = ---- Destroy = ---- seen in the status screen.
+# The Build = ---- Destroy = ---- seen in the status screen.
+status_perm_line_format: '&a%s=&7'
 msg_comptype_ruined: 'Ruined Status'
 msg_comptype_bankrupt: 'Bankrupt Status'
 msg_ruined: '&c(Ruined)'
@@ -1548,6 +1575,10 @@ flatfile_dbg_deleting_duplicate: 'Deleting: %s which is a duplicate of %s'
 flatfile_dbg_folders_found: 'Folders found %s'
 flatfile_dbg_group_file_missing_town_delete: 'Group file missing Town, deleting %s'
 flatfile_dbg_loading_group_list: 'Loading Group list...'
+flatfile_dbg_district_file_missing_town_delete: 'District file missing Town, deleting %s'
+flatfile_dbg_missing_file_delete_district_entry: 'Missing file: %s deleting entry in [districtuuid].data'
+flatfile_err_exception_reading_district_file_at_line: 'Loading Error: Exception while reading District file %s at line: %s'
+flatfile_dbg_loading_district_list: 'Loading District list...'
 flatfile_dbg_loading_nation: 'Loading Nation: %s'
 flatfile_dbg_loading_nation_list: 'Loading Nation list...'
 flatfile_dbg_loading_resident: 'Loading Resident: %s'
@@ -1728,14 +1759,21 @@ msg_up_to_date: '&aYou are up to date.'
 msg_click_purchase: 'Click to purchase'
 msg_you_must_join_this_town_to_claim_this_plot: 'You must join this town: %s, in order to claim this plot. Would you like to join the town and continue claiming?'
 
+msg_legacy_economy_detected: "&bYour Towny's economy implementation is set to Legacy, it is recommended that you let Towny update itself to using the Modern implementation. This will improve compatibility with more Economy plugins."
+msg_click_to_convert_to_modern_economy: "&bClick here to convert your Towny's economy implementation from legacy to modern."
+
+
 #Added in 0.113
 status_trustedlist: 'Trusted'
 msg_click_to_edit: '&6Click to edit.'
 permission_gui_header: 'Towny Permission GUI'
 msg_last_edited: '&7&oLast changed at %s by %s.'
-msg_trusted_added: '&bAdded %s as trusted in this %s.' # Last %s is either town or townblock
+# Last %s is either town or townblock
+msg_trusted_added: '&bAdded %s as trusted in this %s.'
 msg_already_trusted: '&b%s is already trusted in this %s.'
-msg_trusted_added_2: '&b%s has trusted you in a %s: %s.' # Last %s is the town name or worldcoord.
+msg_cannot_trust_your_own_town: '&bYou cannot trust your own town.'
+# Last %s is the town name or worldcoord.
+msg_trusted_added_2: '&b%s has trusted you in a %s: %s.'
 msg_not_trusted: '&b%s is not trusted in this %s.'
 msg_trusted_removed: '&bRemoved %s as trusted in this %s.'
 msg_trusted_removed_2: '&b%s has removed you as trusted in a %s: %s.'
@@ -1747,6 +1785,9 @@ msg_cache_block_err: '&cYou are not allowed to %s here.'
 msg_err_plot_belongs_to_group: '&cPlot belongs to a group, use %s.'
 plotgroup_sing: 'Plot Group'
 msg_err_ally_limit_reached: 'Your nation has reached the ally limit, unable to accept.'
+msg_err_ally_limit_reached_cannot_accept: 'The nation of %s has reached their ally limit, unable to accept.'
+msg_err_ally_limit_reached_cannot_send: 'Your nation has reached the ally limit, unable to invite %s to become your ally.'
+msg_err_ally_limit_reached_cannot_send_targetNation: 'The nation of %s has reached their ally limit, unable to invite %s to become your ally.'
 
 #Added in 0.114
 msg_err_group_not_found: 'Group %s not found.'
@@ -2027,7 +2068,7 @@ confirmation_unclaiming_costs: 'Unclaiming this land will cost %s, do you want t
 msg_you_must_wait_x_seconds_before_renaming_your_town: 'You must wait %s seconds before you can rename your town again.'
 
 #Added in 1.141
-msg_newday_already_scheduled_soon: 'A new day task is already scheduled to happen soon.'
+msg_newday_already_running: 'A new day task is already currently running.'
 
 #Added in 0.142
 
@@ -2142,10 +2183,12 @@ msg_perm_hud_resident: 'resident'
 msg_perm_hud_nation: 'nation'
 #Seen in /plot perm hud:
 msg_perm_hud_outsider: 'outsider'
-#Seen in /plot perm hud:
+#Seen in /towny map hud:
 msg_perm_hud_plot_name: 'Plot: '
-#Seen in /plot perm hud:
+#Seen in /towny map hud:
 msg_perm_hud_plotgroup_name: 'Plot Group: '
+#Seen in /towny map hud:
+msg_map_hud_district: 'District: '
 #Seen in /plot perm hud:
 msg_perm_hud_plot_for_sale: 'For Sale: '
 #Seen in /plot perm hud:
@@ -2261,6 +2304,8 @@ msg_you_have_unclaimed_everything_but_your_homeblock: "You have unclaimed everyt
 msg_warn_are_you_sure_you_want_to_transfer_nation_ownership: "<red>Are you sure you want to transfer nation ownership to %s? This action is irreversible!"
 msg_warn_town_already_capital: "<red>The town of %s is already the nation capital."
 msg_min_adjacent_blocks: 'You are required to have at least %s adjacent town blocks. There is only %s.'
+
+msg_min_adjacent_district_blocks: 'You are required to have at least %s adjacent district plots.'
 
 # Shown when a player with /plot evict permissions uses /plot claim on an owned but not for sale plot, please preserve comma space at the start when translating.
 msg_plot_claim_consider_evict_instead: ', perhaps you are looking for /plot evict instead?'
@@ -2440,7 +2485,7 @@ msg_err_unable_to_use_bank_outside_bank_plot_no_homeblock: 'You cannot use that 
 msg_err_you_cannot_outlaw_your_mayor: "You cannot outlaw your town's mayor."
 
 msg_err_you_cannot_outlaw_because_of_rank: "You cannot outlaw %s because of a town rank they hold."
-    
+
 status_nation_sanctioned_towns: "Sanctioned Towns"
 
 msg_all_of_your_towns_sent_invites_have_been_cancelled: "All of your town's sent invites have been cancelled."
@@ -2461,6 +2506,8 @@ msg_err_name_validation_is_not_permitted: "%s is not permitted."
 
 msg_err_name_validation_is_all_underscores: "%s is entirely underscores."
 
+msg_err_name_validation_too_many_capitals: "%s contains %s capital letters which were not allowed, use less than %s."
+
 msg_err_name_validation_contains_harmful_characters: "%s contains symbols that could be harmful."
 
 msg_err_name_validation_contains_numbers: "%s contains numbers which aren't allowed in names."
@@ -2468,7 +2515,7 @@ msg_err_name_validation_contains_numbers: "%s contains numbers which aren't allo
 msg_err_name_validation_used_in_command_structure: "%s is used in the command structure, you cannot use this name."
 
 msg_town_being_deleted_because_no_residents: "%s is being deleted because it lost its last resident."
-    
+
 outlawed_in: "Outlawed in"
 
 msg_warning_town_deposit_hint: "To put money in your town bank use /town deposit [amount]."
@@ -2516,3 +2563,68 @@ msg_townblock_max_join_days_removed: "This TownBlock has had its max-join-days r
 msg_townblock_min_join_days_set_to: "This TownBlock has had its min-join-days requirement set to %s. Only players joined for more than that number of days will be able to use /plot claim."
 
 msg_townblock_max_join_days_set_to: "This TownBlock has had its max-join-days requirement set to %s. Only players joined for less than that number of days will be able to use /plot claim."
+
+msg_new_resident_spawn_to_town_prompt: "Did you want to spawn to the town you just joined?"
+
+msg_recieved_refund_for_deleted_object: "You have received the bank balance of your deleted town or nation, a sum of %s."
+
+msg_err_you_already_own_this_plot: "You already own this plot."
+
+msg_err_you_cannot_delete_this_nation: "You have been prevented from deleting this nation."
+
+status_district_name_and_size: 'Townblock is part of District: %s. District has %s Townblocks total.'
+
+msg_err_district_name_required: 'You must specify district name ie, /plot district add {name}'
+
+msg_err_rename_district_name_required: 'You must specify district name ie, /plot district rename {name}'
+
+msg_district_renamed_from_x_to_y: 'District %s has been renamed to %s.'
+
+msg_err_plot_not_associated_with_a_district: 'This plot is not associated with a district.'
+
+msg_plot_was_removed_from_district_x: 'Plot <blue>(%s,%s) <dark_green>was removed from district %s.'
+
+msg_district_empty_deleted: 'The district %s had no townblocks and has been deleted.'
+
+msg_district_deleted: 'The district %s has been deleted.'
+
+msg_err_this_plot_is_already_part_of_the_district_x: 'This townblock is already part of the district: %s.'
+
+msg_townblock_transferred_from_x_to_x_district: 'Townblock transferred from %s to %s district.'
+
+msg_district_already_exists_did_you_want_to_transfer: 'This townblock is already a part of the %s district. Are you certain you want to transfer it to the %s district.'
+
+msg_plot_was_put_into_district_x: 'Plot <blue>(%s,%s) <dark_green>was put into district %s.'
+
+msg_err_cannot_remove_from_district_not_enough_adjacent_claims: "You cannot remove this townblock from the district %s, because the a part of the District would be detached from the rest."
+
+map_hover_district: 'District: '
+
+msg_err_you_cannot_join_town_you_have_not_played_long_enough: "You have not been on the server long enough, you must wait another %s before you can join a town."
+
+msg_your_nation_has_pending_ally_invites: "Your nation has invitations become an ally with one or more nations. Use '/n ally received' to view your invitations."
+
+msg_your_town_has_pending_nation_invites: "Your town has invitations to join one or more nations. Use '/t invite received' to view your invitations."
+
+msg_you_have_pending_town_invites: "You have invitations to join one or more towns. Use '/invite list' to view your invitations, or use '/invite deny all' to decline all of these invites."
+
+msg_admin_eco_convert_no_providers: "<red>No economy providers available"
+msg_admin_eco_convert_no_provider_specified: "<red>No economy provider specified"
+msg_admin_eco_convert_no_target_specified: "<red>No target economy specified"
+msg_admin_eco_convert_target_not_found: "<red>No economy adapter found by name '%s', available adapters: [%s]"
+msg_admin_eco_convert_already_modern: "<red>Cannot convert to modern; provider is already in modern mode"
+msg_admin_eco_convert_online_players_warning: "<red>Warning: It is recommended to convert while there are no players on the server."
+msg_admin_eco_convert_x_accounts_found: "Found %s accounts to convert. Beginning conversion now."
+msg_admin_eco_convert_conversion_progress: "Account conversion in progress, %s complete..."
+msg_admin_eco_convert_success: "Economy conversion successful"
+
+msg_err_mode_does_not_exist: "The mode %s is not recognized."
+
+msg_err_not_allowed_to_switch: "You aren't allowed to Switch here."
+
+chunknotification_plot_claim_help_message: " Use '/plot claim' to buy this plot."
+
+titlemsg_pay_your_bail_title: "Pay your bail: %s"
+titlemsg_pay_your_bail_subtitle: "/res jail paybail"
+
+msg_not_for_sale: "Not for sale."

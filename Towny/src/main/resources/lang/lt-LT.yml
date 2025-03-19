@@ -1,39 +1,5 @@
 ---
-name: Towny
-language: english
-author: ElgarL
 website: 'https://townyadvanced.github.io/'
-description: >
-  Language file for all game messages for this Locale.
-#A note on editing this file.
-#----------------------------
-#Do not alter this file if it is in the reference folder.
-#Before you edit this file, read about how Towny handles
-#language files:
-#https://github.com/TownyAdvanced/Towny/wiki/How-Towny-Works#multi-language.
-#A note on text formatting (how Towny status_title_pvpinserts words.)
-#----------------------------------------------------
-#You MUST retain spacing in the texts.
-#If a text begins or ends with a space, it must remain that
-#way.
-#%s = data to be supplied by the plugin.
-#If you find that a line has multiple %s variables which would
-#be in a different order in your language, you can change them
-#to %1$s, %2$s, %4$s, %3$s to change their order. ie: %4$s
-#will always use the 4th variable, no matter where it is
-#placed on the line.
-#A note on text colouring and formatting.
-#----------------------------------------
-#Black = &0, Navy = &1, Green = &2, Blue = &3, Red = &4
-#Purple = &5, Gold = &6, LightGray = &7, Gray = &8
-#DarkPurple = &9, LightGreen = &a, LightBlue = &b
-#Rose = &c, LightPurple = &d, Yellow = &e, White = &f
-#This language file also supports using MiniMessage for colours
-#and formatting. Learn about MiniMessage formatting here:
-#https://docs.adventure.kyori.net/minimessage/format.html
-default_towny_prefix: '&6[Towny] &b'
-default_town_prefix: '&6[%s] &b'
-default_nation_prefix: '&6[%s] &6'
 unclaimed_plot_name: 'Sklypas be savininko'
 unclaimed_zone_name: 'Tyrlaukiai'
 ############################################################
@@ -52,7 +18,7 @@ help_7: 'Sklypų pagalbinės komandos.'
 help_8: 'Towny pagalbinės komandos.'
 help_9: 'Towny administratoriaus pagalbinės komandos.'
 towny_help_0: "Pagrindinės Towny pagalbinės komandos"
-towny_help_1: "Parodo artimiausių miesto sklypų žemėlapį"
+towny_help_1: "Parodo artimiausių miesto blokų žemėlapį"
 towny_help_2: "Parodyti kainas, kurios reikalauja Ekonomikos įskiepio"
 towny_help_3: "Parodyti rekordus"
 towny_help_4: "Parodyti, kiek liko laiko iki naujos dienos"
@@ -77,8 +43,8 @@ town_help_15: "Pamatyti miesto nepageidaujamų asmenų sąrašą."
 town_help_16: "Pamatyti miesto sklypų grupių sąrašą."
 town_help_17: "Pamatyti miesto sklypų tipų sąrašą."
 town_help_18: "Išsiųsti žinutę miesto gyventojams."
-town_help_19: "Pastatyti miestą pardavimui, kurį galėtų nupirkti kiti žaidėjai."
-town_help_20: "Išimti miestą iš pardavimo."
+town_help_19: "Parduoti miestą, kad jį galėtų nusipirkti kiti žaidėjai."
+town_help_20: "Nebeparduoti savo miesto."
 town_help_21: "Nusipirkti miestą, jei jis yra parduodamas."
 town_help_22: "Įnešti pinigų į miesto banką."
 town_help_23: "Naudojama modifikuoti miesto gyventojų rangus."
@@ -102,8 +68,8 @@ town_list_help_4: "Išrikiuoti miestus abėcėlės tvarka nurodytame puslapyje."
 town_list_help_5: "Išrikiuoti miestus pagal plotą nurodytame puslapyje."
 town_list_help_6: "Išrikiuoti miestus pagal prisijungusių gyventojų skaičių nurodytame puslapyje."
 town_set_help_0: "Nustatyti savo miesto lentą."
-town_set_help_1: "Nustatyti savo miesto pagrindinį sklypą, kuriame stovima."
-town_set_help_2: "Nustato atsiradimo vietą savo miesto pagrindiniame sklype arba tolimosios teritorijos atsiradimo vietą, kai stovima toje tolimojoje teritorijoje."
+town_set_help_1: "Nustatyti savo miesto pagrindinį bloką, kuriame stovima."
+town_set_help_2: "Nustato atsiradimo vietą Jūsų pagrindiniame miesto bloke arba tolimosios teritorijos atsiradimo vietą, kai stovima toje tolimojoje teritorijoje."
 town_set_help_3: "Naudokite /town set perm ? tolimesnėns komandoms."
 town_set_help_4: "Nustatyti savo miesto mokesčio dydį."
 town_set_help_5: "Nustatyti specialius dydžius mokesčiams už sklypus."
@@ -129,14 +95,14 @@ town_trust_help_2: "Išvardija miesto patikimus žmones."
 town_towntrust_help_0: "Prideda miestą į miesto patikimų miestų sąrašą."
 town_towntrust_help_1: "Pašalina miestą iš miesto patikimų miestų sąrašo."
 town_towntrust_help_2: "Išvardija miesto patikimus miestus."
-town_buy_help: "Nuperka papildomų miesto sklypų, kad būtų padidintas miesto sklypų limitas."
+town_buy_help: "Nuperka papildomų miesto blokų, kad būtų padidintas Jūsų miesto užimtinų žemių limitas."
 town_cede_help: "Pasiūlo sklypą, kuriame stovite, būti perimtam kito miesto."
-mayor_help_3: 'Užimti teritoriją, kuri nebūtinai liečiasi su pagrindine miesto teritorija'
+mayor_help_3: 'Užimti teritoriją, kuri nesiliečia su pagrindine miesto teritorija'
 mayor_help_4: 'Užimti teritoriją aplink save X spinduliu'
 mayor_help_5: 'Užimti teritoriją didžiausiu spinduliu'
-mayor_help_6: 'Atsisakyti šio miesto sklypo'
-mayor_help_7: 'Mėginti atsisakyti kaimyninių sklypų.'
-mayor_help_8: 'Mėginti atsisakyti visų miesto sklypų.'
+mayor_help_6: 'Atsisakyti šio miesto bloko'
+mayor_help_7: 'Mėginti atsisakyti kaimyninių teritorijų.'
+mayor_help_8: 'Mėginti atsisakyti visų miesto blokų.'
 nation_help_1: 'Jūsų valstybės informacija'
 nation_help_2: '[valstybė]'
 nation_help_3: 'Pasirinktos valstybės informacija'
@@ -194,10 +160,6 @@ res_1: 'Jūsų informacija'
 res_2: '[gyventojas]'
 res_3: 'Nurodyto žaidėjo informacija'
 res_4: 'Išvardyti visus prisijungusius žaidėjus'
-res_5: 'norėdami sužinoti tolimesnes komandas'
-res_6: 'Būtinas prisijungusio žaidėjo vardas'
-res_7: 'Būtinas tikslus vardas'
-res_8: 'Tik paprastas ūkininkas'
 res_9: "Tiek mokėsite mokesčių per dieną."
 res_10: "Naudokite /res jail ? tolimesnėms komandoms."
 res_11: "Naudokite /res toggle ? tolimesnėms komandoms."
@@ -224,7 +186,7 @@ res_jail_help_0: "Sumoka tam tikrą pinigų sumą, kad išvaduotų Jus iš kalė
 res_set_help_0: "Nustatyti Jūsų miesto gyventojo Aprašymą/Biografiją"
 res_set_help_1: "Nustatyti savo gyventojo pagrindinius sklypo leidimus."
 res_set_help_2: "Nustatyti Jūsų miesto gyventojo režimus."
-mode_1: 'Atnaujinti žemėlapį kiekvienąkart perėjus į kitą miesto sklypą'
+mode_1: 'Atnaujinti žemėlapį kiekvienąkart perėjus į kitą miesto bloką'
 mode_2: 'Mėginti užimti teritoriją, per kurią einate'
 mode_3: 'Mėginti atsisakyti teritorijos, per kurią einate'
 mode_4: 'Pradinis susirašinėjimo kanalas yra miesto kanalas'
@@ -251,7 +213,7 @@ world_help_5: 'Atstatyti šį sklypą'
 world_help_6: 'Naudokite /tw toggle ? tolimesnėms komandoms'
 world_help_7: 'Naudokite /tw set ? tolimesnėms komandoms'
 world_set_help_0: "Pakeiskite pasaulio tyrlaukių pavadinimą."
-world_toggle_help_0: "Įjunkite arba išjunkite jeigu miestai gali užimti žemę šiame pasaulyje."
+world_toggle_help_0: "Leisti arba neleisti miestams užimti teritorijų šiame pasaulyje."
 world_toggle_help_1: "Įjunkite arba išjunkite jeigu Towny yra įjungta šiame pasaulyje."
 world_toggle_help_2: "Įjunkite arba išjunkite jeigu karai gali įvykti šiame pasaulyje."
 world_toggle_help_3: "Įjunkite arba išjunkite jeigu pvp arba priverstinis pvp yra įjungtas šiame pasaulyje."
@@ -263,14 +225,14 @@ world_toggle_help_8: "Įjunkite arba išjunkite pakeitimų atšaukimą priversti
 world_toggle_help_9: "Įjunkite arba išjunkite sprogimų padarinių atšaukimo funkcijas šiame pasaulyje."
 world_toggle_help_10: "Įjunkite arba išjunkite komandą šiame pasaulyje, leidžiančią sklypams visiškai ištrinti blockus."
 world_toggle_help_11: "Įjunkite arba išjunkite funkciją šiame pasaulyje, automatiškai ištrinančią padėtus blockus atsisakius sklypo."
-townyadmin_help_1: 'Atsisakyti miesto sklypo'
+townyadmin_help_1: 'Atsisakyti šio miesto bloko'
 townyadmin_help_2: 'Mėginti atsisakyti teritorijos aplink Jus.'
 admin_panel_1: "Naudokite /ta set ? tolimesnėms komandoms"
 admin_panel_2: 'perkrauti Towny'
 admin_panel_3: 'Paleisti naujos dienos kodą'
-admin_panel_4: "Atsisakyti žemių, apsupančių tave"
+admin_panel_4: "Atsisakyti žemių, esančių aplink Jus"
 admin_panel_5: "Naudokite /ta plot ? tolimesnėms komandoms"
-admin_panel_6: "Suteik teigiamą arba neigiamą skaičių miesto sklypų žaidėjui arba miestui"
+admin_panel_6: "Suteikti teigiamą arba neigiamą miesto blokų kiekį žaidėjui arba miestui"
 admin_panel_7: "Naudokite /ta toggle ? tolimesnėms komandoms"
 admin_panel_8: "Komandos, skirtos valdyti šiuos objektus"
 admin_panel_9: "Teleportuotis į nurodytą sklypą"
@@ -324,12 +286,12 @@ townyadmin_nation_help_12: "Išimti pinigus iš valstybės banko."
 townyadmin_nation_help_13: "Atidaryti valstybės banko operacijų knygą."
 townyadmin_nation_help_14: "Prijungti miestą prie valstybės."
 townyadmin_nation_help_15: "Naudoti valstybės rangų komandą."
-townyadmin_nationrank_help_0: "Įteikia valstybės rangą gyventojui."
-townyadmin_nationrank_help_1: "Pašalina valstybės rangą iš gyventojo."
+townyadmin_nationrank_help_0: "Suteikia gyventojui valstybinį rangą."
+townyadmin_nationrank_help_1: "Atima iš gyventojo valstybinį rangą."
 townyadmin_database_help_0: "Priverstinai išsaugoja duomenų bazę."
 townyadmin_database_help_1: "Priverstinai įkrauna duomenų bazę."
 townyadmin_database_help_2: "Pašalina visus titulus ir pavardes nuo kiekvieno gyventojo."
-ta_plot_help_0: "Užima plotą žaidėjui."
+ta_plot_help_0: "Užima sklypą žaidėjui."
 ta_plot_help_1: "Patikrinti metaduomenis, saugomus sklypę, kuriame Jūs dabar stovite."
 ta_plot_help_2: "Nustatyti sklypo metaduomenų raktą ir vertę."
 ta_plot_help_3: "Pridėti arba išimti metaduomenis raktu."
@@ -337,6 +299,7 @@ ta_resident_help_0: "Pervadinti gyventoją."
 ta_resident_help_1: "Pridėti arba pašalinti draugą."
 ta_resident_help_2: "Išvardinti arba išvalyti draugų sąrašą."
 ta_resident_help_3: "Ištrinti gyventoją iš duomenų bazės."
+ta_resident_help_4: "Ištrina žaidėjo aprašymo eilutę."
 ta_toggle_help_0: "Įjungti/išjungti funkciją, leidžiančią naudoti tyrlaukius visuose pasauliuose."
 ta_toggle_help_1: "Įjungti/išjungti regeneracijos funkcijas visuose pasauliuose."
 ta_toggle_help_2: "Įjungti/išjungti kūrėjo įrankius, rodančius papildomus logging pranešimus žaidėjui, nurodytam konfiguracijoje."
@@ -367,7 +330,15 @@ ta_reload_help_1: "Perkrauna konfigūraciją."
 ta_reload_help_2: "Perkrauna kalbų failus."
 ta_reload_help_3: "Pekrauna Towny leidimus."
 ta_reload_help_4: "Perkrauna visus Towny komponentus."
+ta_eco_resetbanks_help: "Atstato miestų ir valstybių bankų balansus į nurodytą kiekį arba 0."
+ta_eco_convert_modern_help: "Konvertuoja Jūsų Towny sąskaitas į mūsų moderniąją įvairovę, galinčią naudoti Vault OfflinePlayer."
+ta_eco_convert_help: "Konvertuoti Jūsų Towny sąskaitas į nurodytą ekonomikos įskiepį, naudinga perkeliant duomenis tarp ekonomikos įskiepių."
+ta_eco_info_help: "Duoda informacijos apie ekonomikos sąskaitas šiame serveryje."
 ta_depositall_help_0: "Įnešti nurodytą sumą į visus miestų ir valstybių bankus."
+ta_info_help_0: "Peržiūrėti nurodytos valstybės ekonominę informaciją."
+ta_info_help_1: "Peržiūrėti nurodyto gyventojo ekonominę informaciją."
+ta_info_help_2: "Peržiūrėti towny serverio sąskaitos ekonominę informaciją."
+ta_info_help_3: "Peržiūrėti nurodyto miesto ekonominę informaciją."
 plot_help_0: "Įjungia sklypo informacijos HUD."
 plot_help_1: "Pašalina sklypo savininką."
 plot_help_2: "Pašalina iš sklypo blokų sąrašą."
@@ -379,6 +350,10 @@ plot_help_7: "Prideda žaidėjui numatytųjų leidimų nepaisymus."
 plot_help_8: "Atveria leidimų rengyklės grafinę naudotojo sąsają."
 plot_help_9: "Prideda žaidėją į sklypo patikimų žmonių sąrašą."
 plot_help_10: "Pašalina žaidėją iš sklypo patikimų žmonių sąrašo."
+plot_district_help_0: "Pvz.: /plot district new PrabangusSklypai"
+plot_district_help_1: "Pašalina sklypą iš nurodyto rajono."
+plot_district_help_2: "Visiškai panaikina rajoną."
+plot_district_help_3: "Pervardina rajoną, kuriame stovite."
 plot_group_help_0: "Pvz.: /plot group new PrabangusSklypai"
 plot_group_help_1: "Pašalina sklypą iš nurodytos grupės."
 plot_group_help_2: "Visiškai pašalina sklypų grupę."
@@ -414,13 +389,13 @@ plot_set_help_6: "Įjungia arba išjungia lygmens ir tipo leidimą."
 plot_set_help_7: "Nustato leidimus gyventojui arba miestui, kuriam priklauso minėtieji sklypai."
 plot_jailcell_help_0: "Prideda kalėjimo kamerą ten, kur stovite."
 plot_jailcell_help_1: "Pašalina kalėjimo kamerą iš ten, kur stovite."
-msg_block_claim: 'Užimti šį sklypą'
+msg_block_claim: 'Užimti šį miesto bloką'
 msg_block_claim_radius: 'Užimti sklypus spinduliu aplink save.'
 msg_plot_nfs: 'Išimti sklypą iš prekybos'
 msg_plot_nfs_radius: 'Išimti sklypus iš prekybos spinduliu'
 msg_nfs_abr: '&e„fs“ ir „nfs“ yra atitinkamai „parduodama“ ir „neparduodama“ santrumpos.'
 msg_plot_fs: 'Skelbti šio sklypo aukcioną.'
-msg_plot_fs_radius: 'Parduoti sklypus spinduliu.'
+msg_plot_fs_radius: 'Pateikti parduoti sklypus spinduliu.'
 ############################################################
 #+------------------------------------------------------+ #
 #|   Messages                                           | #
@@ -433,11 +408,10 @@ msg_couldnt_pay_taxes: '&b%s negalėjo sumokėti mokesčių ir buvo išmestas i�
 msg_couldnt_pay_plot_taxes: '&b%s negalėjo sumokėti mokesčių ir prarado sklypo nuosavybės teises.'
 msg_you_couldnt_pay_plot_tax: '&bJūs neįstengėte sumokėti %s sklypo mokesčio ir praradote nuosavybės teises į %s sklypą.'
 msg_you_couldnt_pay_town_tax: '&bJūs neįstengėte sumokėti %s miesto mokesčio ir buvote pašalintas iš %s.'
-msg_payed_town_tax: '&b Sumokėtas miesto mokestis '
-msg_payed_plot_cost: '&bSumokėta %s už %s sklypą/-us %s'
-msg_payed_resident_tax: '&b Sumokėtas gyventojo mokestis '
+msg_you_paid_town_tax: '&bJūs sumokėjote savo miestui %s mokestį.'
+msg_you_paid_plottax_to_town: '&bJūs sumokėjote %s sklypų mokesčių %s miestui.'
 msg_bankrupt_town: ' neturėjo pakankamai lėšų išlikti miestu.'
-msg_bankrupt_nation: ' neturėjo pakankamai lėšų išlikti valstybe.'
+msg_bankrupt_nation: ' neturėjo pakankamai lėšų valstybingumui išlaikyti.'
 msg_nation_not_peaceful: '&bValstybė neturėjo pakankamai lėšų išlaikyti savo taikios būsenos.'
 msg_nation_cant_peaceful: '&bValstybė neturi pakankamai lėšų, kad galėtų tapti taiki. Jūs privalote turėti pakankamai pinigų, kad galėtumėte kasdien mokėti %.'
 msg_peaceful_disabled: '&bValstybės taika yra išjungta visame pasaulyje.'
@@ -496,7 +470,7 @@ msg_unable_ally_npc: "&cNepavyko išsiųsti pasiūlymo sudaryti aljansą, nes š
 msg_claimed: '&2Sėkmingai užimta teritorija'
 msg_unclaimed: '&2Sėkmingai atsisakyta teritorijos'
 msg_not_claimable: '&cŠiame pasaulyje negalima užimti teritorijų.'
-msg_abandoned_area: '&bApleisti šie sklypai: %s'
+msg_abandoned_area: '&bApleista teritorija: %s'
 msg_admin_unclaim_area: '&cPer prievartą atsisakyta teritorijų: %s'
 msg_abandoned_area_1: '&bJūsų miestas apleido teritoriją'
 msg_no_money_purchase_plot: '&cJūs neturite pakankamai lėšų šiam sklypui įsigyti.'
@@ -554,13 +528,13 @@ msg_xx_deposited_xx: '&b%s įnešė %s į %s banką.'
 msg_insuf_funds: '&cJūs neturite tam pakankamai lėšų.'
 msg_err_withdraw_disabled: 'Pinigų išsiėmimas iš šio banko yra išjungtas!'
 msg_err_deposit_capped: 'Nepavyko įnešti pinigų. Šis bankas pasiekė balanso leistiną ribą: %s.'
-msg_set_town_home: '&bMiesto pagrindinis sklypas sėkmingai pakeistas į %s'
+msg_set_town_home: '&bPagrindinis miesto blokas sėkmingai pakeistas į %s'
 msg_set_town_spawn: '&bSėkmingai pakeista miesto atsiradimo vieta.'
 msg_set_outpost_spawn: '&bSėkmingai pakeista tolimosios teritorijos atsiradimo vieta.'
 msg_set_title: '&b%s buvo suteiktas „%s&b“ titulas.'
 msg_set_surname: '&b%s buvo suteikta „%s&b“ pavardė.'
 msg_clear_title_surname: '&b%s atimtas „%s&b“.'
-msg_clear_plot_material: '&bPlote buvo pašalinti šie blokų tipai: %s.'
+msg_clear_plot_material: '&bSklype buvo pašalinti šie blokų tipai: %s.'
 msg_set_perms: '&bSėkmingai pakeistos teisės į:'
 msg_set_claim: '&bSėkmingai pakeistos %s teritorijos užėmimo galimybės į %s'
 msg_set_perms_reset: '&bSėkmingai atstatytos visų %s sklypų teisės.'
@@ -622,8 +596,8 @@ msg_err_plot_nfs: '&cŠis sklypas neparduodamas.'
 msg_err_not_part_town: '&cPasirinkta teritorija nėra Jūsų miesto dalis.'
 msg_err_not_attached_edge: '&cPasirinkta teritorija yra neliečia miesto krašto.'
 msg_err_empty_area_selection: '&cPasirinktoje teritorijoje nėra galiojančio sklypo.'
-msg_err_not_enough_blocks: '&cNepakanka turimų miesto sklypų, kad būtų galima užimti pasirinktas teritorijas.'
-msg_err_cant_afford_blocks: '&cMiestas neturi pakankamai lėšų, kad užimtų %s sklypus, kainuojančius %s'
+msg_err_not_enough_blocks: '&cNepakanka turimų miesto blokų, kad būtų galima užimti pasirinktas teritorijas.'
+msg_err_cant_afford_blocks: '&cMiestas neturi pakankamai lėšų, kad užimtų %s miesto blokų, kainuojančius %s'
 msg_err_not_in_town_claim: '&cJūs turite priklausyti miestui, kad galėtumėte užimti sklypų.'
 msg_err_must_belong_town: '&cJūs turite priklausyti miestui.'
 msg_err_dont_belong_town: '&cJūs nepriklausote miestui.'
@@ -665,7 +639,6 @@ msg_err_not_percentage: '&cProcentai turi būti mažesni nei 100.'
 msg_err_no_economy: '&cEkonomika neįjungta.'
 msg_err_not_block_type: '&cTai nėra tinkamas sklypo tipas!'
 msg_not_allowed_join: '&c%s neleidžiama prisijungti prie miesto.'
-msg_offline_no_join: '&c%s neprisijungęs, bet naudoja teises, todėl negali prisijungti prie miesto.'
 msg_err_cannot_perform_action: '&cNegalima atlikti šio veiksmo %s.'
 msg_npc_flag: '&bNPC žyma dabar yra %s %s.'
 msg_warning_delete: '&4*** ĮSPĖJIMAS, %s BUS PANAIKINTAS/-A KITĄ NAUJĄ DIENĄ DĖL LĖŠŲ TRŪKUMO ***'
@@ -691,6 +664,7 @@ msg_you_have_been_given_rank: 'Jums suteiktas %s rangas %s.'
 msg_you_have_given_rank: 'Jūs suteikėte %s rangą %s %s.'
 msg_resident_not_your_town: 'Tas gyventojas nepriklauso Jūsų miestui!'
 msg_resident_already_has_rank: '%s jau turi %s rangą.'
+msg_town_or_nation_level_not_high_enough_for_this_rank: "Jūsų %s lygis nėra pakankamai aukštas, kad galėtumėte priskirti %s rangą. Jūsų %s lygis: %s/%s reikalingo."
 msg_you_have_had_rank_taken: 'Jums buvo atimtas %s rangas %s.'
 msg_you_have_taken_rank_from: 'Jūs pašalinote %s rangą %s iš %s.'
 msg_resident_doesnt_have_rank: '%s neturi %s rango.'
@@ -738,8 +712,10 @@ msg_you_have_undeclared_an_outlaw: '%s nebėra nepageidaujamas mieste pavadinimu
 msg_err_player_not_an_outlaw: 'Tas žaidėjas nebuvo paskelbtas nepageidaujamu.'
 msg_err_outlaw_in_open_town: 'Jūs negalite prisijungti prie atviro miesto, kuris Jus yra paskelbęs nepageidaujamu.'
 msg_you_are_an_outlaw_in_this_town: '&4Būkite atsargus, %s laiko Jus nepageidaujamu, todėl žūtis šiame mieste galėtų reikšti kalėjimą.'
-msg_err_town_not_close_enough_to_nation: '%s pagrindinis sklypas yra nepakankamai arti Jūsų sostinės pagrindinio sklypo, kad galėtų prisijungti prie Jūsų valstybės.'
-msg_nation_town_moved_their_homeblock_too_far: '%s pagrindinis sklypas buvo perkeltas pernelyg toli nuo Jūsų valstybės sostinės pagrindinio sklypo ir buvo išmestas iš Jūsų valstybės.'
+msg_you_are_an_outlaw_in_this_town_jail_time: '&4Nepageidaujami asmenys yra kalinami %s valandoms.'
+msg_you_are_an_outlaw_in_this_town_bail_amount: 'Jūsų užstatas kainuotų %s.'
+msg_err_town_not_close_enough_to_nation: '%s pagrindinis miesto blokas yra nepakankamai arti Jūsų sostinės pagrindinio sklypo, kad galėtų prisijungti prie Jūsų valstybės.'
+msg_nation_town_moved_their_homeblock_too_far: '%s pagrindinis miesto blokas buvo perkeltas pernelyg toli nuo Jūsų valstybės sostinės pagrindinio sklypo ir buvo išmestas iš Jūsų valstybės.'
 #Added in 0.33
 msg_err_invalid_radius_number: '&cNetinkamas spindulio ilgis. Rašykite %s arba mažiau.'
 #Added in 0.34
@@ -754,7 +730,7 @@ msg_err_not_enough_residents: 'Mieste yra nepakankamai gyventojų, kad būtų ga
 #Added in 0.37
 msg_err_friendly_fire_disable: 'Draugiška ugnis išjungta!'
 #Added in 0.38
-msg_claim_error: '&cKitas įskiepis sustabdė (%s)/(%s) miesto sklypų užėmimą, nebuvo galima užbaigti operacijos.'
+msg_claim_error: '&cKitas įskiepis sustabdė (%s)/(%s) miesto blokų užėmimą, nebuvo galima užbaigti operacijos.'
 #Added in 0.39
 msg_err_town_spawn_forbidden_war: '&cKelionė į miesto atsiradimo vietą yra įmanoma tik karo metu.'
 msg_err_town_spawn_forbidden_peace: '&cKelionė į miesto atsiradimo vietą yra draudžiama karo metu.'
@@ -837,8 +813,8 @@ you_have_been_requested_to_ally2: 'Jūs buvote pakviestas sudaryti aljansą su %
 town_help_11: 'Sukurti naują miestą. Naudokite ''_'' vietoj tarpų.'
 changed_plot_town: '&bJūs sėkmingai pakeitėte sklypo miestą į %s!'
 not_standing_in_plot: 'Jūs nestovite ant tinkamo sklypo!'
-msg_err_homeblock_has_not_been_set: 'Pagrindinis miesto sklypas nebuvo nustatytas, iš pradžių naudokite ''/town set homeblock''.'
-msg_err_spawn_not_within_homeblock: 'Atsiradimo vieta nėra pagrindinio sklypo ribose, iš pradžių naudokite ''/town set homeblock''.'
+msg_err_homeblock_has_not_been_set: 'Pagrindinis miesto blokas nebuvo nustatytas, iš pradžių naudokite ''/town set homeblock''.'
+msg_err_spawn_not_within_homeblock: 'Atsiradimo vieta nėra pagrindinio miesto bloko ribose, iš pradžių naudokite ''/town set homeblock''.'
 #Added in 0.44
 #TownyChat language strings
 tc_err_invalid_command: 'Klaida: klaidinga komanda!'
@@ -879,10 +855,13 @@ msg_err_over_outposts_limit: 'Jūs negalite teleportuotis į savo tolimąją ter
 #These are translated because we may (or may not) be handling longer words in a smart way.
 #If you are a translator feel free to skip over this section, as it may or may not appear very nice
 #in game. It would be best to see what the changes look like in game before you PR it to github.
-outlaws: 'Nepageidaujami asmenys:' #Used on /t outlawlist
+#Used on /t outlawlist
+outlaws: 'Nepageidaujami asmenys:'
 online: '&a(Prisijungęs)'
-registered_last_online: '&2Registruotas: &a%s &8| &2Paskutinį kartą prisijungė: &a%s' #Used in mayor hover text in /town status screen.
-status_perm: 'Leidimas:' #Used on /plot perm, /res
+#Used in mayor hover text in /town status screen.
+registered_last_online: '&2Registruotas: &a%s &8| &2Paskutinį kartą prisijungė: &a%s'
+#Used on /plot perm, /res
+status_perm: 'Leidimas:'
 status_on: '&4ĮJUNGTA'
 status_off: '&aIŠJUNGTA'
 status_on_good: '&aĮJUNGTA'
@@ -979,6 +958,7 @@ msg_err_public_nation_spawn_forbidden: '&cKelionės į viešas valstybių atsira
 msg_err_public_nation_spawn_forbidden_war: '&cKelionės į viešas valstybių atsiradimo vietas yra įmanomos tik karo metu.'
 msg_err_public_nation_spawn_forbidden_peace: '&cKelionės į viešas valstybių atsiradimo vietas yra draudžiamos karo metu.'
 msg_spawn_cost_set_to: '&b%s nustatė /%s atsiradimo vietos naudojimo mokestį į %s'
+msg_spawn_fail_safe_teleport: '&cTeleportacija nepavyko, vieta nėra saugi, paprašykite savo miesto mero, kad teleportacijos vieta būtų pakeista.'
 msg_err_cannot_set_spawn_cost_more_than: '&cJūs negalite nustatyti atsiradimo vietos mokesčio aukštesnio kaip %s'
 msg_err_ally_isnt_public: '&cJūsų sąjungininkas %s nėra įjungęs viešos atsiradimo vietos. Teleportacija atmesta.'
 msg_nation_changed_public: '&cValstybės viešumo būsena dabar yra %s.'
@@ -1006,36 +986,27 @@ adjustable: 'Reguliuojama'
 #Added in 0.48:
 msg_no_funds_new_town2: '&c%s Jūs neturite pakankamai lėšų įkurti miesto čia, o tai kainuoja %s.'
 msg_no_funds_new_nation2: '&cMiestas neturi pakankamai lėšų pradėti naujos valstybės, o tai kainuoja %s.'
-msg_no_funds_claim2: '&cMiestas neturi pakankamai lėšų užimti %s miesto sklypus, kainuojančius %s. Įneškite %s į miesto banką naudodami /t deposit %s'
-msg_err_cant_afford_blocks2: '&cMiestas neturi pakankamai lėšų užimti %s miesto sklypus, kainuojančius %s. Įneškite %s į miesto banką naudodami /t deposit %s'
+msg_no_funds_claim2: '&cMiestas neturi pakankamai lėšų užimti %s miesto blokus, kainuojančius %s. Įneškite %s į miesto banką naudodami /t deposit %s'
+msg_err_cant_afford_blocks2: '&cMiestas neturi pakankamai lėšų užimti %s miesto blokus, kainuojančius %s. Įneškite %s į miesto banką naudodami /t deposit %s'
 msg_err_not_enough_variables: '&cNepakankamai kintamųjų: '
 nation_rechecked_by_admin: '&bValstybės %s miestų atstumai buvo sėkmingai perpatikrinti.'
 msg_err_nation_over_town_limit: '&cJūsų valstybė pasiekė didžiausią leidžiamų miestų valstybėje skaičių: %s.'
 #Added in 0.49
 msg_process_claim: 'Apdorojamas sklypo užėmimas...'
 msg_process_unclaim: 'Apdorojamas sklypo atsisakymas...'
-msg_total_townblocks: 'Miesto sklypų suma: '
+msg_total_townblocks: 'Miesto blokų suma: '
 #Added in 0.50
 friend_list: 'Draugų sąrašas'
-#The following formatting lists apply to friends lists on the /res screen; townranks lists on the /town screen;
-#nationranks lists on the /nation screen; and probably more lists of residents.
-res_format_list_1: '&2' #First colour applied to Resident lists, ex: on /res, the friend list's Friends section.
-res_format_list_2: '&a' #Second colour applied to Resident lists, ex: on /res, the friend list's [1] section.
-res_format_list_3: '&f' #Third colour applied to Resident lists, ex: on /res, the friend list's list of friends' names section.
-townboard_message_colour_1: '&6'
-townboard_message_colour_2: '&e'
-nationboard_message_colour_1: '&6'
-nationboard_message_colour_2: '&e'
 not_registered: 'Neregistruotas.'
 msg_error_missing_comparator: '&bPrivaloma nurodyti, pagal ką rūšiuoti.'
-msg_error_invalid_comparator: '&bNetinkama lyginamoji priemonė.'
+msg_error_invalid_comparator: '&bNetinkamas kriterijus.'
 msg_error_multiple_comparators: '&bPer daug lyginamųjų priemonių. Nurodykite tik vieną.'
-msg_error_comparator_failed: '&bLyginamoji priemonė nesuveikė. Pamėginkite kitą.'
+msg_error_comparator_failed: '&bKriterijus nesuveikė. Pamėginkite kitą.'
 number_of_residents: '(Gyventojų skaičius)'
 number_of_towns: '(Miestų skaičius)'
 town_name: 'Miesto pavadinimas'
 nation_name: 'Valstybės pavadinimas'
-refund_message: '&aGrąžinta %s už %s miesto sklypų atsisakymą.'
+refund_message: '&aGrąžinta %s už %s miesto blokų atsisakymą.'
 msg_bankrupt_town_multiple: '&bŠie miestai neturėjo pakankamai lėšų išlaikymui, todėl buvo panaikinti: '
 msg_bankrupt_nation_multiple: '&bŠios valstybės neturėjo pakankamai lėšų išlaikymui, todėl buvo panaikintos: '
 msg_couldnt_pay_tax: '&b%s negalėjo susimokėti mokesčių ir buvo išmestas iš %s.'
@@ -1046,8 +1017,8 @@ msg_bankrupt_town2: '&b%s neturėjo pakankamai lėšų išlikti miestu.'
 msg_bankrupt_nation2: '&b%s neturėjo pakankamai lėšų išlikti valstybe.'
 status_embassy_town: 'Ambasados'
 #Added in 0.51:
-msg_error_invalid_comparator_nation: '&bNetinkama lyginamoji priemonė. Mėginkite %s.'
-msg_error_invalid_comparator_town: '&bNetinkama lyginamoji priemonė. Mėginkite %s.'
+msg_error_invalid_comparator_nation: '&bNetinkamas kriterijus. Mėginkite %s.'
+msg_error_invalid_comparator_town: '&bNetinkamas kriterijus. Mėginkite %s.'
 msg_err_merging_for_kings_only: '&bSusijungimą gali atlikti tik valstybės vadovas.'
 msg_err_king_of_that_nation_is_not_online: '&bValstybės %s vadovas %s yra neprisijungęs. Susijungimas nepavyko.'
 nation1_has_merged_with_nation2: '&6Valstybė %s sutiko susijungti su dominuojančia valstybe %s.'
@@ -1065,7 +1036,7 @@ msg_town_forcedisabledpvp_setting_set_to: 'Miestui %s buvo priverstinai pakeista
 msg_nation_changed_open: '&cValstybės atvirumo būsena dabar yra %s.'
 msg_err_already_in_a_nation: 'Jūsų miestas jau yra valstybėje.'
 msg_err_nation_not_open: '&cValstybės %s durys nėra atviros visiems. Paprašykite vadovo ar asistento, kad pakviestų Jus prie jo prisijungti.'
-msg_err_nation_homeblock_in_another_world: '&cJūsų miesto pagrindinis sklypas nėra tame pačiame pasaulyje kaip valstybės sostinės pagrindinis sklypas.'
+msg_err_nation_homeblock_in_another_world: '&cJūsų miesto pagrindinis blokas nėra tame pačiame pasaulyje kaip valstybės sostinės pagrindinis blokas.'
 status_bank_town_penalty_upkeep: 'Perteklinės teritorijos išlaikymo išlaidos:'
 #Added in 0.53:
 msg_error_cannot_town_spawn_youre_an_outlaw_in_town: 'Jūs negalite nuvykti į %s, Jūs ten esate įtrauktas į nepageidaujamų asmenų sąrašą.'
@@ -1094,10 +1065,10 @@ msg_mysql_dump_success: 'MySQL duomenų bazės iškrovimas baigtas.'
 msg_err_mysql_not_being_used: 'Jūsų konfigūracija nenustatyta išsaugoti ir pakrauti MySQL.'
 msg_save_success: 'Duomenynas išsaugotas.'
 msg_load_success: 'Duomenynas pakrautas.'
-msg_err_cannot_afford_to_set_outpost: 'Jūsų miestas neturi pakankamai lėšų, kad nustatytų šį miesto sklypą tolimajai teritorijai.'
+msg_err_cannot_afford_to_set_outpost: 'Jūsų miestas neturi pakankamai lėšų, kad nustatytų šį miesto bloką kaip tolimają teritoriją.'
 msg_too_close2: 'Ši teritorija yra pernelyg arti kito miesto %s.'
-homeblock: 'pagrindinis sklypas'
-townblock: 'miesto sklypas'
+homeblock: 'pagrindinis blokas'
+townblock: 'miesto blokas'
 outpost: 'tolimoji teritorija'
 msg_err_not_same_town: '&b%s nepriklauso Jūsų miestui.'
 #Added in 0.59:
@@ -1107,17 +1078,17 @@ msg_err_the_metadata_for_key_is_not_registered: 'Metaduomenys ''%s'' neregistruo
 msg_key_x_was_successfully_updated_to_x: 'Raktas %s buvo sėkmingai atnaujintas į %s.'
 msg_err_key_x_is_not_part_of_this_plot: 'Raktas %s nėra šio sklypo dalis, pridėkite jį, jei tai yra įmanoma.'
 msg_err_key_x_already_exists: 'Raktas %s jau egzistuoja!'
-msg_custom_data_was_successfully_added_to_townblock: 'Specialūs duomenys buvo sėkmingai pridėti prie miesto sklypo!'
+msg_custom_data_was_successfully_added_to_townblock: 'Specialūs duomenys buvo sėkmingai pridėti prie miesto bloko!'
 msg_data_successfully_deleted: 'Duomenys sėkmingai ištrinti!'
 msg_err_key_cannot_be_deleted: 'Raktas negali būti ištrintas, nes jis neegzistuoja!'
 msg_err_this_town_doesnt_have_any_associated_metadata: 'Šis miestas neturi jokių susijusių metaduomenų.'
-msg_err_key_x_is_not_part_of_this_town: 'Key %s is not part of this town, if possible please add it.'
+msg_err_key_x_is_not_part_of_this_town: 'Raktas %s nėra šio miesto dalis, pridėkite jį, jei tai įmanoma.'
 msg_custom_data_was_successfully_added_to_town: 'Specialūs duomenys buvo sėkmingai pridėti prie miesto!'
 msg_err_this_resident_doesnt_have_any_associated_metadata: 'Gyventojas neturi jokių susijusių metaduomenų.'
-msg_err_key_x_is_not_part_of_this_resident: 'Key %s is not part of this resident, if possible please add it.'
+msg_err_key_x_is_not_part_of_this_resident: 'Raktas %s nėra šio gyventojo dalis, pridėkite jį, jei tai įmanoma.'
 msg_custom_data_was_successfully_added_to_resident: 'Specialūs duomenys buvo sėkmingai pridėti prie gyventojo!'
 msg_err_this_nation_doesnt_have_any_associated_metadata: 'Valstybė neturi jokių susijusių metaduomenų.'
-msg_err_key_x_is_not_part_of_this_nation: 'Key %s is not part of this nation, if possible please add it.'
+msg_err_key_x_is_not_part_of_this_nation: 'Raktas %s nėra šios valstybės dalis, pridėkite jį, jei tai įmanoma.'
 msg_custom_data_was_successfully_added_to_nation: 'Specialūs duomenys buvo sėkmingai pridėti prie valstybės!'
 msg_error_too_many_pages: 'Per daug puslapių.'
 msg_err_location_is_not_within_a_town: 'Vieta nėra miesto ribose.'
@@ -1126,7 +1097,7 @@ msg_err_town_has_no_jail_spawns_set: 'Miestas neturi jokių kalėjimo atsiradimo
 msg_err_town_has_no_outpost_spawns_set: 'Miestas neturi jokių tolimųjų teritorijų atsiradimo vietų.'
 msg_err_location_is_not_within_an_outpost_plot: 'Vieta nėra tolimosios teritorijos sklypo ribose.'
 msg_err_town_has_not_set_a_spawn_location: 'Miestas nėra nustatęs atsiradimo vietos.'
-msg_err_town_has_no_claim_over_this_town_block: 'Miestas nėra užėmęs šio sklypo.'
+msg_err_town_has_no_claim_over_this_town_block: 'Miestas nėra užėmęs šio miesto bloko.'
 msg_err_town_doesnt_belong_to_any_nation: 'Miestas nepriklauso jokiai valstybei.'
 msg_err_mayor_doesnt_belong_to_town: 'Meras nepriklauso miestui.'
 msg_err_tag_too_long: 'Žyma per ilga.'
@@ -1148,7 +1119,7 @@ msg_enemy_areas: 'Priešų teritorijos'
 msg_neutral_towns: 'Neutralūs miestai'
 #Added in 0.64
 msg_err_no_nation_with_that_name: 'Nerasta valstybė su vardu %s'
-msg_err_cannot_unclaim_homeblock: 'Jūs negalite atsisakyti savo pagrindinio sklypo, naudokite ''/town set homeblock'', kad perkeltumėte savo pagrindinį sklypą.'
+msg_err_cannot_unclaim_homeblock: 'Jūs negalite atsisakyti savo pagrindinio bloko, naudokite ''/town set homeblock'', kad perkeltumėte savo pagrindinį bloką.'
 #Added in 0.65
 msg_err_rename_cancelled: 'Pervardijimas buvo atšauktas kito įskiepio.'
 #Added in 0.66
@@ -1163,7 +1134,7 @@ msg_plot_evict_group: 'Jūs sėkmingai išvarėte žaidėją iš šio grupės sk
 msg_err_plot_belongs_to_group_plot_fs: 'Sklypas: %s priklauso grupei, naudokite /plot group [grupės pavadinimas] fs [kaina]'
 msg_err_plot_belongs_to_group_set: 'Sklypas priklauso grupei, naudokite /plot group set'
 msg_plot_group_set_for_sale: 'Parduodama grupė %s!'
-msg_err_plot_already_belongs_to_a_group: 'Šis sklypas jau priklauso grupei: %s, prašome pašalinti miesto sklypą iš tos grupės prieš pridedami ją į kitą.'
+msg_err_plot_already_belongs_to_a_group: 'Šis sklypas jau priklauso grupei: %s, prašome pašalinti miesto bloką iš tos grupės prieš pridedami ją į kitą.'
 msg_err_you_must_specify_a_group_name: 'Jūs turite nurodyti sklypų grupės pavadinimą.'
 msg_plot_was_put_into_group_x: 'Sklypas &9(%s,%s) &2buvo įtrauktas į grupę %s'
 msg_err_plot_not_associated_with_a_group: 'Šis sklypas nėra susietas su grupe.'
@@ -1175,7 +1146,7 @@ msg_player_put_group_up_for_sale: '%s parduoda grupę %s!'
 msg_err_could_not_set_group_type: 'Nepavyko nustatyti grupės tipo - '
 msg_set_group_type_to_x: 'Sklypų grupės tipas pakeistas į %s'
 msg_player_successfully_bought_group_x: '%s sėkmingai nusipirko sklypų grupę %s'
-status_plot_group_name_and_size: 'Miesto sklypas yra dalis grupės: %s. Grupė iš viso turi %s miesto sklypų.'
+status_plot_group_name_and_size: 'Miesto blokas yra dalis grupės: %s. Grupė iš viso turi %s miesto blokų.'
 msg_player_made_group_not_for_sale: '%s išėmė grupę %s iš prekybos.'
 #Added in 0.69
 msg_err_cannot_set_group_to_jail: 'Sklypų grupės negali būti nustatytos kaip kalėjimai.'
@@ -1199,39 +1170,39 @@ msg_already_ally: 'Jūsų valstybė jau yra %s sąjungininkė.'
 #Added in 0.76
 msg_you: 'Jūs'
 #Added in 0.77
-msg_click_spawn: '&aClick to spawn to: &e%s'
-msg_spawn_cost: '&aSpawn Cost = &e%s'
+msg_click_spawn: '&aSpustelėkite norėdami nusiteleportuoti į: &e%s'
+msg_spawn_cost: '&aTeleportacijos kaina = &e%s'
 #Added in 0.78
 msg_reload_error: 'Įvyko klaida perkraunant Towny.'
-msg_reloaded_config: '&2Configuration successfully reloaded.'
-msg_reloaded_perms: '&2Permissions successfully reloaded.'
-msg_reloaded_db: '&2Database successfully reloaded'
-msg_reloaded_lang: '&2Language file successfully reloaded'
-msg_reset_config: '&2Config has been reset'
-msg_err_teleport_cancelled: 'Moving has cancelled your teleport.'
+msg_reloaded_config: '&2Konfigūracija sėkmingai perkrauta.'
+msg_reloaded_perms: '&2Leidimai sėkmingai perkrauti.'
+msg_reloaded_db: '&2Duomenų bazė sėkmingai perkrauta'
+msg_reloaded_lang: '&2Kalbos failas sėkmingai perkrautas'
+msg_reset_config: '&2Konfigūracija buvo atstatyta'
+msg_err_teleport_cancelled: 'Dėl pajudėjimo buvo atšaukta Jūsų teleportacija.'
 #Added in 0.79
 msg_cache_block_error_plot_friends: 'draugai'
 msg_cache_block_error_plot_allies: 'sąjungininkai'
 msg_cache_block_error_plot_outsiders: 'pašaliečiai'
 msg_cache_block_error_plot_town_members: 'miesto nariai'
-msg_err_invalid_nation_map_color: '&cUnknown map color. Allowed colors are %s.'
-msg_nation_map_color_changed: '&bThe nation map color was changed to %s.'
-msg_err_unable_to_add_more_residents_without_nation: 'Your town cannot invite more than %s residents without first joining or creating a nation.'
-msg_the_following_towns_were_deleted_for_having_0_claims: 'The following towns were deleted for having 0 claims: %s'
-msg_spawn_warn: 'Spawning costs %s. Continue? Hint: add -ignore to skip these confirmations.'
-msg_confirm_purchase: 'Doing this will cost %s. Continue?'
-msg_warn_the_following_towns_will_be_removed_from_your_nation: 'Because they will not be close enough to the new capital, the following towns will be removed from your nation: %s. Do you wish to continue?'
-msg_ta_deposit_all_success: 'Successfully deposited %s to all nations'' and towns'' banks.'
-bonus_townblocks: 'papildomi miesto sklypai'
+msg_err_invalid_nation_map_color: '&cNežinoma žemėlapio spalva. Leistinos yra šios spalvos: %s.'
+msg_nation_map_color_changed: '&bVastybės spalva žemėlapyje buvo pakeista į %s.'
+msg_err_unable_to_add_more_residents_without_nation: 'Jūsų miestas negali pakviesti daugiau nei %s gyventojų pirma neprisijungęs ar nesukūręs valstybės.'
+msg_the_following_towns_were_deleted_for_having_0_claims: 'Šie miestai buvo panaikinti, nes neturėjo žemių: %s'
+msg_spawn_warn: 'Pasinaudojimas atsiradimo vieta kainuoja %s. Ar norite tęsti? Patarimas: pridėkite -ignore norėdami praleisti šiuos patvirtinimus.'
+msg_confirm_purchase: 'Šis veiksmas kainuos %s. Ar norite tęsti?'
+msg_warn_the_following_towns_will_be_removed_from_your_nation: 'Šie miestai bus išmesti iš %s valstybės, nes jie nėra pakankamai arti naujosios sostinės. Ar norite tęsti?'
+msg_ta_deposit_all_success: 'Sėkmingai įnešta %s į visų valstybių ir miestų bankus.'
+bonus_townblocks: 'papildomi miesto blokai'
 #Added in 0.80
 nomad_sing: 'Bastūnas'
-msg_new_town_advice: 'Congratulations on creating your town! Your town will pay a daily upkeep which is currently valued at %s. You can deposit money in your town''s bank using ''/t deposit #''. Without money to pay the upkeep your town will be deleted. You can see your costs anytime using /towny prices. Next daily upkeep taken in %s.'
+msg_new_town_advice: 'Sveikiname sukūrus savo miestą! Jūsų miestas mokės kasdienes išlaikymo išlaidas, siekiančias %s. Jūs galite įnešti pinigų į savo miesto banką naudodami ''/t deposit #''. Be pinigų išlaikymo išlaidoms padengti Jūsų miestas bus panaikintas. Jūs galite pamatyti savo išlaidas bet kada naudodami /towny prices. Kitos kasdienės išlaikymo išlaidos bus nuskaičiuotos po %s.'
 #Added in 0.81
-msg_err_teleport_cancelled_damage: 'Damage has cancelled your teleport.'
+msg_err_teleport_cancelled_damage: 'Dėl žalos buvo atšaukta Jūsų teleportacija.'
 #Added in 0.82
-invitation_prefix: "&8[&7Invitation&8] &9"
-confirmation_prefix: "&8[&7Confirmation&8] &9"
-this_message_will_expire2: '&9This will auto-expire in %s seconds'
+invitation_prefix: "&8[&7Pakvietimas&8] &9"
+confirmation_prefix: "&8[&7Patvirtinimas&8] &9"
+this_message_will_expire2: '&9Tai automatiškai nustos galioti po %s sekundžių'
 msg_hover_next_page: 'Kitas puslapis'
 msg_hover_previous_page: 'Ankstesnis puslapis'
 #Added in 0.83
@@ -1278,14 +1249,11 @@ msg_outlaw_kicked: '&4Jūs esate nepageidaujamas %s. Jūs buvote išteleportuota
 msg_outlaw_town_notify: '&cNepageidaujamas asmuo %s įžengė į Jūsų miesto teritoriją.'
 msg_your_town_payed_upkeep_with_debt: '&cJūsų miestas apmokėjo %s išlaikymo išlaidas su skola.'
 msg_payed_nation_tax_with_debt: '&cJūsų miestas apmokėjo %s valstybės mokestį su skola.'
-#Added in 0.90
-status_plot_clear_deletion: 'PlotClearBlockDelete:'
 msg_err_plot_clear_disabled_in_this_world: '/plot clear komanda yra išjungta šiame pasaulyje.'
 #Added in 0.91
 msg_universe_attribution: 'Autoriai: '
 msg_universe_contributors: ' Ir pagalbininkai, tokie kaip Jūs. '
-msg_universe_heart: '<3'
-townblock_plu: 'Miesto sklypai'
+townblock_plu: 'Miesto blokai'
 #Added in 0.92
 #Town Ruins
 msg_newhour_success: 'naujos valandos komanda buvo sėkmingai įvykdyta'
@@ -1300,22 +1268,20 @@ msg_warning_your_town_is_ruined_for_x_more_hours: '&cJūsų miestas bus griuvės
 msg_time_remaining_before_full_removal: 'Iki visiško ištrinimo liko: %d valandos.'
 msg_time_until_reclaim_available: 'Iki galimo atgavimo liko: %d valandos.'
 msg_reclaim_available: 'Galimas atsiėmimas.'
-msg_ruined_town_being_deleted: "%s was ruined for %s hours and is being deleted."
+msg_ruined_town_being_deleted: "%s buvo sugriuvęs %s valandas ir yra naikinamas."
 #Added in 0.93
 msg_changed_peaceful: '&cMiesto neutralumas/taikingumas dabar yra %s.'
 msg_err_town_unclaim_canceled: '&cAtsisakymas atšauktas. Jūs negalite atsisakyti šių žemių dabar.'
 #Added in 0.94
 msg_comptype_residents: 'Gyventojų skaičius'
-msg_comptype_townblocks: 'Užimtų miesto sklypų skaičius'
+msg_comptype_townblocks: 'Užimtų miesto blokų skaičius'
 msg_comptype_balance: 'Banko balansas'
 msg_comptype_online: 'Prisijungę žaidėjai'
 msg_comptype_towns: 'Miestų skaičius'
 msg_comptype_name: 'Abėcėlės tvarka'
 msg_comptype_open: 'Atvirumo būsena'
-msg_status_npc: '&c%s is not a real player, and is limited to Towny only.'
 npc_created: 'Sukurtas:'
-msg_no_funds_claim_plot: '&cYou cannot afford to claim the plot costing %s.'
-msg_no_funds_claim_plot_group: '&cYou cannot afford to claim the %s plots costing %s.'
+msg_no_funds_claim_plot: '&cJums nepakanka lėšų užimti sklypą, kainuojantį %s.'
 status_town_title_peaceful: '&b(Taikus)'
 #Added in 0.95
 status_public: '&b(Viešas)'
@@ -1323,16 +1289,16 @@ msg_days: ' dienos'
 msg_comptype_public: 'Viešumo būsena'
 towny_prices_title: 'Kainos'
 towny_prices_town_nation: '&e[Naujas(-a)] &2Miestas: &a%s &8| &2Valstybė: &a%s'
-towny_prices_reclaim: '&e[Atgavimas] &2Miesto: &a%s'
+towny_prices_reclaim: '&e[Atsiėmimas] &2Miesto: &a%s'
 towny_prices_upkeep: '&e[Išlaikymo išlaidos] &2Miestui: &a%s &8| &2Valstybei: &a%s'
 towny_prices_overclaimed_upkeep: '&e[Perteklinės teritorijos išlaikymo išlaidos] &2Miestui: &a%s'
-towny_prices_claiming_townblock: '&e[Užėmimas] &2Miesto sklypo: &a%s'
-towny_prices_claiming_townblock_increase: ' &8| &2Padidėjimas naujam miesto sklypui: &a+%s'
+towny_prices_claiming_townblock: '&e[Užėmimas] &2Miesto bloko: &a%s'
+towny_prices_claiming_townblock_increase: ' &8| &2Padidėjimas už kiekvieną miesto bloką: &a+%s'
 towny_prices_claiming_outposts: '&e[Užėmimas] &2Tolimųjų teritorijų: &a%s'
 towny_prices_upkeep_based_on: '&7Miesto išlaikymo išlaidos paremtos &a%s'
-towny_prices_upkeep_num_plots: 'sklypų skaičiumi.'
+towny_prices_upkeep_num_plots: 'sklypų skaičiaus.'
 towny_prices_upkeep_town_level: 'miesto lygiu (gyventojų skaičiumi)'
-towny_prices_overclaimed_based_on: '&8Perteklinės teritorijos išlaikymo išlaidos paremtos &a %s %s'
+towny_prices_overclaimed_based_on: '&8Perteklinės teritorijos išlaikymo išlaidos priklauso nuo &a%s %s'
 towny_prices_overclaimed_num_plots: 'perteklinių sklypų skaičiumi *'
 towny_prices_overclaimed_flat_cost: 'vienoda kaina'
 towny_prices_townname: '&cMiestas: &b%s'
@@ -1341,7 +1307,7 @@ towny_prices_price_shop: '&c            &2Parduotuvė: &a%s &8| &2Ambasada: &a%s
 towny_prices_taxes_plot: '&c    [Mokesčiai]    &2Gyventojui: &a%s &8| &2Sklypui: &a%s'
 towny_prices_taxes_shop: '&c            &2Parduotuvė: &a%s &8| &2Ambasada: &a%s'
 towny_prices_town_neutral_tax: '&c            &2Taika: &a%s'
-towny_prices_plots: '&c    [Nustatomi sklypai]'
+towny_prices_plots: '&c    [Sklypų nustatymas]'
 towny_prices_type_single: '            &2%s: &a%s'
 towny_prices_type_double: '            &2%s: &a%s &8| &2%s: &a%s'
 towny_prices_nationname: '&cValstybė: &6%s'
@@ -1351,7 +1317,8 @@ msg_town_destroyed_by_nation_tax: '&bNukariautas miestas %s negalėjo susimokėt
 msg_town_destroyed_by_nation_tax_multiple: '&bŠie nkariauti miestai negalėjo susimokėti valstybės mokesčio ir žlugo: '
 msg_your_town_was_exempt_from_the_nation_tax: '&bJūsų miestas buvo atleistas nuo valstybės mokesčio.'
 #Added in 0.97
-status_perm_line_format: '&a%s=&7' #The Build = ---- Destroy = ---- seen in the status screen.
+#The Build = ---- Destroy = ---- seen in the status screen.
+status_perm_line_format: '&a%s=&7'
 msg_comptype_ruined: 'Griuvėsių būsena'
 msg_comptype_bankrupt: 'Bankroto būsena'
 msg_ruined: '&c(Griuvėsiai)'
@@ -1365,82 +1332,29 @@ gui_title_towny_allowedblocks: '%s Leistinų blokų sąrašas'
 gui_title_towny_wildsblocks: 'Towny laukinių blokų sąrašas'
 gui_title_towny_itemuse: 'Towny daiktų naudojimo sąrašas'
 gui_title_towny_switch: 'Towny perjungimo sąrašas'
-gui_title_towny_plotclear: 'Towny Plot Clear Delete List'
-#Added in 0.99 - FlatFile L10N
-#NOTICE
-#While these strings can be translated, we caution you to keep them in English.
-flatfile_dbg_cannot_set_capital_try_next: 'Nation %s could not set capital to %s, selecting a new capital...'
-flatfile_dbg_deleting_duplicate: 'Deleting: %s which is a duplicate of %s'
-flatfile_dbg_folders_found: 'Folders found %s'
-flatfile_dbg_group_file_missing_town_delete: 'Group file missing Town, deleting %s'
-flatfile_dbg_loading_group_list: 'Loading Group list...'
-flatfile_dbg_loading_nation: 'Loading Nation: %s'
-flatfile_dbg_loading_nation_list: 'Loading Nation list...'
-flatfile_dbg_loading_resident: 'Loading Resident: %s'
-flatfile_dbg_loading_resident_list: 'Loading Resident list...'
-flatfile_dbg_loading_server_world_list: 'Loading Server World List...'
-flatfile_dbg_loading_town: 'Loading Town: %s'
-flatfile_dbg_loading_town_list: 'Loading Town list...'
-flatfile_dbg_loading_townblock_list: 'Loading TownBlock list...'
-flatfile_dbg_loading_world: 'Loading World: %s'
-flatfile_dbg_loading_world_list: 'Loading World List...'
-flatfile_dbg_mismatched_townblock_size: '%s townblocks were found with a town_block_size that does not match your config, they were not loaded into memory.'
-flatfile_dbg_missing_file_delete_group_entry: 'Missing file: %s deleting entry in group.txt'
-flatfile_dbg_missing_file_delete_groups_entry: 'Missing file: %s deleting entry in groups.txt'
-flatfile_dbg_removing_nation_not_found: 'Removing %s because they are not found in the nations.txt'
-flatfile_dbg_removing_resident_not_found: 'Removing %s because they are not found in the residents.txt'
-flatfile_dbg_removing_town_not_found: 'Removing %s because they are not found in the towns.txt.'
-flatfile_dbg_town_fetch_outlaw: 'Town Fetching Outlaw: %s'
-flatfile_dbg_undefined_capital_select_new: 'Nation %s did not have a capital defined, selecting a new capital...'
-flatfile_dbg_world_loaded_townblocks: 'World: %s loaded %s TownBlocks.'
-flatfile_err_cannot_create_defaults: 'Could not create flatfile default files and folders.'
-flatfile_err_could_not_add_to_town: 'Could not add to town!'
-flatfile_err_exception_reading_file: 'Loading Error: Exception while reading file %s'
-flatfile_err_exception_reading_group_file_at_line: 'Loading Error: Exception while reading Group file %s at line: %s'
-flatfile_err_exception_reading_townblock_file_at_line: 'Loading Error: Exception while reading TownBlock file %s at line: %s.'
-flatfile_err_exception_reading_world_file_at_line: 'Loading Error: Exception while reading world file %s at line: %s, in towny/data/worlds/%s.txt'
-flatfile_err_file_error_reading_world_file_at_line: 'Loading Error: File error while reading %s at line: %s, in towny/data/worlds/%s.txt'
-flatfile_err_homeblock_load_invalid_location: '[Warning] %s - HomeBlock tried to load invalid Location.'
-flatfile_err_homeblock_load_invalid_townblock: '[Warning] %s - HomeBlock tried to load invalid TownBlock.'
-flatfile_err_homeblock_load_invalid_world: '[Warning] %s - HomeBlock tried to load invalid World.'
-flatfile_err_invalid_townblock_resident: 'Invalid resident for TownBlock %s. Skipped setting resident for TownBlock...'
-flatfile_err_loading_group_list_at_line: 'Error loading Group List at %s, in towny/data/groups.txt'
-flatfile_err_loading_world_list_at_line: 'Error loading World list at %s, in towny/data/worlds.txt'
-flatfile_err_nation_could_not_load_capital_disband: 'The nation %s could not load a capital city and is being disbanded.'
-flatfile_err_reading_nation_file_at_line: 'Loading Error: Exception while reading nation file %s at line %s, in towny/data/nations/%s.txt'
-flatfile_err_reading_outlaw_of_town_duplicate: 'Loading Error: Exception while reading an outlaw of town file %s.txt. The outlaw %s is duplicated! Skipping adding duplicate...'
-flatfile_err_reading_outlaw_of_town_not_exist: 'Loading Error: Exception while reading an outlaw of town file %s.txt. The outlaw %s does not exist! Removing from list...'
-flatfile_err_reading_resident_at_line: 'Loading Error: Exception while reading resident file %s at line: %s, in towny/data/residents/%s.txt'
-flatfile_err_reading_town_file_at_line: 'Loading Error: Exception while reading town file %s at line: %s, in towny/data/towns/%s.txt'
-flatfile_err_resident_tried_load_invalid_town: 'Loading Error: %s tried to load the town %s which is invalid. Removing town from the resident.'
-flatfile_err_town_homeblock_not_exist: '[Warning] %s does not have a HomeBlock.'
-flatfile_err_townblock_file_contains_unregistered_town_delete: 'TownBlock file contains unregistered Town: %s, deleting %s'
-flatfile_err_townblock_file_missing_town_delete: 'TownBlock file missing Town, deleting %s'
-flatfile_err_townblock_file_unknown_err: 'TownBlock file contains unknown error, deleting %s.'
+flatfile_dbg_loading_district_list: 'Kraunamas rajonų sąrašas...'
 msg_ta_removed_all_titles_and_surnames_removed: 'Visiems gyventojams buvo panaikinti titulai ir pavardės.'
-msg_err_homeblock_already_set_here: 'Ši vieta jau yra Jūsų miesto pagrindinis sklypas.'
+msg_err_homeblock_already_set_here: 'Ši vieta jau yra Jūsų miesto pagrindinis blokas.'
 #Added in 0.100
 msg_town_merge_err_mayor_only: '&cMSusijungimą gali atlikti tik meras.'
-msg_town_merge_err_not_close: '&cMiestas %s yra pernelyg toli nuo Jūsų miesto. Jų pagrindinis sklypas turi būti nutolęs %d miesto sklypų atstumu nuo Jūsų pagrindinio sklypo.'
+msg_town_merge_err_not_close: '&cMiestas %s yra pernelyg toli nuo Jūsų miesto. Jų pagrindinis blokas turi būti nutolęs %d miesto blokų atstumu nuo Jūsų pagrindinio bloko.'
 msg_town_merge_request_sent: '&bSusijungimo prašymas buvo nusiųstas %s merui.'
-msg_town_merge_request_received: '&b%s meras %s paprašė susijungti su Jūsų miestu. Šis veiksmas perkels visus miesto sklypus, gyventojus ir visus pinigus iš miesto banko į %s.'
+msg_town_merge_request_received: '&b%s meras %s paprašė susijungti su Jūsų miestu. Šis veiksmas perkels visus miesto blokus, gyventojus ir visus pinigus iš miesto banko į %s.'
 msg_town_merge_request_denied: '&cSusijungimo prašymas atmestas.'
 msg_town_merge_other_offline: '&c%s meras %s šiuo metu yra neprisijungęs. Susijungimas nepavyko.'
-msg_town_merge_err_too_many_residents: '&cMerge failed: New resident amount exceeds the limit (%d)'
-msg_town_merge_err_too_many_townblocks: '&cMerge failed: New town size exceeds the limit (%d)'
-msg_town_merge_err_too_many_outposts: '&cMerge failed: New outpost amount exceeds the limit (%d)'
-msg_town_merge_err_not_enough_money: '&cMerge failed: Not enough money. (%s/%s)'
-msg_town_merge_err_too_many_purchased_townblocks: '&cMerge failed: Too many purchased townblocks (%d)'
-msg_town_merge_warning: '&cWarning: If accepted, merging with %s will cost %s.'
-msg_town_merge_debt_warning: '&cWarning: %s is currently in debt, you will have to pay their debt if accepted.'
-msg_town_merge_cost_breakdown: '&bCost breakdown: Base cost: %s, Townblock cost: %s, Bankruptcy cost: %s, BonusBlock cost: %s'
+msg_town_merge_err_too_many_residents: '&cSusijungimas nepavyko: naujas gyventojų skaičius viršytų limitą (%d)'
+msg_town_merge_err_too_many_townblocks: '&cSusijungimas nepavyko: naujasis miesto dydis viršytų limitą (%d)'
+msg_town_merge_err_not_enough_money: '&cSusijungimas nepavyko: neužteko pinigų. (%s/%s)'
+msg_town_merge_err_too_many_purchased_townblocks: '&cSusijungimas nepavyko: per daug nupirktų miesto blokų (%d)'
+msg_town_merge_warning: '&cĮspėjimas: Jei bus sutikta, susijungimas su %s kainuos %s.'
+msg_town_merge_debt_warning: '&cĮspėjimas: %s yra įsiskolinęs, Jūs turėsite sumokėti jų skolą, jei bus sutikta.'
 msg_town_merge_failed: '&cSusijungimas nepavyko.'
 msg_town_merge_cancelled: '&cSusijungimas atšauktas.'
-msg_town_merge_success: '&bThe town of %s, owned by %s, has successfully merged into the town of %s.'
+msg_town_merge_success: '&bMiestas %s, vadovaujamas %s, sėkmingai susijungė su %s.'
 #Reasons for withdrawing/depositing for the bankhistory book.
 msg_town_merge_cost_withdraw: 'Miestų susijungimas kainuoja'
 msg_town_merge_transaction_reason: 'Miestų susijungimas'
-towny_prices_town_merge: '&e[Merging] &2Base Cost: &a%s &8| &2Per Plot: &a%s'
+towny_prices_town_merge: '&e[Susijungimas] &2Bazinė kaina: &a%s &8| &2Už sklypą: &a%s'
 #Added in 0.101
 msg_err_nation_not_allied_with: '&cJūsų valstybė nėra %s sąjungininkė.'
 msg_err_nation_not_enemies_with: '&cJūsų valstybė nėra %s priešė.'
@@ -1453,19 +1367,16 @@ msg_err_nation_already_enemies_with_2: '&c%s jau yra %s priešė.'
 msg_ta_allies_enemies_updated: '&b%s atnaujinti sąjungininkai/priešai.'
 #Added in 0.102
 towny_map_detailed_information: '&2Spustelėkite norėdami pamatyti detalesnę sklypo informaciją.'
-msg_err_nation_capital_too_many_residents: '&cThe current capital city has too many residents to be replaced by %s.'
+msg_err_nation_capital_too_many_residents: '&cDabartinė sostinė turi per daug gyventojų, kad ją pakeistų %s.'
 msg_deleting_nation_will_result_in_losing_residents: '&cĮspėjimas: Jūsų valstybės panaikinimas reikš, jog Jūsų miestas yra viršys gyventojų skaičiaus limitą (%d), todėl bus pašalinti %d gyventojai.'
 #Added in 0.103
 msg_command_blocked_inside_towns: '&cJūs negalite naudoti šios komandos būdami miestuose.'
 msg_command_limited: 'Jūs galite naudoti šią komandą tik savo sklypuose.'
 #Added in 0.104
 #Don't add a space to the end please
-msg_plot_perm_claimed_at: 'Claimed at:'
-#Added in 0.105
-msg_wilderness_use_x_in_all_worlds: 'Wilderness use turned %s in all worlds.'
-msg_regenerations_use_x_in_all_worlds: 'Regenerations turned %s in all worlds.'
+msg_plot_perm_claimed_at: 'Užimta:'
 #Added in 0.106
-msg_command_outsider_blocked: 'You cannot run that command because you don''t live in %s.'
+msg_command_outsider_blocked: 'Jūs negalite įvykdyti šios komandos, nes Jūs negyvenate %s.'
 #Added in 0.107
 msg_jailed_for_x_hours: ' %s valandoms.'
 msg_err_this_jail_has_no_cells: 'Šis kalėjimas neturi kamerų.'
@@ -1478,10 +1389,8 @@ msg_err_that_jail_plot_does_not_have_that_many_cells: 'Tas kalėjimo sklypas net
 msg_primary_jail_set_for_town: 'Jūsų miesto pagrindinis kalėjimas buvo nustatytas.'
 msg_x_has_been_freed_from_x: '%s buvo paleistas iš kalėjimo %s'
 msg_you_have_been_jailed: 'Jūs buvote įkalintas.'
-msg_run_to_the_wilderness_or_wait_for_a_jailbreak: 'Run to the wilderness or wait for a jailbreak.'
 msg_err_player_is_not_jailed: 'Tas žaidėjas nėra įkalintas.'
 msg_you_have_paid_bail: 'Jūs sumokėjote užstatą.'
-msg_you_have_been_freed_via_jailbreak: 'There''s been a jailbreak, you are free!'
 msg_you_have_served_your_sentence_and_are_free: 'Jūs atlikote savo laisvės atėmimo bausmę ir dabar esate laisvas.'
 msg_x_has_served_their_sentence_and_is_free: '%s atliko savo laisvės atėmimo bausmę ir dabar yra laisvas.'
 msg_you've_been_jailed_for_x_hours: 'Jūs buvote įkalintas %s valandoms.'
@@ -1490,372 +1399,271 @@ msg_err_you_cannot_remove_the_last_cell: 'Jūs negalite panaikinti paskutinės k
 msg_do_not_log_out_while_waiting_to_be_teleported: 'Neatsijunkite prieš nusiunčiant Jus į kalėjimą, tai būtų pražūtinga.'
 jail_plu: 'Kalėjimai'
 jail_sing: 'Kalėjimas'
-msg_resident_has_not_played_long_enough_to_be_jailed: '%s hasn''t played long enough to be jailed, wait another %s'
+msg_resident_has_not_played_long_enough_to_be_jailed: '%s nepakankamai ilgai žaidė, kad būtų įkalintas, palaukite dar %s'
 #Added in 0.108
-msg_town_not_peaceful: '&bTown couldn''t afford it''s peaceful state.'
-msg_town_already_peaceful: '&bTown is already peaceful.'
-msg_town_already_not_peaceful: '&bTown is already not peaceful.'
-msg_town_cant_peaceful: '&bTown couldn''t afford to become a peaceful town. You need to be able to pay %s per day.'
-msg_town_paid_for_neutral_status: '&bYour town paid %s to retain your peaceful status.'
-msg_nation_paid_for_neutral_status: '&bYour nation paid %s to retain your peaceful status.'
-your_town_has_been_invited_to_join_nation: 'Your town has been invited to join the nation: %s'
-#Added in 0.109
-msg_err_no_one_to_purge: '&bThere are no inactive members to purge.'
-msg_purging_will_remove_the_following_residents: '&bPlease confirm you want to purge the following residents: %s'
-msg_purge_complete_x_removed: '&bPurge complete, %s residents removed.'
-msg_err_days_must_be_greater_than_0: 'Days must be greater than zero.'
-msg_err_outlawed_players_no_teleport: '&4You are outlawed in the town you are currently in and cannot teleport!'
-msg_err_you_cannot_use_command_while_in_outlaw_town: '&4You cannot use that command while in a town you are outlawed in.'
+msg_town_not_peaceful: '&bMiestas neturėjo pakankamai lėšų, kad išliktų taikus.'
+msg_town_already_peaceful: '&bMiestas jau yra taikus.'
+msg_town_already_not_peaceful: '&bMiestas jau yra netaikus.'
+msg_town_cant_peaceful: '&bMiestui nepakako lėšų, kad taptų taikiu miestu. Jums reikia išgalėti susimokėti %s per dieną.'
+msg_town_paid_for_neutral_status: '&bJūsų miestas sumokėjo %s, kad išlaikytų taikią būseną.'
+msg_nation_paid_for_neutral_status: '&bJūsų valstybė sumokėjo %s, kad išlaikytų savo taikų statusą.'
+your_town_has_been_invited_to_join_nation: 'Jūsų miestas buvo pakviestas prisijungti prie valstybės: %s'
+msg_err_days_must_be_greater_than_0: 'Dienų skaičius turi būti didesnis už nulį.'
 #Added in 0.110
-msg_safe_mode: "[Error] Locked in safe mode!"
-msg_safe_mode_base: '[Error] Towny is locked in Safe Mode due to an error! '
-msg_safe_mode_player: 'Tell an admin to check the server''s console.'
-msg_safe_mode_admin: 'Check the server''s console for more information.'
-msg_err_you_can_only_claim_outposts_in_your_homeblocks_world: 'You can only claim outposts in your homeblock''s world.'
-msg_err_not_close_enough_to_your_town_nearest_plot: 'Unable to claim outpost, you are %s townblocks from your nearest claim. Max allowed distance: %s townblocks.'
-msg_err_you_have_moved_your_homeblock_too_recently_wait_x: 'You have moved your homeblock too recently! Wait another %s.'
-msg_err_you_cannot_move_your_homeblock_this_far_limit_is_x_you_are_x: 'You cannot move your homeblock by this many townblocks, limit is %s, this space is %s townblocks away.'
-msg_err_usingtowny_disabled: 'This world is exempt of all Towny interactions. Use /townyworld toggle usingtowny first.'
-#Added in 0.111
-msg_plot_group_already_exists_did_you_want_to_transfer: 'This townblock is already a part of the %s plotgroup. Are you certain you want to transfer it to the %s plotgroup.'
-msg_townblock_transferred_from_x_to_x_group: 'Townblock transferred from %s to %s plot group.'
-msg_plotgroup_deleted: 'The plotgroup %s has been deleted.'
-msg_plotgroup_empty_deleted: 'The plotgroup %s had no townblocks and has been deleted.'
+msg_safe_mode: "[Klaida] Užrakinta saugiajame režime!"
+msg_safe_mode_base: '[Klaida] Dėl klaidos Towny yra užrakintas saugiajame režime! '
+msg_safe_mode_player: 'Praneškite administratoriui, kad šis patikrintų serverio konsolę.'
+msg_safe_mode_admin: 'Patikrinkite serverio konsolę, kad sužinotumėte daugiau.'
+msg_err_you_have_moved_your_homeblock_too_recently_wait_x: 'Jūs pernelyg neseniai perkėlėte savo pagrindinį bloką! Palaukite dar %s.'
+msg_plotgroup_deleted: 'Sklypų grupė %s buvo ištrinta.'
+msg_plotgroup_empty_deleted: 'Sklypų grupė %s neturėjo miesto blokų ir buvo ištrinta.'
 plotgroup_plu: 'Sklypų grupės'
-msg_err_this_town_has_no_plot_groups: 'The specified town has no plot groups.'
-msg_err_this_plot_is_already_part_of_the_plot_group_x: 'This townblock is already part of the plot group: %s'
+msg_err_this_town_has_no_plot_groups: 'Nurodytas miestas neturi sklypų grupių.'
 map_hover_plot_group: 'Sklypų grupė: '
 map_hover_plot_group_size: ' Dydis: '
-map_hover_plots: '%s plots'
+map_hover_plots: '%s sklypai'
 #Added in 0.112
 msg_checking_for_updates: 'Ieškoma atnaujinimų...'
 msg_no_new_updates: 'Atnaujinimų nerasta.'
 msg_new_update_available: '&bPasiekiama nauja versija: %s | Dabartinė versija: %s'
-msg_download_here: 'Download it here: %s'
-msg_click_to_download: '&bClick here to download it.'
-msg_latest_version: '&2Towny version: &a%s &2| Latest version: &a%s'
-msg_up_to_date: '&aYou are up to date.'
+msg_download_here: 'Atsisiųskite tai iš čia: %s'
+msg_click_to_download: '&bSpustelėkite norėdami tai atsisiųsti.'
+msg_latest_version: '&2Towny versija: &a%s &2| Naujausia versija: &a%s'
+msg_up_to_date: '&aJūs turite naujausią versiją.'
 msg_click_purchase: 'Spustelėkite, kad nusipirktumėte'
-msg_you_must_join_this_town_to_claim_this_plot: 'You must join this town: %s, in order to claim this plot. Would you like to join the town and continue claiming?'
+msg_you_must_join_this_town_to_claim_this_plot: 'Jūs turite prisijungti prie miesto %s, kad galėtumėte užimti šį sklypą. Ar norėtumėte prisijungti prie miesto ir tęsti užėmimą?'
 #Added in 0.113
 status_trustedlist: 'Patikimas'
-msg_click_to_edit: '&6Click to edit.'
-permission_gui_header: 'Towny Permission GUI'
-msg_last_edited: '&7&oLast changed at %s by %s.'
-msg_trusted_added: '&bAdded %s as trusted in this %s.' #Last %s is either town or townblock
-msg_already_trusted: '&b%s is already trusted in this %s.'
-msg_trusted_added_2: '&b%s has trusted you in a %s: %s.' #Last %s is the town name or worldcoord.
-msg_not_trusted: '&b%s is not trusted in this %s.'
-msg_trusted_removed: '&bRemoved %s as trusted in this %s.'
-msg_trusted_removed_2: '&b%s has removed you as trusted in a %s: %s.'
-msg_overrides_removed: '&bRemoved permission overrides for %s.'
-msg_overrides_added: '&bAdded default permission overrides for %s.'
-msg_no_overrides_set: '&b%s does not have any overrides set for this %s.'
-msg_overrides_already_set: '&b%s already has overrides set for this %s.'
-msg_cache_block_err: '&cYou are not allowed to %s here.'
-msg_err_plot_belongs_to_group: '&cPlot belongs to a group, use %s.'
+msg_click_to_edit: '&6Spustelėkite norėdami redaguoti.'
+permission_gui_header: 'Towny leidimų GUI'
+msg_already_trusted: '&b%s jau yra patikimas žmogus šiame %s.'
+msg_cache_block_err: '&cJums neleidžiama čia %s.'
+msg_err_plot_belongs_to_group: '&cSklypas priklauso grupei, naudokite %s.'
 plotgroup_sing: 'Sklypų grupė'
-msg_err_ally_limit_reached: 'Your nation has reached the ally limit, unable to accept.'
+msg_err_ally_limit_reached: 'Jūsų valstybė pasiekė sąjungininkų ribą, negalite priimti.'
 #Added in 0.114
-msg_err_group_not_found: 'Group %s not found.'
-msg_err_expected_command_format: 'Incorrect syntax, expected: %s'
-msg_err_group_already_has_node: 'The group %s already has the node %s.'
-msg_err_group_doesnt_have_node: 'The group %s does not have the node %s.'
-msg_successfully_added_node_to_group: 'Successfully added %s to %s.'
-msg_successfully_removed_node_from_group: 'Successfully removed %s from %s.'
-msg_err_there_is_already_a_town_or_nationrank_called_x: 'There is already a %s named %s.'
-msg_err_there_is_no_town_or_nationrank_called_x: 'There is no %s named %s.'
-msg_successfully_add_rank_to_the_town_or_nation_rank: 'Successfully added %s to the %s.'
-msg_successfully_removed_rank_from_the_town_or_nation_rank: 'Successfully removed %s from the %s.'
-msg_err_group_has_no_nodes: 'The group %s has no permission nodes assigned.'
-msg_title_group_permissions: '%s Permissions'
-help_ta_perms_listgroups: 'List groups.'
-help_ta_perms_group: 'Show permission nodes in group'
-help_ta_perms_groupaddpermnode: 'Add a node to a group.'
-help_ta_perms_groupremovepermnode: 'Remove a node from a group.'
-help_ta_perms_townrankadd: 'Adds a townrank to the townyperms file.'
-help_ta_perms_townrankremove: 'Removes a townrank from the townyperms file.'
-help_ta_perms_nationrankadd: 'Adds a nationrank to the townyperms file.'
-help_ta_perms_nationrankremove: 'Removes a nationrank from the townyperms file.'
-msg_err_that_resident_doesnt_belong_to_that_nation: 'That resident doesn''t belong to that nation.'
+msg_err_group_not_found: 'Grupė %s nerasta.'
+msg_err_expected_command_format: 'Klaidinga sintaksė, tikėtasi: %s'
+msg_err_group_already_has_node: 'Grupė %s jau turi mazgą %s.'
+msg_err_group_doesnt_have_node: 'Grupė %s neturi mazgo %s.'
+msg_err_group_has_no_nodes: 'Grupė %s neturi priskirtų leidimų mazgų.'
+msg_title_group_permissions: '%s leidimai'
+help_ta_perms_listgroups: 'Išvardyti grupes.'
+help_ta_perms_group: 'Rodyti leidimų mazgus grupėje'
+help_ta_perms_groupaddpermnode: 'Pridėti mazgą į grupę.'
+help_ta_perms_groupremovepermnode: 'Pašalinti mazgą iš grupės.'
+help_ta_perms_townrankadd: 'Prideda miesto rangą į townyperms failą.'
+help_ta_perms_townrankremove: 'Pašalina miesto rangą iš townyperms failo.'
+help_ta_perms_nationrankadd: 'Prideda valstybinį rangą į townyperms failą.'
+help_ta_perms_nationrankremove: 'Pašalina valstybinį rangą iš townyperms failo.'
+msg_err_that_resident_doesnt_belong_to_that_nation: 'Tas gyventojas nepriklauso tai valstybei.'
 #Added in 0.115
-msg_comptype_founded: 'Founded Date'
-msg_err_must_be_greater_than_or_equal_to: 'Amount must be greater than or equal to %s'
-err_invalid_yaml: 'Loading error: Failed to load file %s (does it pass a yaml parser?).'
+msg_comptype_founded: 'Įkūrimo data'
+msg_err_must_be_greater_than_or_equal_to: 'Kiekis turi būti didesnis arba lygus %s'
+err_invalid_yaml: 'Krovimo klaida: Nepavyko užkrauti failo %s (ar jis praeina yaml analizatorių?).'
 #Added in 0.116
-msg_town_map_color_changed: '&bThe town map color was changed to %s.'
-#Added in 0.117
-msg_err_this_townblock_doesnt_match_the_groups_type: 'This townblock cannot be added to the group because it is not of type: %s'
+msg_town_map_color_changed: '&bMiesto spalva žemėlapyje pakeista į %s.'
 #Added in 0.118
-status_title_nopvp: '&a(No PVP)'
-#Added in 0.119
-msg_err_resident_cannot_be_jailed_because_they_are_outlawed_there: 'You cannot jail your resident because they are in a location where they are outlawed.'
-msg_err_resident_cannot_be_jailed_because_they_are_enemied_there: 'You cannot jail your resident because they are in a location where they are considered an enemy.'
+status_title_nopvp: '&a(Be PVP)'
 #Added in 0.120
-msg_resident_prompt: 'Enter the name of the player in chat, or q to exit. This will automatically time out in 30 seconds.'
-msg_prompt_cancel: 'Prompt cancelled or timed out.'
-#Added in 0.121
-status_title_primary_colour: '&6' #Used to colour the majority of the title bar.
-status_title_secondary_colour: '&e' #Used to colour the words in the title bar.
-status_format_list_1: '&2' #First colour applied to status screen lists, ex: on /res, the friend list's Friends section.
-status_format_list_2: '&a' #Second colour applied to status screen lists, ex: on /res, the friend list's [1] section.
-status_format_list_3: '&f' #Third colour applied to status screen lists, ex: on /res, the friend list's list of friends' names section.
-status_format_key_value_key: '&2' #Colour applied to a status screen element which is just a line of text, or the key in a key/value element.
-status_format_key_value_value: '&a' #Colour applied to the value in a status screen element which has two parts, ex: Registered: SomeDate. (SomeDate is the value.)
-status_format_bracket_element: '&b' #Colour applied to a status element within a bracket, ex: [Bonus: #].
-status_format_hover_key: '&a' #Colour applied to a status screen element which is a hover-able key, ex: [Rank List]
-status_format_hover_bracket_colour: '&7' #Colour applied to the brackets of a hover-able status screen element.
-status_format_key_important: '&c' #Colour applied to an important status screen value, ex: (BANKRUPT), Ruined town reclaim lines, taxes/upkeep costs.
-status_splitter: ' &7| ' #Used in status screens where a splitter is used between values.
-status_home_element: ' &7[Home: %s]'
-status_about: "Apie:"
+msg_resident_prompt: 'Įveskite žaidėjo vardą pokalbyje arba "q", kad išeitumėte. Šiam veiksmui atlikti skirtas laikas automatiškai baigsis po 30 sekundžių.'
+msg_prompt_cancel: 'Raginimas atšauktas arba jam skirtas laikas baigėsi.'
+status_home_element: ' &7[Namai: %s]'
+status_about: "Aprašymas:"
 status_registered: 'Registruotas:'
 status_lastonline: 'Paskutinį kartą prisijungė:'
 status_fractions: '%s/%s'
 status_rank_list: 'Rangų sąrašas'
-status_hover_click_for_more: 'Click for more information.'
-status_jailed: 'Jailed:'
+status_hover_click_for_more: 'Spustelėkite norėdami sužinoti daugiau.'
+status_jailed: 'Įkalintas:'
 status_bad_yes: '&cTAIP'
 status_good_no: '&aNE'
 status_resident_tax_title: '%s mokestis'
-help_menu_command: '<blue>'
-help_menu_subcommand: '<aqua>'
-help_menu_explanation: '<gray>'
-help_menu_requirement: '<red>'
-#Added in 0.122
-msg_warn_the_following_towns_will_be_removed_from_the_merged_nation: 'Because they will not be close enough to your nation capital, the following towns will be removed if the merge is completed: %s.'
 #Added in 0.123
-msg_err_invalid_townyworld: "'%s' is not a valid towny world."
-msg_err_enter_world_name_first: 'Please enter the name of the world first.'
-msg_wilderness_use_set_to: '&bWilderness use has been set to %s in %s.'
+msg_err_invalid_townyworld: "'%s' nėra tinkamas towny pasaulis."
+msg_err_enter_world_name_first: 'Prašome pirma įvesti pasaulio pavadinimą.'
 #Added in 0.124
-msg_err_invalid_response: 'Invalid response! Enter q to exit or back to go back to the previous question.'
-msg_setup_full_guide_link: '&bFor a link to the full install guide, click here.'
-msg_setup_wildernessuse: 'Would you like to enable wilderness use? This will allow players to break/build in the wilderness.'
-msg_setup_revertunclaim: 'Would you like to use revert on unclaim? This will make townblocks slowly regenerate when they are unclaimed.'
-msg_setup_town_block_ratio: 'What would you like to set your town block ratio at? The default is 8 townblocks per resident. Higher amounts will allow towns to claim more for each resident they have. Setting this to 0 will make it use values from the town_levels.'
-msg_setup_town_cost: 'How much should the cost to create a new town be? The default is 250.'
-msg_setup_nation_cost: 'How much should the cost to create a new nation be? The default is 1000.'
-msg_setup_townblock_cost: 'How much should it cost to claim a townblock? The default is 25. A townblock is the same size as a chunk (default settings)'
-msg_setup_success: 'Successfully changed config values to your new values.'
+msg_err_invalid_response: 'Netinkamas atsakymas! Rašykite "q", kad išeitumėte, arba "back", kad grįžtumėte prie ankstesnio klausimo.'
+msg_setup_full_guide_link: '&bSpustelėkite čia nuorodai į visiško įdiegimo gidą.'
+msg_setup_town_cost: 'Kiek turėtų kainuoti įkurti miestą? Numatytoji kaina yra 250.'
+msg_setup_nation_cost: 'Kiek turėtų kainuoti įkurti valstybę? Numatytoji kaina yra 1000.'
+msg_setup_townblock_cost: 'Kiek turėtų kainuoti užimti miesto bloką? Numatytoji kaina yra 25. Miesto blokas yra tokio pat dydžio kaip chunk''as (numatytieji nustatymai)'
+msg_setup_success: 'Sėkmingai pakeistos konfigūracijas vertės į Jūsų naująsias vertes.'
 #Added in 0.125
 #Player has recently died and respawned and is invulnerable.
-msg_err_player_cannot_be_harmed: '%s spawned recently and cannot be harmed.'
+msg_err_player_cannot_be_harmed: '%s neseniai atsirado ir negali būti sužeistas.'
 #Player was invulnerable after respawning and has lost their invulnerability.
-msg_you_have_lost_your_respawn_protection: 'You have lost your respawn protection.'
+msg_you_have_lost_your_respawn_protection: 'Jūs praradote savo prisikėlimo apsaugą.'
 #Message shown to a player when they are denied the ability to pick up items because they are under respawn protection.
-msg_err_cannot_pickup_respawn_protection: 'You cannot pick up items while under respawn protection.'
+msg_err_cannot_pickup_respawn_protection: 'Jūs negalite pakelti daiktų, kol turite prisikėlimo apsaugą.'
 #Added in 0.126
 #Used in the nation screen:
 status_capital: 'Sostinė:'
 #Used in the resident screen's town hover, to denote when a player joined a town.
-status_joined_town: 'Joined town:'
+status_joined_town: 'Prisijungė prie miesto:'
 #Used in the town screen's nation hover, to denote when a town joined a nation.
-status_joined_nation: 'Joined nation:'
+status_joined_nation: 'Prisijungė prie valstybės:'
 #Shown in status screen elements where a value is not known.
-status_unknown: 'unknown'
-#Feedback given for the /ta set nationzoneoverride [townname] [size] command.
-msg_nationzone_override_set_to: '%s has had their nationzone override set to %s.'
-#Feedback given for the /ta set nationzoneoverride [townname] 0 command.
-msg_nationzone_override_removed: '%s has had their nationzone override removed.'
-#Added in 0.127
-#Used in status screen:
-status_nation_zone_size: 'Nation Zone Size:'
+status_unknown: 'nežinoma'
 #Shown when a player adds people to their friends list.
-msg_res_friend_added_to_list: 'Added %s to your friend list.'
+msg_res_friend_added_to_list: '%s pridėtas į Jūsų draugų sąrašą.'
 #Shown when a player removes people from their friends list.
-msg_res_friend_removed_from_list: 'Removed %s from your friend list.'
+msg_res_friend_removed_from_list: '%s pašalintas iš Jūsų draugų sąrašo.'
 #Generic resident freed from jail message.
-msg_resident_unjailed: '%s has been unjailed.'
+msg_resident_unjailed: '%s buvo paleistas iš kalėjimo.'
 #Shown when an admin uses /ta toggle devmode.
-msg_admin_toggle_devmode: 'Dev Mode: %s'
+msg_admin_toggle_devmode: 'Kūrėjo režimas: %s'
 #Shown when an admin uses /ta toggle debug.
 msg_admin_toggle_debugmode: 'Derinimo režimas: %s'
 #Shown when an admin uses /ta toggle townwithdraw
-msg_admin_toggle_townwithdraw: 'Town Withdrawls: %s'
+msg_admin_toggle_townwithdraw: 'Išėmimai iš miestų banko: %s'
 #Shown when an admin uses /ta toggle nationwithdraw
-msg_admin_toggle_nationwithdraw: 'Nation Withdrawls: %s'
+msg_admin_toggle_nationwithdraw: 'Išėmimai iš valstybių banko: %s'
 #Shown when claiming a town block for the town.
-msg_process_town_claim: 'Processing Town Claim...'
+msg_process_town_claim: 'Apdorojamas miesto bloko užėmimas...'
 #Shown when unclaiming a town block for the town.
-msg_process_town_unclaim: 'Processing Town Unclaim...'
+msg_process_town_unclaim: 'Apdorojamas miesto bloko atsisakymas...'
 #Shown when there is nothing to unclaim.
-msg_err_nothing_to_unclaim: 'Nothing to unclaim!'
+msg_err_nothing_to_unclaim: 'Nėra ko atsisakyti!'
 #Given as feedback when /ta checkperm is used.
-msg_perm_true: 'Permission True.'
+msg_perm_true: 'Leidimas suteiktas.'
 #Given as feedback when /ta checkperm is used.
-msg_err_perm_false: 'Permission False.'
+msg_err_perm_false: 'Leidimas nesuteiktas.'
 #Shown at the bottom of the /towny map
 #First variable is townname or None, 2nd variable is plot owner's name or None.
-status_towny_map_town_line: '&2Town: &a%s &7| &2Owner: &a%s'
+status_towny_map_town_line: '&2Miestas: &a%s &7| &2Savininkas: &a%s'
 #Shown on /towny version
-msg_towny_version: '&2Towny Version: &a%s'
+msg_towny_version: '&2Towny versija: &a%s'
 #Shown to admins and ops when a player has been blocked from logging into the server.
-msg_admin_blocked_login: '&2A player using the IP address &c%s &2tried to log in using an account name %s which could damage your server''s economy, but was prevented by Towny. Consider banning this IP address!'
+msg_admin_blocked_login: '&2Žaidėjas, naudojantis IP adresą &c%s, &2bandė prisijungti naudodamas paskyrą pavadinimu %s, kuri galėjo pakenkti serverio ekonomikai, bet Towny ją užkardė. Apsvarstykite, ar nereikėtų uždrausti šio IP adreso!'
 #Shown during resident purge
-msg_scanning_for_old_residents: 'Scanning for old residents...'
+msg_scanning_for_old_residents: 'Ieškoma senų gyventojų...'
 #Shown during resident purge
-msg_deleting_resident: 'Deleting resident: %s.'
-#Shown during resident purge
-msg_purge_complete: 'Resident purge complete: %s deleted.'
+msg_deleting_resident: 'Ištrinamas gyventojas: %s.'
 #Message to the Town, shown when a town is given bonus blocks.
-msg_you_have_been_given_bonus_blocks: 'You have been given %s bonus townblocks.'
+msg_you_have_been_given_bonus_blocks: 'Jums buvo suteikta %s papildomų miesto blokų.'
 #Message shown when a town cannot purchase any more bonus blocks.
-msg_err_you_cannot_purchase_any_more_bonus_blocks: 'Your town cannot purchase any more bonus blocks. Maximum amount reached.'
+msg_err_you_cannot_purchase_any_more_bonus_blocks: 'Jūsų miestas negali įsigyti daugiau papildomų blokų. Pasiektas maksimalus skaičius.'
 #Added in 0.128
 #Message shown to a capital city which is being denied the ability to toggle peaceful on.
 msg_err_capital_cannot_be_peaceful: 'Sostinės negali pakeisti taikumo būsenos.'
-#Message shown as feedback for /t toggle nationzone command.
-msg_changed_nationzone: 'Nation Zone surrounding town is now %s'
-#Error message shown when a town tries to toggle their nationzone which doesn't exist.
-msg_err_your_town_has_no_nationzone_to_toggle: 'Your town has no NationZone to toggle!'
 #Added in 0.129
 #Shown in /towny prices, describing what controls nation upkeep.
-towny_prices_nation_upkeep_based_on: '&7Nation upkeep is based on &athe %s'
+towny_prices_nation_upkeep_based_on: '&7Valstybės išlaikymo išlaidos priklauso nuo &a%s'
 #Shown in /towny prices, describing what controls nation upkeep when it is per town.
 towny_prices_upkeep_num_towns: 'miestų skaičius.'
-#Shown in /towny prices, describing that controls nation upkeep when it is per resident.
-towny_prices_upkeep_nation_level: 'nation level (num residents.)'
 #Added in 0.130
 #Jail causes
 msg_jailed_mayor: 'Įkalintas mero.'
 #Jail causes
-msg_jailed_outlaw: 'Killed as an outlaw.'
+msg_jailed_outlaw: 'Nužudytas kaip nepageidaujamas asmuo.'
 #Jail causes
 msg_jailed_war: 'Karo belaisvis.'
 #Jail handbook messages
-msg_jailed_handbook_1: 'Looks like you''ve been jailed, for the reason %s'
+msg_jailed_handbook_1: 'Panašu, kad buvote įkalintas dėl %s'
 #Jail handbook messages
-msg_jailed_handbook_2: 'That''s too bad huh. Well what can you do about it? Here''s some helpful tips for you while you serve your sentence.'
+msg_jailed_handbook_2: 'Visai nepasisekė, a. Ir ką gi dabar galėtumėte dėl to padaryti? Štai keletas naudingų patarimų Jums, kol atliekate savo bausmę.'
 #Jail handbook messages
-msg_jailed_handbook_3: 'You have been jailed for %s hours. By serving your sentence you will become free.'
+msg_jailed_handbook_3: 'Jūs buvote įkalintas %s valandoms. Atlikęs savo bausmę vėl būsite laisvas.'
 #Jail handbook messages
-msg_jailed_handbook_4_can: 'You can escape from jail by leaving your town using ''/town leave''.'
+msg_jailed_handbook_4_can: 'Jūa galite pabėgti iš kalėjimo palikdami miestą, panaudoję "/town leave".'
 #Jail handbook messages
-msg_jailed_handbook_4_cant: 'While you''re jailed you won''t be able to leave your town to escape jail.'
+msg_jailed_handbook_bail_1: 'Jūs galite išsilaisvinti iš kalėjomo sumokėdami užstatą, naudodami "/res jail paybail".'
 #Jail handbook messages
-msg_jailed_handbook_bail_1: 'You can be freed from jail by paying your bail using ''/res jail paybail''.'
+msg_jailed_handbook_bail_2: 'Užstatas kainuos %s.'
 #Jail handbook messages
-msg_jailed_handbook_bail_2: 'Bail will cost %s.'
-#Jail handbook messages
-msg_jailed_handbook_5: 'If you must persist and make efforts to escape, if you make it to the wilderness you will also earn your freedom.'
-#Jail handbook messages
-msg_jailed_handbook_6: 'But don''t die before you reach the wilderness or you''ll end up right back in jail.'
-#Jail handbook messages
-msg_jailed_teleport: 'Luckily, enderpearls and chorus fruit are allowed to be used to help you escape, now you''ve just got to get a hold of some.'
-#Jail handbook messages
-msg_jailed_war_prisoner: 'As a prisoner of war you will be freed if your countrymen can reduce the jail plot''s HP to 0, or if the town you are jailed in is removed from the war.'
+msg_jailed_handbook_6: 'Bet nežūkite prieš pasiekdamas tyrlaukius, kitaip grįšite tiesiai atgal į kalėjimą.'
 #Jail handbook title
 msg_jailed_title: 'Taigi Jūs buvote įkalintas :('
 #Jail handbook author
-msg_jailed_author: 'Towny Jailco.'
+msg_jailed_author: 'Towny kalėjimo korporacija.'
 #Added in 0.130
 #Message shown when there are no allies to list in /town allylist.
-msg_error_town_has_no_allies: 'Town has no allies to list.'
+msg_error_town_has_no_allies: 'Miestas neturi sąjungininkų.'
 #Message shown when there are no enemies to list in /town enemylist.
-msg_error_town_has_no_enemies: 'Town has no enemies to list.'
+msg_error_town_has_no_enemies: 'Miestas neturi priešų.'
 #Added in 0.132
 #Message shown in the lines of the baltop books
 msg_baltop_book_format: '%s. %s | %s'
 #Added in 0.133
 #Message shown when a confirmation times out.
-msg_confirmation_timed_out: 'Confirmation Timed Out.'
+msg_confirmation_timed_out: 'Patvirtinimo laikas baigėsi.'
 #Added in 0.134
-tc_player_channel_sound_muted: 'The channel sound has been muted'
-tc_player_channel_sound_unmuted: 'The channel sound has been unmuted'
+tc_player_channel_sound_muted: 'Kanalo garsas buvo užtildytas'
+tc_player_channel_sound_unmuted: 'Kanalo garsas buvo įjungtas'
 #Added in 0.135
 msg_cant_toggle_pvp_outsider_in_plot: 'Jūsų sklype yra pašalietis, todėl Jūs negalite pakeisti PVP būsenos!'
 #Added in 0.136
-msg_view_on_web: '&7Click to view on the web.'
+msg_view_on_web: '&7Spustelėkite, kad peržiūrėtumėte žiniatinklyje.'
 #Added in 0.137
 #Shown globally when a town merges with another town.
-town1_has_merged_with_town2: '&6The town %s has agreed to merge together with the prevailing town of %s.'
+town1_has_merged_with_town2: '&6Miestas %s sutiko susijungti su dominuojančiuoju miestu %s.'
 #Shown in the town and nation status screens to inform about neutrality costs.
-status_neutrality_cost: 'Neutrality Cost:'
+status_neutrality_cost: 'Neutralumo kaina:'
 #Added in 0.138
 #Line 1 of the givebonus warning.
-msg_ptw_warning_1: 'If you have paid any real-life money for these townblocks please understand: the server you play on is in violation of the Minecraft EULA and the Towny license.'
+msg_ptw_warning_1: 'Jeigu Jūs už šiuos miesto blokus susimokėjote tikrais pinigais, prašome suprasti: serveris, kuriame žaidžiate, pažeidžia Minecraft EULA ir Towny licensiją.'
 #Line 2 of the givebonus warning.
-msg_ptw_warning_2: 'The Towny team never intended for townblocks to be purchaseable with real money.'
+msg_ptw_warning_2: 'Towny komanda niekada nenumatė, jog miesto blokai būtų įsigyjami už tikrus pinigus.'
 #Line 3 of the givebonus warning.
-msg_ptw_warning_3: 'If you did pay real money you should consider playing on a Towny server that respects the wishes of the Towny Team.'
+msg_ptw_warning_3: 'Jeigu Jūs vis dėlto sumokėjote pinigų, turėtumėte svarstyti žaisti kitame Towny serveryje, kuris paiso Towny komandos norų.'
 #Message shown when a town invites a player to join, and that town has a nation.
-you_have_been_invited_to_join3: 'You have been invited to join %s&9 (Nation: %s&9)'
+you_have_been_invited_to_join3: 'Jūs buvote pakviestas prisijungti prie %s&9 (Valstybė: %s&9)'
 #Added in 0.139
 #Message shown when a town cannot afford to unclaim their land because the refund price is negative and charges them money.
-msg_err_your_town_cannot_afford_unclaim: 'Your town cannot afford the money to unclaim this land. %s required.'
+msg_err_your_town_cannot_afford_unclaim: 'Jūsų miestui nepakanka lėšų atsisakyti šių žemių. Reikia %s.'
 #Message shown when a town pays to unclaim their land because the refund is a negative amount.
-msg_your_town_paid_x_to_unclaim: 'Your town paid %s to unclaim the land.'
+msg_your_town_paid_x_to_unclaim: 'Jūsų miestas sumokėjo %s, kad atsisakytų šių žemių.'
 #Confirmation message shown when a player will unclaim land that costs money.
-confirmation_unclaiming_costs: 'Unclaiming this land will cost %s, do you want to continue?'
+confirmation_unclaiming_costs: 'Šių žemių atsisakymas kainuos %s, ar norite tęsti?'
 #Added in 0.140
 #Message shown when a player tries to rename their town too quickly.
-msg_you_must_wait_x_seconds_before_renaming_your_town: 'You must wait %s seconds before you can rename your town again.'
+msg_you_must_wait_x_seconds_before_renaming_your_town: 'Jūs turite palaukti %s sekundes, kad galėtumėte vėl pervadinti savo miestą.'
 #Added in 1.141
-msg_newday_already_scheduled_soon: 'A new day task is already scheduled to happen soon.'
+msg_newday_already_running: 'Naujos dienos užduotis jau vykdoma.'
 #Added in 0.142
 #Message shown when a player is toggling neutrality too fast.
-msg_err_cannot_toggle_neutral_x_seconds_remaining: 'You cannot toggle neutrality, %s seconds remaining.'
+msg_err_cannot_toggle_neutral_x_seconds_remaining: 'Jūs negalite pakeisti neutralumo statuso, dar liko %s sekundės.'
 #Added in 0.143
 #Message shown when a console sender uses a command meant for in game.
-msg_err_command_not_for_console_use: 'This command cannot be used from the console.'
-#Added in 0.144
-#Message shown when an admin uses /ta town NAME toggle unlimitedclaims.
-msg_town_unlimitedclaims_setting_set_to: 'The town %s has had their unlimitedclaims setting set to %s'
+msg_err_command_not_for_console_use: 'Ši komanda negali būti naudojama iš konsolės.'
 #Message shown when an admin uses up their claims and is asked if they want to turn on unlimited claiming.
-did_you_want_to_toggle_unlimited_claims: 'You do not have enough townblocks to claim, did you want to turn on unlimited claiming for the town of %s'
+did_you_want_to_toggle_unlimited_claims: 'Jūs neturi pakankamai miesto blokų, kad galėtumėte užimti, ar norite miestui %s įjungti neribotus užėmimus'
 #Added in 0.145
 #Message shown when a conquered town tries to leave their nation.
-msg_err_your_conquered_town_cannot_leave_the_nation_yet: 'You cannot leave your nation, your town is conquered.'
-msg_err_console_only: 'This command can only be used by console.'
-msg_err_player_only: 'This command can only be used by a player.'
+msg_err_your_conquered_town_cannot_leave_the_nation_yet: 'Jūs negalite palikti savo valstybės, Jūsų miestas yra užkariautas.'
+msg_err_console_only: 'Ši komanda gali būti naudojama tik konsolėje.'
+msg_err_player_only: 'Tik žaidėjai gali naudoti šią komandą.'
 #Added in 0.146
 #Message shown when a resident toggles bordertitles with /res toggle bordertitles
-msg_border_titles_toggled: 'Title messages shown when crossing borders is %s.'
+msg_border_titles_toggled: 'Rodomos antraštinės žinutės, kai yra kertamos sienos, yra %s.'
 #Added in 0.147
 #Message shown confirming that an admin wants to reset their Towny config
-this_will_reset_your_config: 'Running this command resets your config.yml to the default file. Do you want to continue?'
-#Message shown when an admin is setting a new king or capital and would override the config by doing so
-msg_warn_overriding_server_config: 'By doing this you are overriding the resident limits set in the server configuration. Do you want to continue anyway?'
-#Added in 0.148
-#Message shown when invalid outpost spawns are removed using the /ta commands.
-msg_removed_x_invalid_outpost_spawns: 'Removed %d invalid outpost spawns.'
+this_will_reset_your_config: 'Įvykdžius šią komandą config.yml failas bus atstatytas. Ar norite tęsti?'
 #Added in 0.149
 #Message shown when a player logs in and their town is bankrupt.
-msg_your_town_is_bankrupt: 'Your town is bankrupt, add money to your bank using /town deposit {amount}.'
+msg_your_town_is_bankrupt: 'Jūsų miestas bankrutavo, įneškite pinigų į savo banką naudodami /town deposit {amount}.'
 #Added in 0.150
 #Message shown when a player cannot do something because they have a town.
-msg_err_you_cannot_use_this_command_because_you_are_already_a_member_of_a_town: 'You are unable to use this command, because you are already a member of a town. If you want to continue you will have to use ''/t leave''.'
-#Message shown when a player tries to spawn while in an town they are outlawed in, when outlaw TPing is a disallowed zone.
-msg_a_town_you_are_outlawed_in: 'a town you are an outlaw in.'
-#Message shown when TownyRTP could not find any towns to teleport to.
-msg_err_could_not_find_any_towns_to_rtp: 'Could not find any open, public towns with plots for sale (which you can afford,) to rtp to.'
-#Message showing payment for RTP.
-msg_cost_spawn_rtp: '&bYou were charged %s to teleport to a random town plot that is for sale.'
-#Message shown to a player when they use the town rtp command.
-msg_you_are_about_to_be_teleported_to_a_plot: 'You are about to be teleported to a plot which is forsale in %s which will let you join. Use ''/plot claim'' to claim your plot when you arrive.'
-#Shown in TownyRTP when a player joins a town and is prompted to be TPd to some land to buy.
-townyrtp.the_town_has_plots_to_buy_would_you_like_to_tp: "The town of %s has plots which you can purchase, did you want to be teleported to a plot you can purchase right now?"
-#Shown when you arrive at your destination after opting in to be teleported to a plot to buy.
-townyrtp.you_have_arrived: "You have been teleported to a plot you can purchase. Use '/plot claim' if you would like to claim the plot."
+msg_err_you_cannot_use_this_command_because_you_are_already_a_member_of_a_town: 'Jūs negalite naudoti šios komandos, nes jau esate miesto narys. Norėdami tęsti turite panaudoti ''/t leave''.'
 #Used in the town's status screen to display plots
 status_plot_string: 'Sklypai'
 #Displays a plot type and the amount of townblocks of that type in the town
 status_plot_hover: '%s:'
 #Usage:
-msg_usage: 'Usage: %s'
+msg_usage: 'Naudojimas: %s'
 #Shown in teh bank history books when there are no pages to display
-msg_err_no_pages_to_display: 'No pages to display!'
+msg_err_no_pages_to_display: 'Nėra rodytinų puslapių!'
 #Added in 0.151
 #Message shown to players trying to spawn to a non-allied/non-member nation when public spawning is not allowed at all.
-msg_err_nation_unaffiliated: 'That nation is not affiliated with you.'
+msg_err_nation_unaffiliated: 'Tas miestas nėra su Jumis susijęs.'
 #Message shown to players trying to spawn to a non-nation/non-member town when public spawning is not allowed at all.
-msg_err_town_unaffiliated: 'That town is not affiliated with you.'
+msg_err_town_unaffiliated: 'Tas miestas nesusijęs su Jumis.'
 #Added in 0.152
 #Message shown when a player tries to add a jail cell location where one already exists.
-msg_err_this_location_already_has_a_jailcell: 'This location already has a jail cell.'
+msg_err_this_location_already_has_a_jailcell: 'Ši vieta jau turi kalėjimo kamerą.'
 #Title line of the /plot perm hud.
-msg_perm_hud_title: 'Plot Perms'
+msg_perm_hud_title: 'Sklypo leidimai'
 #Seen in /plot perm hud:
 msg_perm_hud_build: 'Statyti: '
 #Seen in /plot perm hud:
@@ -1875,7 +1683,7 @@ msg_perm_hud_firespread: 'Ugnies sklidimas: '
 #Seen in /plot perm hud:
 msg_perm_hud_mobspawns: 'Monstrų atsiradimas: '
 #Seen in /plot perm hud:
-msg_perm_hud_key: 'Key'
+msg_perm_hud_key: 'Raktas'
 #Seen in /plot perm hud:
 msg_perm_hud_friend: 'draugas'
 #Seen in /plot perm hud:
@@ -1888,260 +1696,130 @@ msg_perm_hud_resident: 'gyventojas'
 msg_perm_hud_nation: 'valstybė'
 #Seen in /plot perm hud:
 msg_perm_hud_outsider: 'pašalietis'
-#Seen in /plot perm hud:
+#Seen in /towny map hud:
 msg_perm_hud_plot_name: 'Sklypas: '
+#Seen in /towny map hud:
+msg_perm_hud_plotgroup_name: 'Sklypų grupė: '
+#Seen in /towny map hud:
+msg_map_hud_district: 'Rajonas: '
 #Seen in /plot perm hud:
-msg_perm_hud_plotgroup_name: 'Plot Group: '
+msg_perm_hud_plot_for_sale: 'Parduodama: '
 #Seen in /plot perm hud:
-msg_perm_hud_plot_for_sale: 'For Sale: '
+msg_perm_hud_no: 'Ne'
 #Seen in /plot perm hud:
-msg_perm_hud_no: 'No'
-#Seen in /plot perm hud:
-msg_perm_hud_yes: 'Yes'
-#Added in 0.153
-#Message shown confirming /ta town NAME settownlevel # command.
-msg_town_level_overridden_with: 'The town %s has had their townlevel set to %s.'
-#Message shown when unsetting a manual town level.
-msg_town_level_unset: 'The town %s has had their manually-set townlevel unset. Current townlevel is %s.'
-#Message show when a town is unable to have purchased townblocks, when /ta town NAME giveboughtblocks is used.
-msg_err_town_not_allowed_purchased_blocks: 'The town %s is unable to purchase townblocks based on the config rules.'
-#Message shown when unsetting all purchased townblocks from a town.
-msg_purchased_blocks_unset: 'The town %s has had their purchased townblocks removed.'
-#Message shown when /ta town name giveboughtblocks # is used.
-msg_purchased_blocks_changed: 'The town %s has been given %s bought townblocks, they currently have %s bought townblocks.'
+msg_perm_hud_yes: 'Taip'
 #Added in 0.154
 msg_comptype_upkeep: 'Išlaikymas'
-#Added in 0.155
-#Message shown when toggling town upkeep admin setting
-msg_town_upkeep_setting_set_to: 'The town %s has had their upkeep setting set to %s.'
-#Shown when a player tries to set a plot type but their town has reached the limit, first number is the limit and the string is the type name.
-msg_town_plot_type_limit_reached: 'Your town has reached the limit of %d %s plots.'
 #Added in 0.156
 msg_spawn_cost_free: 'Nemokama'
-#Message shown when someone tries to set a plot's type to one already set.
-msg_plot_already_of_type: 'This plot is already a %s type.'
-msg_town_board_reset: '&bTown board reset.'
-msg_town_has_no_jailslots: 'The town jail is full.'
-msg_player_has_been_sent_to_jail_into_cell_number_x_for_x_hours_by_x_for_x_bail: '%s has been sent to %s into cell number %s for %s hours with a bail of %s by %s.'
-msg_player_has_been_sent_to_jail_into_cell_number_x_for_x_hours_by_x: '%s has been sent to %s into cell number %s for %s hours by %s.'
-msg_you_have_been_jailed_your_bail_is_x: 'You have been jailed, your bail is %s.'
-msg_err_higher_than_max_allowed_bail_x: 'Your set bail was higher then the maximum which is %s.'
-msg_err_higher_than_max_allowed_hours_x: 'Your set hours were higher then the maximum which is %s.'
-msg_not_enough_money_in_bank_to_jail_x_fee_is_x: 'Not enough in town bank to jail %s, fee is %s.'
-msg_you_were_released_as_town_ran_out_of_slots: 'Your jailers let you free to make space.'
-msg_x_has_been_released_as_jail_slots_ran_out: '%s has been released to make space for another prisoner.'
-msg_you_were_released_as_town_ran_out_of_upkeep_funds: 'You have been released as your jailers can no longer afford to keep you imprisoned.'
-msg_x_has_been_released_ran_out_of_upkeep_funds: '%s has been released due to a lack of funds in the Town bank.'
-msg_x_has_been_withdrawn_for_upkeep_of_prisoner_x: '%s withdrawn from Town bank to pay for upkeep for prisoner %s.'
-msg_x_has_been_withdrawn_for_jailing_of_prisoner_x: '%s withdrawn from Town bank to pay for jailing of %s.'
+msg_town_board_reset: '&bMiesto lenta atstatyta.'
+msg_town_has_no_jailslots: 'Miesto kalėjimas yra užpildytas.'
+msg_you_have_been_jailed_your_bail_is_x: 'Jūs buvote įkalintas, Jūsų užstatas yra %s.'
+msg_you_were_released_as_town_ran_out_of_slots: 'Jūsų kalintojai Jus paleidžia, kad padarytų daugiau vietos.'
+msg_x_has_been_released_as_jail_slots_ran_out: '%s buvo paleistas iš kalėjimo, kad būtų padaryta vietos kitam kaliniui.'
+msg_you_were_released_as_town_ran_out_of_upkeep_funds: 'Jūs buvote paleistas, nes Jūsų kalintojai neturėjo pakankamai lėšų laikyti Jus kalėjime.'
 #Message shown in the confirmation for /ta resetbanks {amount}.
-confirmation_are_you_sure_you_want_to_reset_all_banks: 'Are you sure you want to reset all town and nation banks to %s?'
-#Message shown when a nation cannot add a town because of the max-residents-limit.
-msg_err_cannot_add_nation_over_resident_limit: '&cYour nation has reached the maximum number of allowed residents-per-nation, %s, and cannot add %s.'
-#Message shown to a town when they cannot join a nation because of the max-residents-limit.
-msg_err_cannot_join_nation_over_resident_limit: '&cYou cannot join this nation as it would be over the residents-per-nation limit of %s.'
-#Message shown to a town because the nation has hit their max-towns-limit.
-msg_err_cannot_join_nation_over_town_limit: '&cYou cannot join this nation, it has reached the maximum number of allowed towns-per-nation: %s.'
-#Message shown confirming /tw set usedefaults
-confirmation_are_you_sure_you_want_to_reset_this_worlds_settings: 'Are you sure you want to reset all of this world''s settings to the ones which are set in the config?'
+confirmation_are_you_sure_you_want_to_reset_all_banks: 'Ar Jūs tikrai norite atstatyti visų miestų ir valstybių bankus į %s?'
 #Part of the /town plots output.
 msg_town_plots_title: ' Miesto sklypai'
 #Part of the /town plots output.
-msg_town_plots_town_size: '<dark_green>Town Size: <green>%s/%s'
+msg_town_plots_town_size: '<dark_green>Miesto dydis: <green>%s/%s'
 #Part of the /town plots output.
-msg_town_plots_town_bought: ' <aqua>[Bought: %s/%s]'
+msg_town_plots_town_bought: ' <aqua>[Nusipirkta: %s/%s]'
 #Part of the /town plots output.
-msg_town_plots_town_bonus: ' <aqua>[Bonus: %s]'
+msg_town_plots_town_bonus: ' <aqua>[Papildomi: %s]'
 #Part of the /town plots output.
-msg_town_plots_town_nationbonus: ' <aqua>[NationBonus: %s]'
+msg_town_plots_town_nationbonus: ' <aqua>[Valstybės priedas: %s]'
 #Part of the /town plots output.
-msg_town_plots_town_owned_land: '<dark_green>Town Owned Land: <green>%s'
-#Part of the /town plots output.
-msg_town_plots_type_header: '<dark_green>Type: <green>Player-Owned <gray>/ <aqua>ForSale <gray>/ <yellow>Total'
-#Part of the /town plots output.
-msg_town_plots_type_header_revenue: ' <gray>/ <dark_green>Daily Revenue'
+msg_town_plots_type_header_revenue: ' <gray>/ <dark_green>Kasdienės pajamos'
 #Part of the /town plots output.
 msg_town_plots_type_line: '<dark_green>%s: <green>%s <gray>/ <aqua>%s <gray>/ <yellow>%s'
 #Part of the /town plots output.
 msg_town_plots_type_line_revenue: ' <gray>/ <dark_green>%s'
-#Message giving confirmation warning for trusttown
-confirmation_msg_trusttown_consequences: 'You are about to give full plot permissions to an entire town. This means that the mayor of the town will be able to decide who gets permission to build and break in your town, by adding residents. If this town is open, then anyone can join and gain full access to your town. Are you sure you wish to trust all residents (including future residents,) from this town?'
 #Message shown when a player uses a command that is blocked because their location has an active war.
-msg_command_war_blocked: 'You cannot run that command because your town is at war.'
+msg_command_war_blocked: 'Jūs negalite vykdyti šios komandos, nes Jūsų miestas šiuo metu kariauja.'
 #Message shown when a player tries to unclaim land but cannot because an outsider is there (and the config doesn't allow this.)
-msg_cant_unclaim_outsider_in_town: 'There is an outsider in this townblock, you can''t unclaim this townblock!'
-#Message shown when a player is making a town too soon after deleting one.
-msg_err_cannot_create_new_town_x_seconds_remaining: 'You cannot create a new town, %s seconds remaining on cooldown.'
-#Message shown when a player is claiming land too soon after unclaiming it.
-msg_err_cannot_claim_townblock_x_seconds_remaining: 'You cannot claim this townblock: %s, %s seconds remaining on cooldown.'
-#Messages shown when an admin uses /ta set founder {townname} {foundername}
-msg_founder_set: 'The town of %s has had the founder set to %s.'
-#Message shown when toggling town allowed to war admin setting
-msg_town_allowedtowar_setting_set_to: 'The town %s has had their allowed-to-war setting set to %s.'
-#Message shown to confirm that a player wants to unclaim all of their land, besides the homeblock, seen with /t unclaim all.
-confirmation_did_you_want_to_unclaim_all: 'Are you sure you want to unclaim all of your land? (Your homeblock will not be unclaimed.)'
-#Message shown after a player unclaims all their land.
-msg_you_have_unclaimed_everything_but_your_homeblock: "You have unclaimed everything but your homeblock. To unclaim your homeblock you must set a new homeblock using '/t set homeblock' first."
-msg_warn_are_you_sure_you_want_to_transfer_nation_ownership: "<red>Are you sure you want to transfer nation ownership to %s? This action is irreversible!"
-msg_warn_town_already_capital: "<red>The town of %s is already the nation capital."
-msg_min_adjacent_blocks: 'You are required to have at least %s adjacent town blocks. There is only %s.'
-#Shown when a player with /plot evict permissions uses /plot claim on an owned but not for sale plot, please preserve comma space at the start when translating.
-msg_plot_claim_consider_evict_instead: ', perhaps you are looking for /plot evict instead?'
+msg_cant_unclaim_outsider_in_town: 'Šiame miesto bloke stovi svetimšalis, todėl Jūs negalite atsisakyti šio miesto bloko!'
 #Shown to a player when Towny does not know of them.
-msg_you_are_unknown: "You are not known to Towny."
+msg_you_are_unknown: "Jūs nesate žinomas Towny."
 #Generic Resident/Town/Nation/Thing is not known to Towny.
-msg_townyobject_unknown: "%s is not known to Towny."
+msg_townyobject_unknown: "%s nėra žinomas Towny."
 #Shown when a resident is unknown to Towny.
-msg_err_resident_unknown: "%s is not a resident that is recognized."
-#Shown when a town is unknown to Towny.
-msg_err_town_unknown: "%s is not a town that is recognized."
-#Shown when a nation is unknown to Towny.
-msg_err_nation_unknown: "%s is not a nation that is recognized."
-#Shown when a resident doesn't belong to a town.
-msg_err_townyobject_x_has_no_town: "%s does not belong to any town."
+msg_err_resident_unknown: "%s yra neatpažintas gyventojas."
 #Shown when a town doesn't belong to a nation.
-msg_err_townyobject_x_has_no_nation: "%s does not belong to any nation."
+msg_err_townyobject_x_has_no_nation: "%s nepriklauso jokiai valstybei."
 #Shown to admins when they use /plot claimedat on a plot which has no registration date.
-msg_err_townblock_has_no_claimedat_data: "This townblock has no data on when it was claimed."
+msg_err_townblock_has_no_claimedat_data: "Šis miesto blokas neturi duomenų, kada jis buvo užimtas."
 #Shown when someone cannot afford something, to tell them what it costs.
-msg_err_you_need_x_to_pay: "You need %s to pay."
+msg_err_you_need_x_to_pay: "Jums reikia %s, kad galėtumėte sumokėti."
 #Shown when someone tries to deposit/withdraw 0 amounts.
-msg_err_amount_must_be_greater_than_zero: "Amount must be greater than zero."
-#Message shown when taking over claims is disabled on a server.
-msg_err_taking_over_claims_is_not_enabled: "Taking over claims is not enabled on this server."
-#Messages shown when taking over a claim is not allowed because the town is not overclaimed.
-msg_err_this_townblock_cannot_be_taken_over: "This TownBlock cannot be taken over, the town that it belongs to is not overclaimed."
-#Message shown when taking over a claim would also set the homeblock because the town has no claims.
-msg_err_you_cannot_make_this_your_homeblock: "You cannot make this claim because it would make this TownBlock your homeblock, which is not allowed."
-#Message shown when taking over a claim is stopped by another plugin.
-msg_err_another_plugin_cancelled_takeover: "Another plugin has stopped your takeover of this land."
-#Confirmation shown when taking over a claim.
-confirmation_you_are_about_to_take_over_a_claim: "You are about to take over a claim belonging to %s for the cost: %s. Did you want to continue?"
+msg_err_amount_must_be_greater_than_zero: "Kiekis turi būti didesnis už nulį."
 #Warning message shown when a town is beginning to claim close to their limit, and the takeoverclaim feature is active.
-msg_warning_you_are_almost_out_of_townblocks: "Warning: You have nearly used up your available townblocks for claiming. If you lose a resident you will be at risk of your town being able to have townblocks stolen by other towns."
-#Warning message shown on login when a town is overclaimed and at risk of falling victim to the takeoverclaim feature.
-msg_warning_your_town_is_overclaimed: "Warning: Your town is overclaimed. While you have too many townblocks claimed, it will be possible for other towns to takeover plots of your town, consider unclaiming some land."
-#Chunk Notification slug, shown when entering a plot that can be stolen.
-chunk_notification_takeover_available: " <red>[TakeoverClaim Available]"
-#Message shown when a takeover claim would cut a town into two sections.
-msg_err_you_cannot_over_claim_would_cut_into_two: "You cannot take over this plot, because doing so would split the town into two segments. You will have to overclaim from a different direction."
-#Message shown when an admin tries to toggle conquered off of a town that is not conquered.
-msg_err_that_town_is_not_conquered: "%s is already not conquered."
-#Message shown when a town has its conquered status removed by an admin.
-msg_conquered_status_removed: "%s has had their conquered status removed."
-msg_setup_command_folia: "The /ta install command currently does not work on Folia due to the conversation API not working, refer to the install guide below instead."
-msg_perm_gui_folia: "This button currently does not work on Folia due to the conversation API not working, use the /plot perm add <name> command instead."
-msg_folia_scoreboard: "Changing scoreboards is currently not supported on Folia."
-#Message shown when a player cannot unclaim land because at least one plot wouldn't have enough adjacent claims.
-msg_err_cannot_unclaim_not_enough_adjacent_claims: "You cannot unclaim this townblock because the townblock at %s,%s would not have enough adjacent claims (%s are required.)"
+msg_warning_you_are_almost_out_of_townblocks: "Įspėjimas: Jūs išnaudojote beveik visus turimus miesto blokus, skirtus užėmimui. Jei prarasite gyventoją, Jūsų miestui kils rizika, kad jo blokai bus atimti kitų miestų."
+msg_setup_command_folia: "/ta install komanda šiuo metu neveikia Folia programinėje įrangoje dėl konvertavimo API neveikimo, vietoj to remkitės įdiegimo gidu žemiau."
+msg_folia_scoreboard: "Švieslenčių keitimas šiuo metu nepalaikomas Folia."
 #Message shown when a nation collects taxes from its towns.
-msg_tax_collected_from_towns: "<aqua>Your nation collected %s in tax from its towns."
+msg_tax_collected_from_towns: "<aqua>Jūsų valstybė iš miestų mokesčių surinko %s."
 #Message shown when a nation pays taxes to its towns.
-msg_tax_paid_to_towns: "<aqua>Your nation paid %s in tax to its towns."
+msg_tax_paid_to_towns: "<aqua>Jūsų valstybė sumokėjo %s mokesčių miestams."
 #Message shown when a town collects taxes from its residents.
-msg_tax_collected_from_residents: "<aqua>Your town collected %s in tax from its residents."
-#Message shown when a town pays taxes to its residents.
-msg_tax_paid_to_residents: "<aqua>Your town paid %s in tax to its residents."
-#Message shown when a town collects taxes from its plottaxes.
-msg_tax_collected_from_plots: "<aqua>Your town collected %s in tax from its plots' taxes."
-#Message shown when a town pays taxes to its plottaxes.
-msg_tax_paid_to_residents_for_plots: "<aqua>Your town paid %s in tax to the land owners via plot taxes."
-#Message shown when a nation collects taxes from its towns that are conquered.
-msg_tax_collected_from_conquered_towns: "<aqua>Your nation collected %s in extra tax from its conquered towns."
-msg_your_town_was_exempt_from_the_nation_conquered_tax: "<aqua>Your town was exempt from the nation's conquered tax."
-msg_nation_set_conquered_tax__amount_set: "%s has set the conquered tax amount to %s."
-msg_err_cannot_set_nation_conquere_tax_amount_higher_than: "You cannot set the conquered tax above %s."
-msg_err_your_town_is_not_old_enough_to_overclaim: "Your town is not old enough to overclaim, you must wait another %s."
-msg_err_your_cannot_overclaim_for_another: "You cannot overclaim again for another %s."
+msg_tax_collected_from_residents: "<aqua>Jūsų miestas iš gyventojų mokesčių surinko %s."
 #Generic error message for when a world isn't loaded
-msg_err_world_not_loaded: "<red>World is not loaded."
-#Message shown when a mayor toggles a plots taxed status.
-msg_changed_plot_taxed: '&cThis plot has had its taxed status set to %s.'
-msg_changed_plotgroup_taxed: '&cThis plotgroup has had its taxed status set to %s.'
-status_forsale: "&a(For Sale: %s)"
-msg_town_forsale: "%s has been set for sale at %s."
-msg_town_notforsale: "%s is no longer for sale."
-msg_town_sell_confirmation: "This will put your town up for sale for %s. Are you sure you want to continue?"
-msg_town_buytown_already_mayor: "You are already mayor of %s."
-msg_town_buytown_confirmation: "Buying %s will cost %s and remove you from any town you may currently be a part of. Are you sure you want to continue?"
-msg_town_buytown_not_forsale: "Specified town is not for sale."
-msg_town_buytown_ruined: "Ruined towns cannot be bought."
-msg_resident_about_reset: "&bResident about reset."
-msg_err_invalid_string_about_not_set: "Invalid string, resident about not set."
-msg_set_about: "%s's about was set to %s."
-msg_clear_about: "%s's about was cleared."
-#Message shown when toggling town visibleontoplists setting
-msg_town_visibleontoplist_setting_set_to: 'The town %s has had their visible-on-top-lists setting set to %s.'
+msg_err_world_not_loaded: "<red>Pasaulis nepakrautas."
+status_forsale: "&a(Parduodama: %s)"
+msg_town_buytown_already_mayor: "Jūs jau esate %s meras."
+msg_town_buytown_not_forsale: "Nurodytas miestas neparduodamas."
+msg_town_buytown_ruined: "Sugriuvę miestai negali būti nupirkti."
+msg_resident_about_reset: "&bGyventojo aprašymas atstatytas."
+msg_err_invalid_string_about_not_set: "Netinkama eilutė, gyventojo aprašymas nenustatytas."
+msg_set_about: "%s aprašymas buvo nustatytas į %s."
+msg_clear_about: "%s aprašymas buvo išvalytas."
 #Message shown when an admin overrides a town founding date via townyadmin.
-townyadmin_town_set_help_0: "Sets the founding date of a town."
-townyadmin_nation_set_help_0: "Sets the founding date of a nation."
-msg_town_registered_set: "Founding date of town: '%s' set to: '%s'."
-msg_nation_registered_set: "Founding date of nation: '%s' set to: '%s'."
-msg_err_time_cannot_be_in_the_future: "Specified time cannot be in the future."
+townyadmin_town_set_help_0: "Nustato miesto įkūrimo datą."
+townyadmin_nation_set_help_0: "Nustato valstybės įkūrimo datą."
+msg_err_time_cannot_be_in_the_future: "Nurodytas laikas negali būti ateityje."
 #The format used for the /t say and /n say commands.
-town_say_format: "%s says: %s"
-msg_err_floodfill_not_in_wild: "You cannot use floodfill while standing in a claimed area."
-msg_err_floodfill_out_of_bounds: "Claim shape must be fully closed off in order to floodfill."
-msg_err_floodfill_cannot_contain_towns: "Flood fill selection must not contain other towns."
-#Message shown when a resident is an NPC and is not allowed to do something.
-msg_err_resident_is_npc: "You cannot do this to an NPC resident."
+town_say_format: "%s sako: %s"
 #Message shown when a resident doesn't own any land and the /res plotlist command is used.
-msg_err_resident_doesnt_own_any_land: "The resident does not own any land personally."
+msg_err_resident_doesnt_own_any_land: "Gyventojas neturi nuosavos žemės."
 msg_unnamed: "Be pavadinimo"
-msg_err_nation_cannot_sanction_own_town: "You cannot sanction a town that is a part of your nation."
-msg_err_nation_town_isnt_sanctioned: "Your nation is not sanctioning that town."
-msg_err_nation_town_already_sanctioned: "Your nation already sanctions that town."
-msg_err_nation_town_sanctioned: "Your nation has now sanctioned %s, they will not be allowed to join your nation."
-msg_err_nation_town_unsanctioned: "Your nation is no longer sanctioning %s."
-msg_err_nation_has_no_sanctioned_towns: "The nation has no sanctioned towns."
-title_nation_sanctioned_towns: 'Sanctioned Towns'
-msg_err_cannot_add_sanctioned_town: "Your nation cannot add %s, your nation has sanctioned them."
-msg_err_cannot_join_nation_sanctioned_town: "Your town cannot join %s, this nation has sanctioned your town."
-msg_err_no_nation_cannot_do: "You cannot perform this action because no nation was able to be determined."
-msg_err_cannot_nation_spawn_your_town_is_sanctioned: "Your town is sanctioned by %s, you cannot spawn there."
-msg_err_cannot_claim_the_following_worldcoords_because_of_unwanted_biome: "The following coordinate(s) cannot be claimed because they contain too much of an unwanted biome: %s."
-msg_err_cannot_claim_the_following_worldcoords_because_of_ocean_biome: "The following coordinate(s) cannot be claimed because they contain too much ocean biome: %s."
-msg_err_cannot_begin_town_in_this_biome: "You cannot start a town in this biome."
-msg_err_cannot_overclaim_this_town_because_they_arent_your_enemy: "You are not able to overclaim this town because your nation does not consider their nation an enemy."
-msg_err_unable_to_command_outside_of_town: 'You cannot use that command outside of your town.'
-msg_err_unable_to_use_bank_outside_bank_plot_no_homeblock: 'You cannot use that command outside of a bank plot.'
-msg_err_you_cannot_outlaw_your_mayor: "You cannot outlaw your town's mayor."
-msg_err_you_cannot_outlaw_because_of_rank: "You cannot outlaw %s because of a town rank they hold."
-status_nation_sanctioned_towns: "Sanctioned Towns"
-msg_all_of_your_towns_sent_invites_have_been_cancelled: "All of your town's sent invites have been cancelled."
-msg_err_name_validation_invalid_characters: "%s contains characters which aren't allowed in the Towny regex settings."
-msg_err_name_validation_begins_with_eco_prefix: "%s begins with letters used in the economy features, you cannot use this name."
-msg_err_name_validation_name_already_in_use: "%s is a name that is already in use."
-msg_err_name_validation_title_too_long: "%s is too long to use as a title or surname."
-msg_err_name_validation_name_too_long: "%s is too long to use as a name."
-msg_err_name_validation_is_empty: "You cannot supply an empty name."
-msg_err_name_validation_is_not_permitted: "%s is not permitted."
-msg_err_name_validation_is_all_underscores: "%s is entirely underscores."
-msg_err_name_validation_contains_harmful_characters: "%s contains symbols that could be harmful."
-msg_err_name_validation_contains_numbers: "%s contains numbers which aren't allowed in names."
-msg_err_name_validation_used_in_command_structure: "%s is used in the command structure, you cannot use this name."
-msg_town_being_deleted_because_no_residents: "%s is being deleted because it lost its last resident."
-outlawed_in: "Outlawed in"
-msg_warning_town_deposit_hint: "To put money in your town bank use /town deposit [amount]."
-msg_warning_nation_deposit_hint: "To put money in your nation bank use /nation deposit [amount]."
-teleport_warmup_title_dont_move: "&6Don't move!"
-teleport_warmup_subtitle_seconds_remaining: "&c%s &7seconds remaining until teleport."
-msg_ruined_town_plot_permissions_allowed_on_x_plots: "Because your town has a ruined status, %s plot(s) permission lines have had changed to provide no protections."
-console_msg_ruined_town_plot_permissions_allowed_on_x_plots: "Because of their ruined status, %s has had %s plot(s) permission lines changed to provide no protections: %s."
-msg_err_town_cede_you_cannot_cede_a_plot_to_your_own_town: "You cannot cede a plot to your own town."
-msg_err_town_cede_you_cannot_cede_your_homeblock: "You cannot cede your town's homeblock."
-msg_err_town_cede_the_mayor_is_not_online: "The mayor of %s, %s is not online to accept your plot."
-msg_err_town_no_longer_owns_this_plot: "%s no longer owns this plot."
-msg_err_town_cede_town_cannot_cede_their_homeblock: "%s cannot cede their if homeblock."
-msg_town_cede_plot_confirmation_give_plot: "Are you sure you want to give %s this plot?"
-msg_town_cede_plot_confirmation_accept_plot: "%s would like to cede the townblock at %s to your town, will you accept?"
-msg_town_cede_plot_accepted: "%s has accepted ceding of your plot."
-msg_town_cede_plot_denied: "%s has declined your offer."
-msg_town_cede_plot_unable_to_accept: "%s was unable to accept your offer."
-msg_town_cede_plot_you_have_accepted: "You have gained control of the plot at %s."
-msg_err_cannot_claim_plot_join_date_too_low: "You cannot claim this plot until you have been a town resident for %s days."
-msg_err_cannot_claim_plot_join_date_too_high: "You cannot claim this plot, it is for residents who have been town members for less than %s days."
-msg_townblock_min_join_days_removed: "This TownBlock has had its min-join-days requirement removed."
-msg_townblock_max_join_days_removed: "This TownBlock has had its max-join-days requirement removed."
-msg_townblock_min_join_days_set_to: "This TownBlock has had its min-join-days requirement set to %s. Only players joined for more than that number of days will be able to use /plot claim."
-msg_townblock_max_join_days_set_to: "This TownBlock has had its max-join-days requirement set to %s. Only players joined for less than that number of days will be able to use /plot claim."
+msg_err_nation_cannot_sanction_own_town: "Jūs negalite paskelbti sankcijų miestui, priklausančiam Jūsų valstybei."
+msg_err_nation_town_isnt_sanctioned: "Jūsų valstybė nėra paskelbusi sankcijų šiam miestui."
+msg_err_nation_town_already_sanctioned: "Jūsų valstybė jau yra paskelbusi sankcijas šiam miestui."
+msg_err_nation_town_sanctioned: "Jūsų valstybė paskelbė sankcijas %s, jie negalės prisijungti prie Jūsų valstybės."
+msg_err_nation_town_unsanctioned: "Jūsų valstybė panaikino sankcijas %s."
+msg_err_nation_has_no_sanctioned_towns: "Valstybė jokiam miestui nėra paskelbusi sankcijų."
+title_nation_sanctioned_towns: 'Sankcionuoti miestai'
+msg_err_cannot_begin_town_in_this_biome: "Jūs negalite įkurti miesto šiame biome."
+msg_err_unable_to_command_outside_of_town: 'Jūs negalite naudoti šios komandos už savo miesto ribų.'
+msg_err_unable_to_use_bank_outside_bank_plot_no_homeblock: 'Jūs negalite naudoti šios komandos už banko sklypo ribų.'
+msg_err_you_cannot_outlaw_your_mayor: "Jūs negalite paskelbti savo miesto mero nepageidaujamu asmeniu."
+status_nation_sanctioned_towns: "Sankcionuoti miestai"
+msg_all_of_your_towns_sent_invites_have_been_cancelled: "Visi Jūsų miesto išsiųsti pakvietimai buvo atšaukti."
+msg_err_name_validation_name_already_in_use: "%s pavadinimas jau yra naudojamas."
+msg_err_name_validation_title_too_long: "%s yra pernelyg ilgas, kad būtų naudojamas kaip titulas ar pavardė."
+msg_err_name_validation_name_too_long: "%s yra pernelyg ilgas pavadinimui užrašyti."
+msg_err_name_validation_is_empty: "Jūs negalite duoti tuščio pavadinimo."
+msg_err_name_validation_is_not_permitted: "%s yra neleistinas."
+msg_err_name_validation_is_all_underscores: "%s yra vien tik pabraukimo brūkšniai."
+msg_warning_town_deposit_hint: "Norėdami įnešti pinigų į savo miesto banką naudokite /town deposit [kiekis]."
+msg_warning_nation_deposit_hint: "Norėdami įnešti pinigų į savo valstybės banką naudokite /nation deposit [kiekis]."
+teleport_warmup_title_dont_move: "&6Nejudėkite!"
+teleport_warmup_subtitle_seconds_remaining: "&c%s &7sekundės liko iki teleportacijos."
+msg_err_town_no_longer_owns_this_plot: "%s nebepriklauso šis sklypas."
+msg_town_cede_plot_confirmation_give_plot: "Ar Jūs tikrai norite atiduoti %s šį sklypą?"
+msg_town_cede_plot_denied: "%s atmetė Jūsų pasiūlymą."
+msg_town_cede_plot_unable_to_accept: "%s negalėjo priimti Jūsų pasiūlymo."
+msg_err_you_already_own_this_plot: "Jums jau priklauso šis sklypas."
+map_hover_district: 'Rajonas: '
+msg_admin_eco_convert_no_providers: "<red>Nėra prieinamų ekonomikos tiekėjų"
+msg_admin_eco_convert_no_provider_specified: "<red>Ekonomikos tiekėjas nenurodytas"
+msg_admin_eco_convert_no_target_specified: "<red>Nenurodyta tikslinė ekonomika"
+msg_admin_eco_convert_conversion_progress: "Vykdomas sąskaitų konvertavimas, %s baigta..."
+msg_admin_eco_convert_success: "Ekonomikos konvertavimas sėkmingas"
+msg_err_mode_does_not_exist: "Režimas %s neatpažintas."
+msg_err_not_allowed_to_switch: "Jūs negalite čia perjungti."
+chunknotification_plot_claim_help_message: " Naudokite '/plot claim', kad įsigytumėte šį sklypą."
+titlemsg_pay_your_bail_title: "Sumokėkite savo užstatą: %s"
+titlemsg_pay_your_bail_subtitle: "/res jail paybail"
+msg_not_for_sale: "Neparduodama."

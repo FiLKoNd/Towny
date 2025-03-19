@@ -6,6 +6,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
 
+import com.palmergames.util.Pair;
 import io.papermc.lib.PaperLib;
 
 import org.bukkit.Bukkit;
@@ -239,7 +240,7 @@ public class WorldCoord extends Coord {
 	}
 
 	private void unloadChunks(Towny plugin) {
-		getChunks().forEach(future -> future.thenAccept(chunk -> chunk.addPluginChunkTicket(plugin)));
+		getChunks().forEach(future -> future.thenAccept(chunk -> chunk.removePluginChunkTicket(plugin)));
 	}
 
 	/**
@@ -250,21 +251,57 @@ public class WorldCoord extends Coord {
 	 */
 	@Unmodifiable
 	public Collection<CompletableFuture<Chunk>> getChunks() {
+		final World world = getBukkitWorld();
+		if (world == null)
+			return Collections.emptyList();
+		
 		if (getCellSize() > 16) {
 			// Dealing with a townblocksize greater than 16, we will have multiple chunks per WorldCoord.
 			final Set<CompletableFuture<Chunk>> chunkFutures = new HashSet<>();
 			
-			int side = (int) Math.ceil(getCellSize() / 16f);
-			for (int x = 0; x < side; x++) {
-				for (int z = 0; z < side; z++) {
-					chunkFutures.add(PaperLib.getChunkAtAsync(getSubCorner(x, z)));
-				}
-			}
+			for (final Pair<Integer, Integer> chunkPos : getChunkPositions())
+				chunkFutures.add(PaperLib.getChunkAtAsync(world, chunkPos.left(), chunkPos.right()));
 			
 			return Collections.unmodifiableSet(chunkFutures);
 		} else {
 			return Collections.singleton(PaperLib.getChunkAtAsync(getCorner()));
 		}
+	}
+	
+	protected Collection<Pair<Integer, Integer>> getChunkPositions() {
+		return getChunkPositions(getCellSize());
+	}
+
+	/**
+	 * @param cellSize The current {@link #getCellSize()}
+	 * @return A collection of all chunk coords that are contained within this worldcoord for the given cell size
+	 */
+	protected Collection<Pair<Integer, Integer>> getChunkPositions(final int cellSize) {
+		final Set<Pair<Integer, Integer>> chunks = new HashSet<>();
+		int side = (int) Math.ceil(cellSize / 16f);
+		
+		for (int x = 0; x < side; x++) {
+			for (int z = 0; z < side; z++) {
+				chunks.add(Pair.pair(x + getX(), z + getZ()));
+			}
+		}
+		
+		return chunks;
+	}
+
+	/**
+	 * @return Whether all chunks contained in this worldcoord are loaded.
+	 */
+	public boolean isFullyLoaded() {
+		final World bukkitWorld = getBukkitWorld();
+		if (bukkitWorld == null)
+			return false;
+		
+		for (final Pair<Integer, Integer> chunkPos : getChunkPositions())
+			if (!bukkitWorld.isChunkLoaded(chunkPos.left(), chunkPos.right()))
+				return false;
+		
+		return true;
 	}
 
 	// Used to get a location at the corner of a WorldCoord.
@@ -272,16 +309,11 @@ public class WorldCoord extends Coord {
 		return new Location(getBukkitWorld(), getX() * getCellSize(), 0, getZ() * getCellSize());
 	}
 	
-	// Used to get a location representing sub coordinates of a WorldCoord, to ease the lookup of a corresponding Chunk. 
-	private Location getSubCorner(int x, int z) {
-		return getCorner().add(x * 16, 0, z * 16);
-	}
-	
 	/**
 	 * @return Return a Bukkit bounding box containg the space of the WorldCoord.
 	 */
 	public BoundingBox getBoundingBox() {
-		return BoundingBox.of(getLowerMostCornerLocation(), getUpperMostCornerLocation());
+		return BoundingBox.of(getLowerMostCornerLocation().getBlock(), getUpperMostCornerLocation().getBlock());
 	}
 	
 	/**
@@ -295,7 +327,7 @@ public class WorldCoord extends Coord {
 	 * @return Location of the upper-most corner of a WorldCoord.
 	 */
 	public Location getUpperMostCornerLocation() {
-		return getCorner().add(getCellSize(), getBukkitWorld().getMaxHeight(), getCellSize());
+		return getCorner().add(getCellSize() - 1, getBukkitWorld().getMaxHeight() - 1, getCellSize() - 1);
 	}
 
 	/**

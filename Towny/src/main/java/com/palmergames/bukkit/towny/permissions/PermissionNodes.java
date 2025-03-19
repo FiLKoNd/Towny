@@ -231,6 +231,13 @@ public enum PermissionNodes {
 			TOWNY_COMMAND_PLOT_SET_SPLEEF("towny.command.plot.set.spleef"),
 			TOWNY_COMMAND_PLOT_SET_INN("towny.command.plot.set.inn"),
 			TOWNY_COMMAND_PLOT_SET_JAIL("towny.command.plot.set.jail"),
+
+		TOWNY_COMMAND_PLOT_DISTRICT("towny.command.plot.district.*"),
+		TOWNY_COMMAND_PLOT_DISTRICT_ADD("towny.command.plot.district.add"),
+		TOWNY_COMMAND_PLOT_DISTRICT_REMOVE("towny.command.plot.district.remove"),
+		TOWNY_COMMAND_PLOT_DISTRICT_DELETE("towny.command.plot.district.delete"),
+		TOWNY_COMMAND_PLOT_DISTRICT_RENAME("towny.command.plot.district.rename"),
+
 		
 		TOWNY_COMMAND_PLOT_GROUP("towny.command.plot.group.*"),
 		    TOWNY_COMMAND_PLOT_GROUP_ADD("towny.command.plot.group.add"),
@@ -258,18 +265,31 @@ public enum PermissionNodes {
 	TOWNY_COMMAND_RESIDENT_SET("towny.command.resident.set.*"),
 		TOWNY_COMMAND_RESIDENT_SET_PERM("towny.command.resident.set.perm"),
 		TOWNY_COMMAND_RESIDENT_SET_MODE("towny.command.resident.set.mode"),
+		TOWNY_COMMAND_RESIDENT_SET_MODE_CLEAR("towny.command.resident.set.mode.clear"),
 		TOWNY_COMMAND_RESIDENT_SET_ABOUT("towny.command.resident.set.about"),
 	
 	TOWNY_COMMAND_RESIDENT_TOGGLE("towny.command.resident.toggle.*"),
+		// Plot-permission-related
 		TOWNY_COMMAND_RESIDENT_TOGGLE_PVP("towny.command.resident.toggle.pvp"),
 		TOWNY_COMMAND_RESIDENT_TOGGLE_EXPLOSION("towny.command.resident.toggle.explosion"),
 		TOWNY_COMMAND_RESIDENT_TOGGLE_FIRE("towny.command.resident.toggle.fire"),
 		TOWNY_COMMAND_RESIDENT_TOGGLE_MOBS("towny.command.resident.toggle.mobs"),
-		TOWNY_COMMAND_RESIDENT_TOGGLE_PLOTBORDER("towny.command.resident.toggle.plotborder"),
-		TOWNY_COMMAND_RESIDENT_TOGGLE_TOWNCLAIM("towny.command.resident.toggle.townclaim"),
-		TOWNY_COMMAND_RESIDENT_TOGGLE_CONSTANTPLOTBORDER("towny.command.resident.toggle.constantplotborder"),
-		TOWNY_COMMAND_RESIDENT_TOGGLE_IGNOREPLOTS("towny.command.resident.toggle.ignoreplots"),
+		// Generic Modes
+		TOWNY_COMMAND_RESIDENT_TOGGLE_BEDSPAWN("towny.command.resident.toggle.bedspawn"),
 		TOWNY_COMMAND_RESIDENT_TOGGLE_BORDERTITLES("towny.command.resident.toggle.bordertitles"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_IGNOREOTHERCHANNELS("towny.command.resident.toggle.ignoreotherchannels"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_IGNOREPLOTS("towny.command.resident.toggle.ignoreplots"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_INFOTOOL("towny.command.resident.toggle.infotool"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_MAP("towny.command.resident.toggle.map"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_PLOTGROUP("towny.command.resident.toggle.plotgroup"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_DISTRICT("towny.command.resident.toggle.district"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_TOWNBORDER("towny.command.resident.toggle.townborder"),
+		// Border Modes
+		TOWNY_COMMAND_RESIDENT_TOGGLE_CONSTANTPLOTBORDER("towny.command.resident.toggle.constantplotborder"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_PLOTBORDER("towny.command.resident.toggle.plotborder"),
+		// Claiming Modes
+		TOWNY_COMMAND_RESIDENT_TOGGLE_TOWNCLAIM("towny.command.resident.toggle.townclaim"),
+		TOWNY_COMMAND_RESIDENT_TOGGLE_TOWNUNCLAIM("towny.command.resident.toggle.townunclaim"),
 	
 	TOWNY_COMMAND_RESIDENT_FRIEND("towny.command.resident.friend"),
 	TOWNY_COMMAND_RESIDENT_SPAWN("towny.command.resident.spawn"),	
@@ -296,6 +316,7 @@ public enum PermissionNodes {
 		TOWNY_COMMAND_TOWNYADMIN_PLOT_TRUST("towny.command.townyadmin.plot.trust"),
 	
 	TOWNY_COMMAND_TOWNYADMIN_RESIDENT("towny.command.townyadmin.resident.*"),
+		TOWNY_COMMAND_TOWNYADMIN_RESIDENT_ABOUT("towny.command.townyadmin.resident.about"),
 		TOWNY_COMMAND_TOWNYADMIN_RESIDENT_RENAME("towny.command.townyadmin.resident.rename"),
 		TOWNY_COMMAND_TOWNYADMIN_RESIDENT_FRIEND("towny.command.townyadmin.resident.friend"),
 		TOWNY_COMMAND_TOWNYADMIN_RESIDENT_META("towny.command.townyadmin.resident.meta"),
@@ -377,8 +398,11 @@ public enum PermissionNodes {
 	TOWNY_COMMAND_TOWNYADMIN_CHECKOUTPOSTS("towny.command.townyadmin.checkoutposts"),
 	TOWNY_COMMAND_TOWNYADMIN_UNCLAIM("towny.command.townyadmin.unclaim"),
 	TOWNY_COMMAND_TOWNYADMIN_RESIDNET_DELETE("towny.command.townyadmin.resident.delete"),
-	TOWNY_COMMAND_TOWNYADMIN_DEPOSITALL("towny.command.townyadmin.depositall"),
-	TOWNY_COMMAND_TOWNYADMIN_RESETBANKS("towny.command.townyadmin.resetbanks"),
+	TOWNY_COMMAND_TOWNYADMIN_ECO("towny.command.townyadmin.eco.*"),
+	TOWNY_COMMAND_TOWNYADMIN_ECO_DEPOSITALL("towny.command.townyadmin.eco.depositall"),
+	TOWNY_COMMAND_TOWNYADMIN_ECO_RESETBANKS("towny.command.townyadmin.eco.resetbanks"),
+	TOWNY_COMMAND_TOWNYADMIN_ECO_CONVERT("towny.command.townyadmin.eco.convert"),
+	TOWNY_COMMAND_TOWNYADMIN_ECO_INFO("towny.command.townyadmin.eco.info"),
 	TOWNY_COMMAND_TOWNYADMIN_TOWNYPERMS("towny.command.townyadmin.townyperms"),
 	TOWNY_COMMAND_TOWNYADMIN_TPPLOT("towny.command.townyadmin.tpplot"),
 	TOWNY_COMMAND_TOWNYADMIN_INSTALL("towny.command.townyadmin.install"),

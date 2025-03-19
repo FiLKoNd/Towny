@@ -10,6 +10,9 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.confirmations.ConfirmationTransaction;
+import com.palmergames.bukkit.towny.event.DeleteTownEvent;
+import com.palmergames.bukkit.towny.event.plot.group.PlotGroupDeletedEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreReclaimEvent;
 import com.palmergames.bukkit.towny.event.town.TownReclaimedEvent;
 import com.palmergames.bukkit.towny.event.town.TownRuinedEvent;
 import com.palmergames.bukkit.towny.exceptions.AlreadyRegisteredException;
@@ -78,9 +81,11 @@ public class TownRuinUtil {
 		//Remove town from nation, otherwise after we change the mayor to NPC and if the nation falls, the npc would receive nation refund.
 		final Nation nation = town.getNationOrNull();
 		if (nation != null) {
-			double bankBalance = town.getAccount().getHoldingBalance();
-			if (TownySettings.areRuinedTownsBanksPaidToNation() && bankBalance > 0)
-				town.getAccount().payTo(bankBalance, nation.getAccount(), String.format("Ruined Town (%s) Paid Remaining Bank To Nation", town.getName()));
+			if (TownyEconomyHandler.isActive() && TownySettings.areRuinedTownsBanksPaidToNation()) {
+				double bankBalance = town.getAccount().getHoldingBalance();
+				if (bankBalance > 0)
+					town.getAccount().payTo(bankBalance, nation, String.format("Ruined Town (%s) Paid Remaining Bank To Nation", town.getName()));
+			}
 			town.removeNation();
 		}
 
@@ -122,7 +127,8 @@ public class TownRuinUtil {
 		// Unregister the now empty plotgroups.
 		if (town.getPlotGroups() != null)
 			for (PlotGroup group : new ArrayList<>(town.getPlotGroups()))
-				TownyUniverse.getInstance().getDataSource().removePlotGroup(group);
+				if (!BukkitTools.isEventCancelled(new PlotGroupDeletedEvent(group, null, PlotGroupDeletedEvent.Cause.TOWN_DELETED)))
+					TownyUniverse.getInstance().getDataSource().removePlotGroup(group);
 		
 		// Check if Town has more residents than it should be allowed (if it were the capital of a nation.)
 		if (TownySettings.getMaxResidentsPerTown() > 0)
@@ -164,6 +170,7 @@ public class TownRuinUtil {
 			Confirmation.runOnAccept(() -> reclaimTown(resident, town))
 			.setCost(new ConfirmationTransaction(() -> townReclaimCost, resident, "Cost of town reclaim.", Translatable.of("msg_insuf_funds")))
 			.setTitle(Translatable.of("msg_confirm_purchase", TownyEconomyHandler.getFormattedBalance(townReclaimCost)))
+			.setCancellableEvent(new TownPreReclaimEvent(town, resident, player))
 			.sendTo(player);
 		} catch (TownyException e) {
 			TownyMessaging.sendErrorMsg(player, e.getMessage(player));
@@ -235,14 +242,13 @@ public class TownRuinUtil {
 			if (!town.exists())
 				continue;
 
-			if (hasRuinTimeExpired(town)) {
+			if (hasRuinTimeExpired(town) && townyUniverse.getDataSource().removeTown(town, DeleteTownEvent.Cause.RUINED)) {
 				//Ruin found & recently ruined end time reached. Delete town now.
 				TownyMessaging.sendMsg(Translatable.of("msg_ruined_town_being_deleted", town.getName(), TownySettings.getTownRuinsMaxDurationHours()));
-				townyUniverse.getDataSource().removeTown(town, false);
 				continue;
 			}
 
-			if(TownySettings.doRuinsPlotPermissionsProgressivelyAllowAll()) {
+			if (TownySettings.doRuinsPlotPermissionsProgressivelyAllowAll()) {
 				final Town finalTown = town;
 				// We are configured to slowly open up plots' permissions while a town is ruined.
 				Towny.getPlugin().getScheduler().runAsync(() -> allowPermissionsOnRuinedTownBlocks(finalTown));

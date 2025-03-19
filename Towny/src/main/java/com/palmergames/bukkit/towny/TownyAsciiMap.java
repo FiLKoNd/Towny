@@ -170,13 +170,14 @@ public class TownyAsciiMap {
 					Component forSaleComponent = Component.empty();
 					Component claimedAtComponent = Component.empty();
 					Component groupComponent = Component.empty();
+					Component districtComponent = Component.empty();
 					
 					if (TownyEconomyHandler.isActive()) {
 						double cost = townblock.hasPlotObjectGroup() 
 							? townblock.getPlotObjectGroup().getPrice()
 							: townblock.getPlotPrice();
 						if (cost > -1)
-							forSaleComponent = TownyComponents.miniMessage(String.format(ChunkNotification.forSaleNotificationFormat, TownyEconomyHandler.getFormattedBalance(cost)).replaceAll("[\\[\\]]", "") + " " + translator.of("msg_click_purchase")).color(NamedTextColor.YELLOW).append(Component.newline());
+							forSaleComponent = TownyComponents.miniMessage(String.format(ChunkNotification.forSaleNotificationFormat, getOwner(townblock), TownyEconomyHandler.getFormattedBalance(cost)).replaceAll("[\\[\\]]", "") + " " + translator.of("msg_click_purchase")).color(NamedTextColor.YELLOW).append(Component.newline());
 					}
 					
 					if (townblock.getClaimedAt() > 0)
@@ -190,6 +191,13 @@ public class TownyAsciiMap {
 							.append(Component.text(townblock.getPlotObjectGroup().getFormattedName(), NamedTextColor.GREEN)
 							.append(translator.component("map_hover_plot_group_size").color(NamedTextColor.DARK_GREEN)
 							.append(translator.component("map_hover_plots", townblock.getPlotObjectGroup().getTownBlocks().size()).color(NamedTextColor.GREEN)
+							.append(Component.newline()))));
+					
+					if (townblock.hasDistrict())
+						districtComponent = translator.component("map_hover_district").color(NamedTextColor.DARK_GREEN)
+							.append(Component.text(townblock.getDistrict().getFormattedName(), NamedTextColor.GREEN)
+							.append(translator.component("map_hover_plot_group_size").color(NamedTextColor.DARK_GREEN)
+							.append(translator.component("map_hover_plots", townblock.getDistrict().getTownBlocks().size()).color(NamedTextColor.GREEN)
 							.append(Component.newline()))));
 					
 					if (townblock.hasResident())
@@ -209,6 +217,7 @@ public class TownyAsciiMap {
 					
 					Component hoverComponent = townComponent
 						.append(plotTypeComponent)
+						.append(districtComponent)
 						.append(groupComponent)
 						.append(forSaleComponent)
 						.append(claimedAtComponent)
@@ -334,5 +343,9 @@ public class TownyAsciiMap {
 	private static String parseUnicode(String symbol) {
 		// remove the "\\u" before we get the resulting unicode symbol.
 		return String.valueOf(Character.toChars(Integer.parseInt(symbol.substring(2))));
+	}
+
+	private static String getOwner(TownBlock townblock) {
+		return townblock.hasResident() ? townblock.getResidentOrNull().getName() : townblock.getTownOrNull().getName();
 	}
 }

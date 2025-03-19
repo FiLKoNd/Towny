@@ -266,7 +266,7 @@ public abstract class Government extends TownyObject implements BankEconomyHandl
 		if (!TownyEconomyHandler.isActive()) {
 			throw new TownyException(Translation.of("msg_err_no_economy"));
 		}
-		if (!resident.getAccount().payTo(amount, getAccount(), "Deposit from " + resident.getName())) {
+		if (!resident.getAccount().payTo(amount, this, "Deposit from " + resident.getName())) {
 			throw new TownyException(Translation.of("msg_insuf_funds"));
 		}
 	}
@@ -275,8 +275,7 @@ public abstract class Government extends TownyObject implements BankEconomyHandl
 	public BankAccount getAccount() {
 		if (account == null) {
 			String accountName = StringMgmt.trimMaxLength(getBankAccountPrefix() + getName(), 32);
-			World world = getWorld();
-			account = new BankAccount(accountName, world, this);
+			account = new BankAccount(accountName, this);
 			account.setAuditor(accountAuditor);
 		}
 

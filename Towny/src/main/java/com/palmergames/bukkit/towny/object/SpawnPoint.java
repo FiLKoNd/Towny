@@ -3,11 +3,10 @@ package com.palmergames.bukkit.towny.object;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.bsideup.jabel.Desugar;
 import org.bukkit.Location;
-import org.bukkit.Particle;
-
 import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.util.BukkitParticle;
+
 import org.bukkit.World;
 
 public class SpawnPoint {
@@ -52,6 +51,9 @@ public class SpawnPoint {
 	}
 
 	public void drawParticle() {
+		if (!Towny.getPlugin().isEnabled())
+			return;
+		
 		final World world = position.world().getBukkitWorld();
 		if (world == null)
 			return;
@@ -64,7 +66,7 @@ public class SpawnPoint {
 			Towny.getPlugin().getScheduler().runAsyncLater(() -> {
 				try {
 					// This can potentially throw an exception if we're running this async and a player disconnects while it's sending particles.
-					world.spawnParticle(Particle.CRIT_MAGIC, point, 1, 0.0, 0.0, 0.0, 0.0);
+					world.spawnParticle(BukkitParticle.getSpawnPointParticle(), point, 1, 0.0, 0.0, 0.0, 0.0);
 				} catch (Exception ignored) {}
 			}, (long) i * RING_DELAY_TICKS);
 			i++;
@@ -101,7 +103,6 @@ public class SpawnPoint {
 		JAIL_SPAWN
 	}
 	
-	@Desugar
 	private record RingCoord(double x, double z) {
 		private static RingCoord offset(double a, double b) {
 			return new RingCoord(a, b);

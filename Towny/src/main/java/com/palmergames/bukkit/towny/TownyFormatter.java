@@ -34,11 +34,13 @@ import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.util.StringMgmt;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -107,6 +109,9 @@ public class TownyFormatter {
 		screen.addComponentOf("explosion", colourKeyValue(translator.of("explosions"), ((world.isForceExpl() || townBlock.getPermissions().explosion) ? translator.of("status_on"): translator.of("status_off")))); 
 		screen.addComponentOf("firespread", colourKeyValue(translator.of("firespread"), ((world.isForceFire() || townBlock.getPermissions().fire) ? translator.of("status_on"):translator.of("status_off")))); 
 		screen.addComponentOf("mobspawns", colourKeyValue(translator.of("mobspawns"), ((world.isForceTownMobs() || townBlock.getPermissions().mobs || town.isAdminEnabledMobs()) ?  translator.of("status_on"): translator.of("status_off"))));
+
+		if (townBlock.hasDistrict())
+			screen.addComponentOf("district", colourKey(translator.of("status_district_name_and_size", townBlock.getDistrict().getName(), townBlock.getDistrict().getTownBlocks().size())));
 
 		if (townBlock.hasPlotObjectGroup())
 			screen.addComponentOf("plotgroup", colourKey(translator.of("status_plot_group_name_and_size", townBlock.getPlotObjectGroup().getName(), townBlock.getPlotObjectGroup().getTownBlocks().size())));
@@ -442,7 +447,7 @@ public class TownyFormatter {
 		if (nation.getNumTowns() > 0 && nation.hasCapital() && nation.getCapital().hasMayor()) {
 			Resident king = nation.getCapital().getMayor();
 			screen.addComponentOf("king", colourKeyValue(translator.of("status_nation_king"), king.getFormattedName()),
-					HoverEvent.showText(translator.component("registered_last_online", registeredFormat.format(king.getRegistered()), lastOnlineFormatIncludeYear.format(king.getLastOnline()))
+					HoverEvent.showText(translator.component("registered_last_online", getFormattedResidentRegistration(king), lastOnlineFormatIncludeYear.format(king.getLastOnline()))
 						.append(Component.newline())
 						.append(translator.component("status_hover_click_for_more"))),
 					ClickEvent.runCommand("/towny:resident " + king.getName())
@@ -635,7 +640,11 @@ public class TownyFormatter {
 	 * @return String with registered date formatted for use in the StatusScreen. 
 	 */
 	private static String getResidentRegisteredLine(Resident resident, Translator translator) {
-		return (!resident.isNPC() ? colourKeyValue(translator.of("status_registered"), registeredFormat.format(resident.getRegistered())) : colourKeyValue(translator.of("npc_created"), registeredFormat.format(resident.getRegistered())));
+		return (!resident.isNPC() ? colourKeyValue(translator.of("status_registered"), getFormattedResidentRegistration(resident)) : colourKeyValue(translator.of("npc_created"), getFormattedResidentRegistration(resident)));
+	}
+
+	public static String getFormattedResidentRegistration(Resident resident) {
+		return registeredFormat.format(resident.getRegistered());
 	}
 	
 	/**
@@ -1048,11 +1057,14 @@ public class TownyFormatter {
 		String webUrl = "";
 		if (TownySettings.isUsingWebMapStatusScreens() && spawnLocation.hasSpawn() && !TownySettings.getWebMapUrl().isEmpty())
 			webUrl = TownySettings.getWebMapUrl()
-				.replaceAll("\\{world}", spawnLocation.getSpawnOrNull().getWorld().getName())
+				.replaceAll("\\{world}", getWorldSlugForMapURL(spawnLocation.getSpawnOrNull().getWorld()))
 				.replaceAll("\\{x}", "" + spawnLocation.getSpawnOrNull().getBlockX())
 				.replaceAll("\\{z}", "" + spawnLocation.getSpawnOrNull().getBlockZ());
 
 		return webUrl;
 	}
 
+	private static String getWorldSlugForMapURL(World world) {
+		return TownySettings.isUsingWorldKeyForWorldName() ? world.getKey().toString() : world.getName();
+	}
 }

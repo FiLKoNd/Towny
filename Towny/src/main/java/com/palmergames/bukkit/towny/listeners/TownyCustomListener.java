@@ -1,6 +1,5 @@
 package com.palmergames.bukkit.towny.listeners;
 
-import com.palmergames.bukkit.config.ConfigNodes;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.TownyEconomyHandler;
@@ -9,6 +8,7 @@ import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.command.TownCommand;
 import com.palmergames.bukkit.towny.command.TownyCommand;
+import com.palmergames.bukkit.towny.confirmations.Confirmation;
 import com.palmergames.bukkit.towny.event.BedExplodeEvent;
 import com.palmergames.bukkit.towny.event.ChunkNotificationEvent;
 import com.palmergames.bukkit.towny.event.NewTownEvent;
@@ -17,24 +17,35 @@ import com.palmergames.bukkit.towny.event.SpawnEvent;
 import com.palmergames.bukkit.towny.event.TownAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownBlockPermissionChangeEvent;
 import com.palmergames.bukkit.towny.event.TownClaimEvent;
+import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownRemoveResidentEvent;
 import com.palmergames.bukkit.towny.event.damage.TownyPlayerDamagePlayerEvent;
+import com.palmergames.bukkit.towny.event.nation.NationLevelDecreaseEvent;
+import com.palmergames.bukkit.towny.event.nation.NationLevelIncreaseEvent;
 import com.palmergames.bukkit.towny.event.nation.NationPreTownLeaveEvent;
+import com.palmergames.bukkit.towny.event.town.TownLevelDecreaseEvent;
+import com.palmergames.bukkit.towny.event.town.TownLevelIncreaseEvent;
 import com.palmergames.bukkit.towny.event.town.TownPreUnclaimCmdEvent;
+import com.palmergames.bukkit.towny.event.town.TownPreUnclaimEvent;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.CellSurface;
+import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.PlayerCache;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.SpawnType;
 import com.palmergames.bukkit.towny.object.Town;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyWorld;
 import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.Translation;
 import com.palmergames.bukkit.towny.object.WorldCoord;
+import com.palmergames.bukkit.towny.permissions.TownyPerms;
 import com.palmergames.bukkit.towny.utils.BorderUtil;
 import com.palmergames.bukkit.towny.utils.ChunkNotificationUtil;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
+import com.palmergames.bukkit.towny.utils.ProximityUtil;
 import com.palmergames.bukkit.towny.utils.SpawnUtil;
+import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.Colors;
 import com.palmergames.bukkit.util.DrawSmokeTaskFactory;
 import com.palmergames.util.TimeMgmt;
@@ -73,7 +84,7 @@ public class TownyCustomListener implements Listener {
 			return;
 
 		// Run the following with a one tick delay, so that everything has a chance to take in the player's position.
-		plugin.getScheduler().runLater(() -> {
+		plugin.getScheduler().runLater(player, () -> {
 			try {
 				if (resident.hasMode("townclaim"))
 					TownCommand.parseTownClaimCommand(player, new String[] {});
@@ -81,6 +92,8 @@ public class TownyCustomListener implements Listener {
 					TownCommand.parseTownUnclaimCommand(player, new String[] {});
 				if (resident.hasMode("plotgroup") && resident.hasPlotGroupName()) 
 					Towny.getPlugin().getScheduler().runLater(player, () -> Bukkit.dispatchCommand(player, "plot group add " + resident.getPlotGroupName()), 1L);
+				if (resident.hasMode("district") && resident.hasDistrictName())
+					Towny.getPlugin().getScheduler().runLater(player, () -> Bukkit.dispatchCommand(player, "plot district add " + resident.getDistrictName()), 1L);
 			} catch (TownyException e) {
 				TownyMessaging.sendErrorMsg(player, e.getMessage(player));
 			}
@@ -213,6 +226,25 @@ public class TownyCustomListener implements Listener {
 	}
 
 	/**
+	 * Used to prevent unclaiming when a District would be cut in two parts.
+	 * 
+	 * @param event {@link TownPreUnclaimEvent} thrown when someone runs /t unclaim.
+	 */
+	@EventHandler(ignoreCancelled = true)
+	public void onTownUnclaimDistrict(TownPreUnclaimEvent event) {
+		TownBlock townBlock = event.getTownBlock();
+		if (!townBlock.hasDistrict())
+			return;
+
+		try {
+			ProximityUtil.testAdjacentRemoveDistrictRulesOrThrow(townBlock.getWorldCoord(), event.getTown(), townBlock.getDistrict(), 1);
+		} catch (TownyException e) {
+			event.setCancelled(true);
+			event.setCancelMessage(e.getMessage());
+		}
+	}
+
+	/**
 	 * Used to warn towns when they're approaching their claim limit, when the
 	 * takeoverclaim feature is enabled, as well as claiming particles.
 	 * 
@@ -220,7 +252,7 @@ public class TownyCustomListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onTownClaim(TownClaimEvent event) {
-		if (TownySettings.isShowingClaimParticleEffect())
+		if (TownySettings.isShowingClaimParticleEffect() && event.getTownBlock().getWorldCoord().isFullyLoaded())
 			Towny.getPlugin().getScheduler().runAsync(() ->
 				CellSurface.getCellSurface(event.getTownBlock().getWorldCoord()).runClaimingParticleOverSurfaceAtPlayer(event.getResident().getPlayer()));
 
@@ -234,14 +266,27 @@ public class TownyCustomListener implements Listener {
 	 * Used to warn towns when they've lost a resident, so they know they're at risk
 	 * of having claims stolen in the takeoverclaim feature.
 	 * 
+	 * Used for town_level and nation_level decrease events.
+	 * 
 	 * @param event TownRemoveResidentEvent.
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onTownLosesResident(TownRemoveResidentEvent event) {
+		Town town = event.getTown();
+		if (town.getLevelNumber() < TownySettings.getTownLevelFromGivenInt(town.getNumResidents() + 1, town)) {
+			BukkitTools.fireEvent(new TownLevelDecreaseEvent(town));
+		}
+		if (town.hasNation()) {
+			Nation nation = town.getNationOrNull();
+			if (nation.getLevelNumber() < TownySettings.getNationLevelFromGivenInt(nation.getNumResidents() + 1)) {
+				BukkitTools.fireEvent(new NationLevelDecreaseEvent(nation));
+			}	
+		}
+		
 		if (!TownySettings.isOverClaimingAllowingStolenLand())
 			return;
-		if (event.getTown().isOverClaimed())
-			TownyMessaging.sendPrefixedTownMessage(event.getTown(), Translatable.literal(Colors.Red).append(Translatable.of("msg_warning_your_town_is_overclaimed")));
+		if (town.isOverClaimed())
+			TownyMessaging.sendPrefixedTownMessage(town, Translatable.literal(Colors.Red).append(Translatable.of("msg_warning_your_town_is_overclaimed")));
 	}
 
 	/**
@@ -269,24 +314,68 @@ public class TownyCustomListener implements Listener {
 
 	}
 
-	@EventHandler(ignoreCancelled = true)
-	public void onResidentJoinTown(TownAddResidentEvent event) {
-		if (!TownySettings.isPromptingNewResidentsToTownSpawn() || !TownySettings.getBoolean(ConfigNodes.SPAWNING_ALLOW_TOWN_SPAWN))
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true) 
+	public void onResidentPreJoinTown(TownPreAddResidentEvent event) {
+		Resident resident = event.getResident();
+
+		long minTime = TownySettings.getResidentMinTimeToJoinTown();
+		if (minTime <= 0L)
 			return;
 
-		Town town = event.getTown();
-		Player player = event.getResident().getPlayer();
-		Town residentTown = event.getResident().getTownOrNull();
+		long timePlayed = System.currentTimeMillis() - resident.getRegistered();
+		if (timePlayed >= minTime)
+			return;
 
-		if (player == null || residentTown == null || residentTown.equals(town))
+		String timeRemaining = TimeMgmt.getFormattedTimeValue(minTime - timePlayed);
+		event.setCancelled(true);
+		event.setCancelMessage(Translatable.of("msg_err_you_cannot_join_town_you_have_not_played_long_enough", timeRemaining).forLocale(resident));
+	}
+
+	@EventHandler(ignoreCancelled = true)
+	public void onResidentJoinTown(TownAddResidentEvent event) {
+		Town town = event.getTown();
+
+		if (town.getLevelNumber() > TownySettings.getTownLevelFromGivenInt(town.getNumResidents() - 1, town)) {
+			BukkitTools.fireEvent(new TownLevelIncreaseEvent(town));
+		}
+		if (town.hasNation()) {
+			Nation nation = town.getNationOrNull();
+			if (nation.getLevelNumber() > TownySettings.getNationLevelFromGivenInt(nation.getNumResidents() - 1)) {
+				BukkitTools.fireEvent(new NationLevelIncreaseEvent(nation));
+			}	
+		}
+
+		if (!TownySettings.isPromptingNewResidentsToTownSpawn() || !TownySettings.isConfigAllowingTownSpawn())
+			return;
+
+		Player player = event.getResident().getPlayer();
+		Town playerLocationTown = Optional.ofNullable(player).map(p -> TownyAPI.getInstance().getTown(p.getLocation())).orElse(null);
+
+		if (player == null || (playerLocationTown != null && playerLocationTown.equals(town)))
 			return;
 		
 		String notAffordMsg = Translatable.of("msg_err_cant_afford_tp").forLocale(player);
 
-		try {
-			SpawnUtil.sendToTownySpawn(player, new String[0], town, notAffordMsg, false, false, SpawnType.TOWN);
-		} catch (TownyException e) {
-			TownyMessaging.sendErrorMsg(player, e.getMessage(player));
+		double cost = town.getSpawnCost();
+		if (cost > 0) {
+			// The costed spawn will have its own Confirmation.
+			try {
+				SpawnUtil.sendToTownySpawn(player, new String[0], town, notAffordMsg, false, false, SpawnType.TOWN);
+			} catch (TownyException e) {
+				TownyMessaging.sendErrorMsg(player, e.getMessage(player));
+			}
+		} else {
+			// No cost, so lets offer the new resident a choice.
+			Confirmation.runOnAccept(() -> {
+				try {
+					SpawnUtil.sendToTownySpawn(player, new String[0], town, notAffordMsg, false, false, SpawnType.TOWN);
+				} catch (TownyException e) {
+					TownyMessaging.sendErrorMsg(player, e.getMessage(player));
+				}
+			})
+			.setTitle(Translatable.of("msg_new_resident_spawn_to_town_prompt"))
+			.sendTo(player);
+			
 		}
 	}
 
@@ -304,5 +393,49 @@ public class TownyCustomListener implements Listener {
 		if (cache == null || !cache.getLastTownBlock().equals(worldCoord) || PlayerCacheUtil.isOwnerCache(cache))
 			return;
 		Towny.getPlugin().resetCache(player);
+	}
+
+	/*
+	 * Watch for town and nation level increasing/decreasing and reassign permissions in case the players have level-requirement permissions. 
+	 */
+
+	@EventHandler
+	public void onTownLevelIncrease(TownLevelIncreaseEvent event) {
+		if (!TownyPerms.ranksWithTownLevelRequirementPresent())
+			return;
+		event.getTown().getResidents()
+		.stream()
+		.filter(Resident::isOnline)
+		.forEach(r -> TownyPerms.assignPermissions(r, r.getPlayer()));
+	}
+	
+	@EventHandler
+	public void onTownLevelDecrease(TownLevelDecreaseEvent event) {
+		if (!TownyPerms.ranksWithTownLevelRequirementPresent())
+			return;
+		event.getTown().getResidents()
+		.stream()
+		.filter(Resident::isOnline)
+		.forEach(r -> TownyPerms.assignPermissions(r, r.getPlayer()));
+	}
+	
+	@EventHandler
+	public void onNationLevelIncrease(NationLevelIncreaseEvent event) {
+		if (!TownyPerms.ranksWithNationLevelRequirementPresent())
+			return;
+		event.getNation().getResidents()
+		.stream()
+		.filter(Resident::isOnline)
+		.forEach(r -> TownyPerms.assignPermissions(r, r.getPlayer()));
+	}
+	
+	@EventHandler
+	public void onNationLevelDecrease(NationLevelDecreaseEvent event) {
+		if (!TownyPerms.ranksWithNationLevelRequirementPresent())
+			return;
+		event.getNation().getResidents()
+		.stream()
+		.filter(Resident::isOnline)
+		.forEach(r -> TownyPerms.assignPermissions(r, r.getPlayer()));
 	}
 }

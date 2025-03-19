@@ -13,7 +13,7 @@
 
     <artifactId>towny</artifactId>
     <packaging>jar</packaging>
-    <version>0.100.2.0</version>
+    <version>0.101.1.6</version>
 
     <licenses>
         <license>
@@ -30,8 +30,7 @@
     </organization>
 
     <properties>
-        <java.version>17</java.version>
-        <project.bukkitAPIVersion>1.16</project.bukkitAPIVersion>
+        <project.bukkitAPIVersion>1.19</project.bukkitAPIVersion>
         <skipTests>true</skipTests>
     </properties>
 
@@ -74,13 +73,39 @@
             <id>playpro-repo</id>
             <url>https://maven.playpro.com</url>
         </repository>
+        <!-- VaultUnlockedAPI -->
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <!-- Here to satisfy MockBukkit testing. -->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <scope>test</scope>
+            <exclusions>
+              <exclusion>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-api</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-text-serializer-gson</artifactId>
+              </exclusion>
+              <exclusion>
+                <groupId>net.kyori</groupId>
+                <artifactId>adventure-text-serializer-legacy</artifactId>
+              </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>1.21.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -92,7 +117,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version>
+            <version>6.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -112,12 +137,12 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7.1</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultUnlockedAPI</artifactId>
+            <version>2.9</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.ElgarL</groupId>
@@ -129,25 +154,20 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.23.1</version>
+            <version>2.24.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.11.5</version>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.26.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.11.0</version>
+            <version>1.26.2</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
@@ -157,34 +177,28 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.3.2</version>
+            <version>4.3.4</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-plain</artifactId>
-            <version>4.16.0</version>
+            <version>4.19.0</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.16.0</version>
+            <version>4.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.2</version>
+            <version>3.1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
             <artifactId>api</artifactId>
             <version>5.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.bsideup.jabel</groupId>
-            <artifactId>jabel-javac-plugin</artifactId>
-            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -228,28 +242,29 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.2</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.2</version>
+            <version>5.11.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>22.3</version>
+            <version>22.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.20</artifactId>
-            <version>3.78.0</version>
+            <artifactId>MockBukkit-v1.21</artifactId>
+            <version>3.133.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <pluginRepositories>
         <pluginRepository>
             <id>apache.snapshots</id>
@@ -267,20 +282,15 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.12.1</version>
+                    <version>3.13.0</version>
                     <configuration>
-                        <release>8</release>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                        <compilerArgs>
-                            <arg>-Xplugin:jabel</arg>
-                        </compilerArgs>
+                        <release>${java.version}</release>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.6.3</version>
+                    <version>3.11.2</version>
                     <executions>
                         <execution>
                             <id>install</id>
@@ -298,7 +308,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <source>16</source>
+                        <source>${java.version}</source>
                         <doclint>all,-missing</doclint>
                         <doctitle>Towny - ${project.version}</doctitle>
                         <groups>
@@ -340,7 +350,7 @@
                 <plugin>  <!-- Create sources.jar -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.3.1</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -353,39 +363,16 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>3.5.2</version>
+                    <version>3.6.0</version>
                     <configuration>
                         <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                         <artifactSet>
-                            <includes>
-                                <include>net.kyori:adventure-platform-bukkit</include>
-                                <include>net.kyori:adventure-platform-api</include>
-                                <include>net.kyori:adventure-api</include>
-                                <include>net.kyori:adventure-text-serializer-craftbukkit</include>
-                                <include>net.kyori:adventure-platform-facet</include>
-                                <include>net.kyori:adventure-text-serializer-gson</include>
-                                <include>net.kyori:adventure-text-serializer-legacy</include>
-                                <include>net.kyori:adventure-key</include>
-                                <include>net.kyori:adventure-text-serializer-gson-legacy-impl</include>
-                                <include>net.kyori:adventure-text-serializer-bungeecord</include>
-                                <include>net.kyori:adventure-platform-viaversion</include>
-                                <include>net.kyori:adventure-nbt</include>
-                                <include>net.kyori:examination-api</include>
-                                <include>net.kyori:examination-string</include>
-                                <include>net.kyori:adventure-text-serializer-plain</include>
-                                <include>net.kyori:adventure-text-minimessage</include>
-                                <include>com.zaxxer:HikariCP</include>
-                                <include>io.papermc:paperlib</include>
-                                <include>org.apache.commons:commons-compress</include>
-                                <include>org.apache.commons:commons-text</include>
-                                <include>org.bstats:bstats-bukkit</include>
-                                <include>org.bstats:bstats-base</include>
-                                <include>org.json:json</include>
-                                <include>solar.squares:pixel-width-core</include>
-                                <include>com.palmergames.bukkit.towny:towny-base-providers</include>
-                                <include>com.palmergames.bukkit.towny:towny-folia-provider</include>
-                                <include>com.palmergames.bukkit.towny:towny-paper-provider</include>
-                            </includes>
+                            <excludes>
+                                <exclusion>org.slf4j:slf4j-api</exclusion>
+                                <exclusion>commons-io:commons-io</exclusion>
+                                <exclusion>commons-codec:commons-codec</exclusion>
+                                <exclusion>org.apache.commons:commons-lang3</exclusion>
+                            </excludes>
                         </artifactSet>
                         <relocations>
                             <relocation>
@@ -401,16 +388,8 @@
                                 <shadedPattern>com.palmergames.compress</shadedPattern>
                             </relocation>
                             <relocation>
-                                <pattern>org.apache.commons.text</pattern>
-                                <shadedPattern>com.palmergames.text</shadedPattern>
-                            </relocation>
-                            <relocation>
                                 <pattern>net.kyori.adventure</pattern>
                                 <shadedPattern>com.palmergames.adventure</shadedPattern>
-                            </relocation>
-                            <relocation>
-                                <pattern>net.kyori.examination</pattern>
-                                <shadedPattern>com.palmergames.examination</shadedPattern>
                             </relocation>
                             <relocation>
                                 <pattern>org.bstats</pattern>
@@ -425,14 +404,16 @@
                             <filter>
                                 <artifact>*:*</artifact>
                                 <excludes>
-                                    <exclude>META-INF/*.MF</exclude>
+                                    <exclude>META-INF/MANIFEST.MF</exclude>
+                                    <exclude>META-INF/**/module-info.class</exclude>
                                 </excludes>
                             </filter>
-                            <filter>
-                                <artifact>net.kyori:*</artifact>
-                                <excludes>META-INF/versions/9/module-info.class</excludes>
-                            </filter>
                         </filters>
+                        <transformers>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> </transformer>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"> </transformer>
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer"> </transformer>
+                        </transformers>
                         <minimizeJar>true</minimizeJar>
                     </configuration>
                     <executions>
@@ -447,7 +428,7 @@
                 <plugin>
                     <groupId>com.github.TownyAdvanced</groupId>
                     <artifactId>bridger</artifactId>
-                    <version>1.7.1.Final</version>
+                    <version>1.7.2.Final</version>
                     <executions>
                         <!-- run after "compile", runs bridger on main classes -->
                         <execution>
@@ -462,9 +443,21 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
+                    <version>3.5.2</version>
                     <configuration>
                         <skipTests>${skipTests}</skipTests>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.4.2</version>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <paperweight-mappings-namespace>mojang</paperweight-mappings-namespace>
+                            </manifestEntries>
+                        </archive>
                     </configuration>
                 </plugin>
             </plugins>
@@ -488,29 +481,6 @@
             <properties>
                 <skipTests>false</skipTests>
             </properties>
-        </profile>
-
-        <profile>
-            <id>intellij-idea-only</id>
-            <activation>
-                <property>
-                    <name>idea.maven.embedder.version</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <release>${java.version}</release>
-                            <compilerArgs>
-                                <arg>--enable-preview</arg>
-                            </compilerArgs>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
     </profiles>
 </project>

@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.TownySettings.TownLevel;
 import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.event.DeleteNationEvent;
 import com.palmergames.bukkit.towny.event.NationAddTownEvent;
 import com.palmergames.bukkit.towny.event.NationRemoveTownEvent;
 import com.palmergames.bukkit.towny.event.BonusBlockPurchaseCostCalculationEvent;
@@ -80,6 +81,7 @@ public class Town extends Government implements TownBlockOwner {
 	private List<Jail> jails = null;
 	private HashMap<String, PlotGroup> plotGroups = null;
 	private TownBlockTypeCache plotTypeCache = new TownBlockTypeCache();
+	private HashMap<String, District> districts = null;
 	
 	private Resident mayor;
 	private String founderName;
@@ -237,12 +239,17 @@ public class Town extends Government implements TownBlockOwner {
 	public void setMayor(Resident mayor, boolean callEvent) {
 		if (!hasResident(mayor))
 			return;
+		
+		final Resident oldMayor = this.mayor;
 
 		if (callEvent)
 			BukkitTools.fireEvent(new TownMayorChangedEvent(this.mayor, mayor));
 
 		this.mayor = mayor;
 
+		if (oldMayor != null)
+			TownyPerms.assignPermissions(oldMayor, null);
+		
 		TownyPerms.assignPermissions(mayor, null);
 	}
 
@@ -291,8 +298,8 @@ public class Town extends Government implements TownBlockOwner {
 		try {
 			oldNation.removeTown(this);
 		} catch (EmptyNationException e) {
-			TownyUniverse.getInstance().getDataSource().removeNation(oldNation);
-			TownyMessaging.sendGlobalMessage(Translatable.of("msg_del_nation", e.getNation().getName()));
+			if (TownyUniverse.getInstance().getDataSource().removeNation(oldNation, DeleteNationEvent.Cause.NO_TOWNS))
+				TownyMessaging.sendGlobalMessage(Translatable.of("msg_del_nation", e.getNation().getName()));
 		}
 		
 		try {
@@ -324,6 +331,10 @@ public class Town extends Government implements TownBlockOwner {
 
 		if (nation == null) {
 			this.nation = null;
+			if (isConquered()) {
+				setConquered(false);
+				setConqueredDays(0);
+			}
 			return;
 		}
 
@@ -683,12 +694,16 @@ public class Town extends Government implements TownBlockOwner {
 			return;
 
 		Nation townNation = getNationOrNull();
-		if (townNation == null || !townNation.getCapital().hasHomeBlock()
-			|| !ProximityUtil.isTownTooFarFromNation(this, townNation.getCapital(), townNation.getTowns()))
+		if (townNation == null || !townNation.getCapital().hasHomeBlock())
 			return;
 
-		TownyMessaging.sendNationMessagePrefixed(townNation, Translatable.of("msg_nation_town_moved_their_homeblock_too_far", getName()));
-		removeNation();
+		List<Town> outOfRangeTowns = ProximityUtil.gatherOutOfRangeTowns(townNation);
+		if (outOfRangeTowns.size() > 0) {
+			if (outOfRangeTowns.contains(this))
+				TownyMessaging.sendNationMessagePrefixed(townNation, Translatable.of("msg_nation_town_moved_their_homeblock_too_far", getName()));
+
+			ProximityUtil.removeOutOfRangeTowns(townNation);
+		}
 	}
 	
 	/**
@@ -775,18 +790,16 @@ public class Town extends Government implements TownBlockOwner {
 		return mayor != null;
 	}
 
-	public void removeResident(Resident resident) throws EmptyTownException, NotRegisteredException {
+	public void removeResident(Resident resident) throws EmptyTownException {
 
-		if (!hasResident(resident)) {
-			throw new NotRegisteredException();
-		} else {
+		if (!hasResident(resident))
+			return;
 
-			remove(resident);
-			resident.setJoinedTownAt(0);
+		remove(resident);
+		resident.setJoinedTownAt(0);
 
-			if (getNumResidents() == 0) {
-				throw new EmptyTownException(this);
-			}
+		if (getNumResidents() == 0) {
+			throw new EmptyTownException(this);
 		}
 	}
 
@@ -1044,13 +1057,18 @@ public class Town extends Government implements TownBlockOwner {
 		for (Location loc : getAllOutpostSpawns()) {
 			i++;
 			TownBlock tboutpost = TownyAPI.getInstance().getTownBlock(loc);
-			if (tboutpost != null) {
-				String name = !tboutpost.hasPlotObjectGroup() ? tboutpost.getName() : tboutpost.getPlotObjectGroup().getName();
-				if (!name.isEmpty())
-					outpostNames.add(name);
-				else
-					outpostNames.add(String.valueOf(i));
+
+			if (tboutpost == null) {
+				removeOutpostSpawn(loc);
+				save();
+				continue;
 			}
+
+			String name = !tboutpost.hasPlotObjectGroup() ? tboutpost.getName() : tboutpost.getPlotObjectGroup().getName();
+			if (!name.isEmpty())
+				outpostNames.add(name);
+			else
+				outpostNames.add(String.valueOf(i));
 		}
 		return outpostNames;
 	}
@@ -1095,6 +1113,9 @@ public class Town extends Government implements TownBlockOwner {
 	}
 
 	public void setPlotPrice(double plotPrice) {
+		if (plotPrice < 0)
+			plotPrice = -1;
+		
 		this.plotPrice = Math.min(plotPrice, TownySettings.getMaxPlotPrice());
 	}
 
@@ -1113,6 +1134,9 @@ public class Town extends Government implements TownBlockOwner {
 	}
 
 	public void setCommercialPlotPrice(double commercialPlotPrice) {
+		if (commercialPlotPrice < 0)
+			commercialPlotPrice = -1;
+		
 		this.commercialPlotPrice = Math.min(commercialPlotPrice, TownySettings.getMaxPlotPrice());
 	}
 
@@ -1122,6 +1146,9 @@ public class Town extends Government implements TownBlockOwner {
 	}
 
 	public void setEmbassyPlotPrice(double embassyPlotPrice) {
+		if (embassyPlotPrice < 0)
+			embassyPlotPrice = -1;
+		
 		this.embassyPlotPrice = Math.min(embassyPlotPrice, TownySettings.getMaxPlotPrice());
 	}
 
@@ -1305,6 +1332,9 @@ public class Town extends Government implements TownBlockOwner {
 		if (!callEvent)
 			return;
 
+		if (TownyPerms.hasConqueredNodes())
+			TownyPerms.updateTownPerms(this);
+
 		if (this.isConquered)
 			BukkitTools.fireEvent(new TownConqueredEvent(this));
 		else
@@ -1436,6 +1466,53 @@ public class Town extends Government implements TownBlockOwner {
 		return null;
 	}
 
+	public void renameDistrict(String oldName, District district) {
+		districts.remove(oldName);
+		districts.put(district.getName(), district);
+	}
+
+	public void addDistrict(District district) {
+		if (!hasDistricts())
+			districts = new HashMap<>();
+		
+		districts.put(district.getName(), district);
+	}
+
+	public void removeDistrict(District district) {
+		if (hasDistricts() && districts.remove(district.getName()) != null) {
+			for (TownBlock tb : new ArrayList<>(district.getTownBlocks())) {
+				if (tb.hasDistrict() && tb.getDistrict().getUUID().equals(district.getUUID())) {
+					district.removeTownBlock(tb);
+					tb.removeDistrict();
+					tb.save();
+				}
+			}
+		}
+	}
+
+	// Abstract to collection in case we want to change structure in the future
+	public Collection<District> getDistricts() {
+		if (districts == null || districts.isEmpty())
+			return Collections.emptyList();
+		
+		return Collections.unmodifiableCollection(districts.values());
+	}
+
+	public boolean hasDistricts() {
+		return districts != null;
+	}
+
+	public boolean hasDistrictName(String name) {
+		return hasDistricts() && districts.containsKey(name);
+	}
+
+	@Nullable
+	public District getDistrictFromName(String name) {
+		if (hasDistricts() && hasDistrictName(name))
+			return districts.get(name);
+		return null;
+	}
+	
 	@Override
 	public double getBankCap() {
 		return TownySettings.getTownBankCap(this);
@@ -1807,6 +1884,7 @@ public class Town extends Government implements TownBlockOwner {
 	public TownLevel getTownLevel() {
 		return TownySettings.getTownLevel(this);
 	}
+
 	/**
 	 * Get the Town's current TownLevel number, based on its population.
 	 * <p>
@@ -1826,64 +1904,12 @@ public class Town extends Government implements TownBlockOwner {
 	 */
 	public int getLevelNumber() {
 		int townLevelNumber = getManualTownLevel() > -1
-				? TownySettings.getTownLevelWhichIsManuallySet(getManualTownLevel())
-				: TownySettings.getTownLevelFromGivenInt(getNumResidents(), this);
+				? Math.min(getManualTownLevel(), TownySettings.getTownLevelMax())
+				: TownySettings.getTownLevelWhichIsNotManuallySet(getNumResidents(), this);
 
 		TownCalculateTownLevelNumberEvent tctle = new TownCalculateTownLevelNumberEvent(this, townLevelNumber);
 		BukkitTools.fireEvent(tctle);
 		return tctle.getTownLevelNumber();
-	}
-	
-	/**
-	 * @deprecated since 0.99.6.3 use {@link #getLevelNumber()} instead.
-	 * Get the Town's current level, based on its population.
-	 * <p>
-	 *     Note that Town Levels are not hard-coded. They can be defined by the server administrator,
-	 *     and may be different from the default configuration.
-	 * </p>
-	 * @return Current Town Level.
-	 */
-	@Deprecated
-	public int getLevel() {
-		return getLevelNumber();
-	}
-
-	/**
-	 * @deprecated since 0.99.6.3 use {@link TownySettings#getTownLevelFromGivenInt(int, Town)} instead.
-	 * Get the town level for a given population size.
-	 * <p>
-	 *     Great for debugging, or just to see what the town level is for a given amount of residents. 
-	 *     But for most cases you'll want to use {@link Town#getLevel()}, which uses the town's current population.
-	 *     <br />
-	 *     Note that Town Levels are not hard-coded. They can be defined by the server administrator,
-	 *     and may be different from the default configuration.
-	 * </p>
-	 * @param populationSize Number of residents used to calculate the level.
-	 * @return The calculated Town Level. 0, if the town is ruined, or the method otherwise fails through.
-	 */
-	@Deprecated
-	public int getLevel(int populationSize) {
-		return TownySettings.getTownLevelFromGivenInt(populationSize, this);
-	}
-
-	/**
-	 * @deprecated since 0.99.6.3 use {@link TownySettings#getTownLevelMax()} instead.
-	 * Get the maximum level a Town may achieve.
-	 * @return Size of TownySettings' configTownLevel SortedMap.
-	 */
-	@Deprecated
-	public int getMaxLevel() {
-		return TownySettings.getConfigTownLevel().size();
-	}
-
-	/**
-	 * @deprecated since 0.99.6.3 use {@link #getLevelNumber()} instead.
-	 * Returns the Town Level ID.
-	 * @return id
-	 */
-	@Deprecated
-	public int getLevelID() {
-		return getLevelNumber();
 	}
 
 	/**

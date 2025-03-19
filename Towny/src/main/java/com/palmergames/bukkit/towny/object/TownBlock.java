@@ -45,6 +45,7 @@ public class TownBlock extends TownyObject {
 	private boolean taxed = true;
 	private boolean outpost = false;
 	private PlotGroup plotGroup;
+	private District district;
 	private long claimedAt;
 	private Jail jail;
 	private Map<Resident, PermissionData> permissionOverrides = new HashMap<>();
@@ -224,13 +225,16 @@ public class TownBlock extends TownyObject {
 
 	public void setPlotPrice(double price) {
 		if (this.town != null) {
-			if (isForSale() && price == -1.0)
+			if (isForSale() && price < 0)
 				// Plot is no longer for sale.
 				this.town.getTownBlockTypeCache().removeTownBlockOfTypeForSale(this);
-			else if (!isForSale() && price > -1.0)
+			else if (!isForSale() && price >= 0)
 				// Plot is being put up for sale.
 				this.town.getTownBlockTypeCache().addTownBlockOfTypeForSale(this);
 		}
+		
+		if (price < 0)
+			price = -1;
 
 		this.plotPrice = price;
 	}
@@ -242,7 +246,7 @@ public class TownBlock extends TownyObject {
 
 	public boolean isForSale() {
 
-		return getPlotPrice() != -1.0;
+		return getPlotPrice() >= 0.0;
 	}
 
 	public boolean isTaxed() {
@@ -439,25 +443,9 @@ public class TownBlock extends TownyObject {
 		super.setName(newName.replace("_", " ")); 
 	}
 
-	/**
-	 * @deprecated Deprecated as of 0.99.5.3, it is no longer possible to mutate the world/coordinates of a townblock.
-	 */
-	@Deprecated
-	public void setX(int x) {
-
-	}
-
 	public int getX() {
 
 		return this.worldCoord.getX();
-	}
-
-	/**
-	 * @deprecated Deprecated as of 0.99.5.3, it is no longer possible to mutate the world/coordinates of a townblock.
-	 */
-	@Deprecated
-	public void setZ(int z) {
-
 	}
 
 	public int getZ() {
@@ -473,14 +461,6 @@ public class TownBlock extends TownyObject {
 	public WorldCoord getWorldCoord() {
 
 		return this.worldCoord;
-	}
-
-	/**
-	 * @deprecated Deprecated as of 0.99.5.3, it is no longer possible to mutate the world/coordinates of a townblock.
-	 */
-	@Deprecated
-	public void setWorld(TownyWorld world) {
-
 	}
 
 	public TownyWorld getWorld() {
@@ -558,6 +538,27 @@ public class TownBlock extends TownyObject {
 		}
 	}
 
+
+	public boolean hasDistrict() { return district != null; }
+	
+	public District getDistrict() {
+		return district;
+	}
+	
+	public void removeDistrict() {
+		this.district = null;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+
+		try {
+			district.addTownBlock(this);
+		} catch (NullPointerException e) {
+			TownyMessaging.sendErrorMsg("Townblock failed to setDistrict(district), district is null. ");
+		}
+	}
+
 	@Override
 	public void save() {
 		TownyUniverse.getInstance().getDataSource().saveTownBlock(this);
@@ -628,8 +629,12 @@ public class TownBlock extends TownyObject {
 	}
 	
 	public void evictOwnerFromTownBlock() {
+		evictOwnerFromTownBlock(false);
+	}
+
+	public void evictOwnerFromTownBlock(boolean forsale) {
 		this.removeResident();
-		this.setPlotPrice(-1);
+		this.setPlotPrice(forsale ? town.getPlotPrice() : -1);
 		this.setType(getType());
 		this.save();
 	}

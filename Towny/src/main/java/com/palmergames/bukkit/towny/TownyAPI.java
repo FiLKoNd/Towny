@@ -2,6 +2,7 @@ package com.palmergames.bukkit.towny;
 
 import com.palmergames.bukkit.towny.command.BaseCommand;
 import com.palmergames.bukkit.towny.db.TownyDataSource;
+import com.palmergames.bukkit.towny.event.teleport.CancelledTownyTeleportEvent.CancelledTeleportReason;
 import com.palmergames.bukkit.towny.event.townblockstatus.NationZoneTownBlockStatusEvent;
 import com.palmergames.bukkit.towny.exceptions.KeyAlreadyRegisteredException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
@@ -637,7 +638,12 @@ public class TownyAPI {
      */
     @Nullable
     public TownBlock getTownBlock(Location location) {
-        WorldCoord worldCoord = WorldCoord.parseWorldCoord(location);
+        WorldCoord worldCoord;
+		try {
+			worldCoord = WorldCoord.parseWorldCoord(location);
+		} catch (IllegalArgumentException ignored) {
+			return null;
+		}
 		return worldCoord.getTownBlockOrNull();
     }
     
@@ -713,10 +719,13 @@ public class TownyAPI {
 		}
     }
     
-    public void abortTeleportRequest(Resident resident) {
-        
-        TeleportWarmupTimerTask.abortTeleportRequest(resident);
-    }
+	public void abortTeleportRequest(Resident resident) {
+		abortTeleportRequest(resident, CancelledTeleportReason.UNKNOWN);
+	}
+
+	public void abortTeleportRequest(Resident resident, CancelledTeleportReason reason) {
+		TeleportWarmupTimerTask.abortTeleportRequest(resident, reason);
+	}
     
     public void registerCustomDataField(CustomDataField<?> field) throws KeyAlreadyRegisteredException {
     	townyUniverse.addCustomCustomDataField(field);

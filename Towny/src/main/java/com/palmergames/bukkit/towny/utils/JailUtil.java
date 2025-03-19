@@ -130,9 +130,22 @@ public class JailUtil {
 		teleportToJail(resident);
 		
 		// Call ResidentJailEvent.
-		BukkitTools.fireEvent(new ResidentJailEvent(resident));
-	
+		BukkitTools.fireEvent(new ResidentJailEvent(resident, reason, jailer instanceof Player player ? player : null));
+
+		if (TownySettings.showBailTitle())
+			Towny.getPlugin().getScheduler().runLater(() -> showBailTitleMessage(resident, translator), 80L);
 	}
+
+	public static void showBailTitleMessage(Resident resident, Translator translator) {
+		if (!resident.isOnline() || !resident.isJailed() || resident.getJailBailCost() <= 0)
+			return;
+		TownyMessaging.sendTitleMessageToResident(resident,
+				translator.of("titlemsg_pay_your_bail_title", TownyEconomyHandler.getFormattedBalance(resident.getJailBailCost())),
+				translator.of("titlemsg_pay_your_bail_subtitle"),
+				200); // 10 seconds
+		Towny.getPlugin().getScheduler().runLater(() -> showBailTitleMessage(resident, translator), 200L);
+	}
+
 
 	/**
 	 * Unjails a resident.
@@ -196,6 +209,7 @@ public class JailUtil {
 			unJailResident(resident);
 		}
 		}
+		BukkitTools.fireEvent(new ResidentUnjailEvent(resident, reason));
 	}
 
 	public static void unJailResident(Resident resident) {
@@ -205,7 +219,6 @@ public class JailUtil {
 		resident.setJail(null);
 		resident.setJailBailCost(0.00);
 		resident.save();
-		BukkitTools.fireEvent(new ResidentUnjailEvent(resident));
 	}
 
 	/**

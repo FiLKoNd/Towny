@@ -1,6 +1,5 @@
 package com.palmergames.bukkit.towny.db;
 
-import com.github.bsideup.jabel.Desugar;
 import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.db.TownySQLSource.TownyDBTableType;
@@ -49,6 +48,9 @@ public class SQLSchema {
 		initTable(cntx, TownyDBTableType.PLOTGROUP);
 		updateTable(cntx, TownyDBTableType.PLOTGROUP, getPlotGroupColumns());
 
+		initTable(cntx, TownyDBTableType.DISTRICT);
+		updateTable(cntx, TownyDBTableType.DISTRICT, getDistrictColumns());
+
 		initTable(cntx, TownyDBTableType.JAIL);
 		updateTable(cntx, TownyDBTableType.JAIL, getJailsColumns());
 
@@ -79,6 +81,7 @@ public class SQLSchema {
 			case TOWNBLOCK -> fetchCreateTownBlocksStatement();
 			case JAIL -> fetchCreateUUIDStatement(tableType);
 			case PLOTGROUP -> fetchCreatePlotGroupStatement(tableType);
+			case DISTRICT -> fetchCreateUUIDStatement(tableType);
 			case COOLDOWN -> fetchCreateCooldownsStatement(tableType);
 			case WORLD -> fetchCreateWorldStatemnt(tableType);
 			case HIBERNATED_RESIDENT -> fetchCreateUUIDStatement(tableType);
@@ -157,6 +160,14 @@ public class SQLSchema {
 		columns.add("`groupName` mediumtext NOT NULL");
 		columns.add("`groupPrice` float DEFAULT NULL");
 		columns.add("`town` VARCHAR(32) NOT NULL");
+		columns.add("`metadata` text DEFAULT NULL");
+		return columns;
+	}
+
+	private static List<String> getDistrictColumns() {
+		List<String> columns = new ArrayList<>();
+		columns.add("`districtName` mediumtext NOT NULL");
+		columns.add("`town` VARCHAR(36) NOT NULL");
 		columns.add("`metadata` text DEFAULT NULL");
 		return columns;
 	}
@@ -333,6 +344,7 @@ public class SQLSchema {
 		columns.add("`changed` bool NOT NULL DEFAULT '0'");
 		columns.add("`metadata` text DEFAULT NULL");
 		columns.add("`groupID` VARCHAR(36) DEFAULT NULL");
+		columns.add("`districtID` VARCHAR(36) DEFAULT NULL");
 		columns.add("`claimedAt` BIGINT NOT NULL");
 		columns.add("`trustedResidents` mediumtext DEFAULT NULL");
 		columns.add("`customPermissionData` mediumtext DEFAULT NULL");
@@ -402,7 +414,6 @@ public class SQLSchema {
 		}
 	}
 
-	@Desugar
 	private record ColumnUpdate(String table, String column) {
 		private static ColumnUpdate update(String table, String column) {
 			return new ColumnUpdate(SQLSchema.TABLE_PREFIX + table, column);

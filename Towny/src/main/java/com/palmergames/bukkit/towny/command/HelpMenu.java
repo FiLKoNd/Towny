@@ -254,6 +254,7 @@ public enum HelpMenu {
 		protected MenuBuilder load() {
 			return new MenuBuilder("townyadmin resident")
 				.add("[resident]", Translatable.of("res_3"))
+				.add("[resident] about clear", Translatable.of("ta_resident_help_4"))
 				.add("[resident] rename [newname]", Translatable.of("ta_resident_help_0"))
 				.add("[resident] friend... [add|remove] [resident]", Translatable.of("ta_resident_help_1"))
 				.add("[resident] friend... [list|clear]", Translatable.of("ta_resident_help_2"))
@@ -416,15 +417,38 @@ public enum HelpMenu {
 				.add("all", Translatable.of("ta_reload_help_4"));
 		}
 	},
-	
+
+	TA_ECO {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("townyadmin eco")
+				.add("resetbanks {amount}", Translatable.of("ta_eco_resetbanks_help"))
+				.add("depositall [amount]", Translatable.of("ta_depositall_help_0"))
+				.add("convert modern", Translatable.of("ta_eco_convert_modern_help"))
+				.add("convert [economy]", Translatable.of("ta_eco_convert_help"))
+				.add("info ?", Translatable.of("ta_eco_info_help"));
+		}
+	},
+
 	TA_DEPOSITALL {
 		@Override
 		protected MenuBuilder load() {
-			return new MenuBuilder("townyadmin depositall")
+			return new MenuBuilder("townyadmin eco depositall")
 				.add("[amount]", Translatable.of("ta_depositall_help_0"));
 		}
 	},
-	
+
+	TA_ECO_INFO {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("townyadmin eco info")
+				.add("nation [nationname]", Translatable.of("ta_info_help_0"))
+				.add("resident [residentname]", Translatable.of("ta_info_help_1"))
+				.add("serveraccount", Translatable.of("ta_info_help_2"))
+				.add("town [townname]", Translatable.of("ta_info_help_3"));
+		}
+	},
+
 	TOWNYWORLD_HELP {
 		@Override
 		protected MenuBuilder load(MenuBuilder builder) {
@@ -765,6 +789,7 @@ public enum HelpMenu {
 		protected MenuBuilder load() {
 			return new MenuBuilder("resident set mode")
 				.add("", "/resident set mode", "clear", Translatable.of("res_toggle_help_10"))
+				.add("", "/resident set mode", "reset", Translatable.of("res_toggle_help_10.5"))
 				.add("/resident set mode [mode]...[mode]")
 				.add("tc", "", Translatable.of("mode_4"))
 				.add("nc", "", Translatable.of("mode_5"))
@@ -827,6 +852,17 @@ public enum HelpMenu {
 				.add(Translatable.of("msg_nfs_abr"));
 		}
 	},
+
+	PLOT_DISTRICT_HELP {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("plot district")
+				.add("add|new|create [name]", Translatable.of("plot_district_help_0"))
+				.add("remove", Translatable.of("plot_district_help_1"))
+				.add("delete", Translatable.of("plot_district_help_2"))
+				.add("rename [newName]", Translatable.of("plot_district_help_3"));
+		}
+	},
 	
 	PLOT_GROUP_HELP {
 		@Override
@@ -844,6 +880,16 @@ public enum HelpMenu {
 		}
 	},
 	
+	PLOT_GROUP_SET {
+		@Override
+		protected MenuBuilder load() {
+			return new MenuBuilder("plot group set")
+				.add("maxjoindays", Translatable.of("plot_set_help_1.6"))
+				.add("minjoindays", Translatable.of("plot_set_help_1.5"))
+				.add("[plottype]", Translatable.of("plot_set_help_0"));
+		}
+	},
+
 	PLOT_GROUP_TOGGLE {
 		@Override
 		protected MenuBuilder load() {

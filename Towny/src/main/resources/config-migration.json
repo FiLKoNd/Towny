@@ -856,5 +856,62 @@
         "value": "towny.command.resident.outlawlist"
       }
     ]
+  },
+  {
+    "version": "0.100.2.10",
+    "changes": [
+      {
+        "type": "RUNNABLE",
+        "key": "update_farm_blocks"
+      }
+    ]
+  },
+  {
+    "version": "0.100.3.9",
+    "changes": [
+      {
+        "type": "NATION_LEVEL_ADD",
+        "key": "nationCapitalBonusOutpostLimit",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "version": "0.100.4.6",
+    "changes": [
+      {
+        "type": "RUNNABLE",
+        "key": "disable_modern_eco"
+      }
+    ]
+  },
+  {
+    "version": "0.101.0.5",
+    "changes": [
+      {
+        "type": "APPEND",
+        "path": "protection.town_mob_removal_ignored_spawn_causes",
+        "value": ",TRIAL_SPAWNER"
+      }
+    ]
+  },
+  {
+    "version": "0.101.1.2",
+    "changes": [
+      {
+        "type": "RUNNABLE",
+        "key": "add_pale_oak_to_farm_plot"
+      }
+    ]
+  },
+  {
+    "version": "0.101.1.6",
+    "changes": [
+      {
+        "type": "APPEND",
+        "path": "protection.potion_types",
+        "value": ",WIND_CHARGED,WEAVING,INFESTED,OOZING"
+      }
+    ]
   }
 ]

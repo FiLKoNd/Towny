@@ -145,9 +145,9 @@ public class CombatUtil {
 
 				/*
 				 * Both townblocks are not Arena plot and Player is not considered an Admin by Towny.
-				 * Arena plots never prevent pvp, admins are never prevented from pvping.
+				 * Arena plots never prevent pvp, admins can some times bypass pvp settings.
 				 */
-				if (!isArenaPlot(attackerTB, defenderTB) && !isTownyAdmin(attackingPlayer)) {
+				if (!isArenaPlot(attackerTB, defenderTB) && !isOutlawInTown(defenderTB, attackingPlayer, defendingPlayer) && !isTownyAdminBypassingPVP(attackingPlayer)) {
 					/*
 					 * Check if we are preventing friendly fire between allies
 					 * Check the attackers TownBlock for its PvP status, else the world.
@@ -429,6 +429,28 @@ public class CombatUtil {
 	}
 
 	/**
+	 * Return true if the outlaw system allows for outlaws to harm/be harmed.
+	 * 
+	 * @param defenderTB TownBlock where the defendingPlayer is harmed.
+	 * @param attackingPlayer Player harming the defendingPlayer.
+	 * @param defendingPlayer Player getting harmed.
+	 * @return true if one of the players is an outlaw in a situation where that matters.
+	 */
+	private static boolean isOutlawInTown(TownBlock defenderTB, Player attackingPlayer, Player defendingPlayer) {
+		if (defenderTB == null)
+			return false;
+		
+		Town town = defenderTB.getTownOrNull();
+		if (town == null)
+			return false;
+		if (TownySettings.forcePVPForTownOutlaws() && town.hasOutlaw(defendingPlayer.getName()))
+			return true;
+		if (TownySettings.outlawsAlwaysAllowedToPVP() && town.hasOutlaw(attackingPlayer.getName()))
+			return true;
+		return false;
+	}
+	
+	/**
 	 * Is the defending resident an ally of the attacking resident?
 	 * 
 	 * @param attackingResident - Attacking Resident (String)
@@ -476,8 +498,12 @@ public class CombatUtil {
 			return true;
 		if (a.hasAlly(b))
 			return true;
-		if (isSameNation(a, b))
+		if (isSameNation(a, b) && TownySettings.areConqueredTownsConsideredAllied())
 			return true;
+		if (isSameNation(a, b) && !TownySettings.areConqueredTownsConsideredAllied() && ((a.isConquered() && !b.isConquered()) || (!a.isConquered() && b.isConquered()))) {
+			TownyMessaging.sendDebugMsg(String.format("The isAlly test between %s and %s was overridden because one of the two towns is conquered by the other.", a.getName(), b.getName()));
+			return false;
+		}
 		if (a.hasNation() && b.hasNation() && a.getNationOrNull().hasAlly(b.getNationOrNull()))
 			return true;
 		return false;
@@ -710,7 +736,7 @@ public class CombatUtil {
 		}
 	}
 
-	private static boolean isTownyAdmin(Player attackingPlayer) {
-		return TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(attackingPlayer);
+	private static boolean isTownyAdminBypassingPVP(Player attackingPlayer) {
+		return TownySettings.isPVPAlwaysAllowedForAdmins() && TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(attackingPlayer);
 	}
 }

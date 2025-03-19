@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.TownyMessaging;
 import com.palmergames.bukkit.towny.TownySettings;
 import com.palmergames.bukkit.towny.event.mobs.MobSpawnRemovalEvent;
 import com.palmergames.bukkit.towny.hooks.PluginIntegrations;
@@ -12,6 +13,7 @@ import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownBlockType;
 import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.object.Translatable;
 import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.palmergames.bukkit.towny.regen.TownyRegenAPI;
 import com.palmergames.bukkit.towny.regen.block.BlockLocation;
@@ -33,6 +35,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
@@ -50,8 +53,8 @@ import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Trident;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.WindCharge;
 import org.bukkit.entity.memory.MemoryKey;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -80,12 +83,13 @@ import org.bukkit.projectiles.BlockProjectileSource;
 import org.bukkit.projectiles.ProjectileSource;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * 
@@ -211,14 +215,14 @@ public class TownyEntityListener implements Listener {
 	}
 	
 	/**
-	 * Prevent block explosions and lightning from hurting entities.
+	 * Prevent entity and block explosions and lightning from hurting entities.
 	 * 
 	 * Doesn't stop damage to vehicles or hanging entities.
 	 *  
 	 * @param event - EntityDamageEvent
 	 */
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void onEntityTakesBlockExplosionDamage(EntityDamageEvent event) {
+	public void onEntityTakesExplosionDamage(EntityDamageEvent event) {
 		if (plugin.isError()) {
 			event.setCancelled(true);
 			return;
@@ -227,10 +231,22 @@ public class TownyEntityListener implements Listener {
 		if (!TownyAPI.getInstance().isTownyWorld(event.getEntity().getWorld()))
 			return;
 
-		if ((event.getCause() == DamageCause.BLOCK_EXPLOSION || event.getCause() == DamageCause.LIGHTNING) && entityProtectedFromExplosiveDamageHere(event.getEntity(), event.getCause())) {
+		// Don't make Creeper damage tied to the explosion setting of a plot, otherwise
+		// Creepers are completely useless.
+		if (event instanceof EntityDamageByEntityEvent eevent && eevent.getDamager() instanceof Creeper)
+			return;
+
+		if (event.getCause() != null && causeIsExplosive(event.getCause()) && entityProtectedFromExplosiveDamageHere(event.getEntity(), event.getCause())) {
 			event.setDamage(0);
 			event.setCancelled(true);
 		}
+	}
+
+	private boolean causeIsExplosive(DamageCause cause) {
+		return switch(cause) {
+		case ENTITY_EXPLOSION, BLOCK_EXPLOSION, LIGHTNING -> true;
+		default -> false;
+		};
 	}
 
 	/**
@@ -551,7 +567,10 @@ public class TownyEntityListener implements Listener {
 		final TownyWorld townyWorld = TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld());
 		if (townyWorld == null || !townyWorld.isUsingTowny())
 			return;
-		
+
+		if (isWindCharge(event))
+			return;
+
 		List<Block> blocks = TownyActionEventExecutor.filterExplodableBlocks(event.blockList(), null, event.getEntity(), event);
 		event.blockList().clear();
 		event.blockList().addAll(blocks);
@@ -576,6 +595,53 @@ public class TownyEntityListener implements Listener {
 				TownyRegenAPI.beginProtectionRegenTask(block, count, townyWorld, event);
 			}
 		}
+	}
+
+	/**
+	 * Protects against players using Wind Charges to open doors and use switches.
+	 * 
+	 * @param event - EntityExplodeEvent
+	 */
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	public void onWindChargeExplode(EntityExplodeEvent event) {
+		if (plugin.isError()) {
+			event.setCancelled(true);
+			return;
+		}
+
+		final TownyWorld townyWorld = TownyAPI.getInstance().getTownyWorld(event.getEntity().getWorld());
+		if (townyWorld == null || !townyWorld.isUsingTowny())
+			return;
+
+		if (!isWindCharge(event))
+			return;
+
+		Player player = getWindChargePlayerOrNull(event);
+		if (player == null)
+			return;
+
+		List<Block> deniedBlocks = new ArrayList<>();
+		for (Block block : event.blockList())
+			if (TownySettings.isSwitchMaterial(block.getType(), block.getLocation()) && !TownyActionEventExecutor.canSwitch(player, block.getLocation(), block.getType(), true))
+				deniedBlocks.add(block);
+
+		if (deniedBlocks.isEmpty())
+			return;
+
+		event.blockList().removeAll(deniedBlocks);
+		TownyMessaging.sendErrorMsg(player, Translatable.of("msg_err_not_allowed_to_switch"));
+	}
+	
+	private boolean isWindCharge(EntityExplodeEvent event) {
+		return MinecraftVersion.CURRENT_VERSION.isNewerThanOrEquals(MinecraftVersion.MINECRAFT_1_21)
+				&& event.getEntity() instanceof WindCharge charge;
+	}
+
+	@Nullable
+	private Player getWindChargePlayerOrNull(EntityExplodeEvent event) {
+		if (event.getEntity() instanceof WindCharge charge && charge.getShooter() instanceof Player player)
+			return player;
+		return null;
 	}
 
 	/**
@@ -789,14 +855,14 @@ public class TownyEntityListener implements Listener {
 		/*
 		 * Bypass any occasion where there is no block being hit and the shooter isn't a player.
 		 */
-		if (plugin.isError() || !TownyAPI.getInstance().isTownyWorld(event.getEntity().getWorld()) || event.getHitBlock() == null || !(event.getEntity().getShooter() instanceof Player))
+		if (plugin.isError() || !TownyAPI.getInstance().isTownyWorld(event.getEntity().getWorld()) || event.getHitBlock() == null || !(event.getEntity().getShooter() instanceof Player player))
 			return;
 		
 		Block block = event.getHitBlock().getRelative(event.getHitBlockFace());
 		Material material = block.getType();
 		if (ItemLists.PROJECTILE_TRIGGERED_REDSTONE.contains(material) && TownySettings.isSwitchMaterial(material, block.getLocation())) {
 			//Make decision on whether this is allowed using the PlayerCache and then a cancellable event.
-			if (!TownyActionEventExecutor.canSwitch((Player) event.getEntity().getShooter(), block.getLocation(), material)) {
+			if (!TownyActionEventExecutor.canSwitch(player, block.getLocation(), material)) {
 				/*
 				 * Since we are unable to cancel a ProjectileHitEvent on buttons & 
 				 * pressure plates even using MC 1.17 we must set the block to air
@@ -827,7 +893,7 @@ public class TownyEntityListener implements Listener {
 		// Prevent non-player actions outright if it is in a town.
 		if (!(event.getEntity().getShooter() instanceof Player player)) {
 			if (!TownyAPI.getInstance().isWilderness(hitBlock))
-				cancelProjectileHitEvent(event, hitBlock);
+				event.setCancelled(true);
 			return;
 		}
 
@@ -835,7 +901,7 @@ public class TownyEntityListener implements Listener {
 		if (disallowedTargetSwitch(hitBlock, player) ||
 			disallowedProjectileBlockBreak(hitBlock, event.getEntity(), player) ||
 			disallowedCampfireLighting(hitBlock, event.getEntity(), player)) {
-			cancelProjectileHitEvent(event, hitBlock);
+			event.setCancelled(true);
 		}
 	}
 
@@ -857,7 +923,7 @@ public class TownyEntityListener implements Listener {
 
 	private boolean disallowedProjectileBlockBreak(Block hitBlock, Projectile projectile, Player player) {
 		// Pointed dripstone can only be broken by tridents
-		if (MinecraftVersion.CURRENT_VERSION.isNewerThanOrEquals(MinecraftVersion.MINECRAFT_1_17) && hitBlock.getType() == Material.POINTED_DRIPSTONE && !(projectile instanceof Trident))
+		if (hitBlock.getType() == Material.POINTED_DRIPSTONE && !(projectile instanceof Trident))
 			return false;
 
 		// Decorated pots can't be broken by these 3 projectiles
@@ -873,21 +939,6 @@ public class TownyEntityListener implements Listener {
 
 	private boolean isFireArrow(Projectile projectile) {
 		return projectile instanceof Arrow arrow && arrow.getFireTicks() > 0;
-	}
-
-	private void cancelProjectileHitEvent(ProjectileHitEvent event, Block block) {
-		if (event instanceof Cancellable) {
-			event.setCancelled(true);
-			return;
-		}
-		/*
-		 * Since we are unable to cancel a ProjectileHitEvent before MC 1.17 we must
-		 * set the block to air then set it back to its original form. 
-		 * TODO: When support is dropped for pre-1.17 MC versions this method can be removed.
-		 */
-		BlockData data = block.getBlockData();
-		block.setType(Material.AIR);
-		plugin.getScheduler().run(block.getLocation(), () -> block.setBlockData(data));
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -920,7 +971,6 @@ public class TownyEntityListener implements Listener {
 		map.put("damage_resistance", "resistance");
 	});
 
-	@SuppressWarnings("SimplifyStreamApiCallChains")
 	private boolean hasDetrimentalEffects(Collection<PotionEffect> effects) {
 		if (effects.isEmpty())
 			return false;
@@ -928,7 +978,7 @@ public class TownyEntityListener implements Listener {
 		/*
 		 * List of potion effects blocked from PvP.
 		 */
-		final List<String> detrimentalPotions = TownySettings.getPotionTypes().stream().map(type -> type.toLowerCase(Locale.ROOT)).collect(Collectors.toList());
+		final List<String> detrimentalPotions = TownySettings.getPotionTypes().stream().map(type -> type.toLowerCase(Locale.ROOT)).toList();
 
 		return effects.stream()
 			.map(effect -> BukkitTools.potionEffectName(effect.getType()))

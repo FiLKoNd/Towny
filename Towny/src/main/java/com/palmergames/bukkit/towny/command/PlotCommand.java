@@ -15,12 +15,19 @@ import com.palmergames.bukkit.towny.event.PlotClearEvent;
 import com.palmergames.bukkit.towny.event.PlotPreChangeTypeEvent;
 import com.palmergames.bukkit.towny.event.PlotPreClearEvent;
 import com.palmergames.bukkit.towny.event.TownBlockSettingsChangedEvent;
+import com.palmergames.bukkit.towny.event.TownPreAddResidentEvent;
 import com.palmergames.bukkit.towny.event.TownBlockPermissionChangeEvent;
 import com.palmergames.bukkit.towny.event.plot.PlayerChangePlotTypeEvent;
 import com.palmergames.bukkit.towny.event.plot.PlotNotForSaleEvent;
 import com.palmergames.bukkit.towny.event.plot.PlotSetForSaleEvent;
 import com.palmergames.bukkit.towny.event.plot.PlotTrustAddEvent;
 import com.palmergames.bukkit.towny.event.plot.PlotTrustRemoveEvent;
+import com.palmergames.bukkit.towny.event.plot.district.DistrictAddEvent;
+import com.palmergames.bukkit.towny.event.plot.district.DistrictCreatedEvent;
+import com.palmergames.bukkit.towny.event.plot.district.DistrictDeletedEvent;
+import com.palmergames.bukkit.towny.event.plot.group.PlotGroupAddEvent;
+import com.palmergames.bukkit.towny.event.plot.group.PlotGroupCreatedEvent;
+import com.palmergames.bukkit.towny.event.plot.group.PlotGroupDeletedEvent;
 import com.palmergames.bukkit.towny.event.plot.toggle.PlotToggleExplosionEvent;
 import com.palmergames.bukkit.towny.event.plot.toggle.PlotToggleFireEvent;
 import com.palmergames.bukkit.towny.event.plot.toggle.PlotToggleMobsEvent;
@@ -32,6 +39,7 @@ import com.palmergames.bukkit.towny.exceptions.NoPermissionException;
 import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.huds.HUDManager;
 import com.palmergames.bukkit.towny.object.Coord;
+import com.palmergames.bukkit.towny.object.District;
 import com.palmergames.bukkit.towny.object.PermissionData;
 import com.palmergames.bukkit.towny.object.PlotGroup;
 import com.palmergames.bukkit.towny.object.Resident;
@@ -58,6 +66,7 @@ import com.palmergames.bukkit.towny.utils.MoneyUtil;
 import com.palmergames.bukkit.towny.utils.NameUtil;
 import com.palmergames.bukkit.towny.utils.OutpostUtil;
 import com.palmergames.bukkit.towny.utils.PermissionGUIUtil;
+import com.palmergames.bukkit.towny.utils.ProximityUtil;
 import com.palmergames.bukkit.util.BukkitTools;
 import com.palmergames.bukkit.util.ChatTools;
 import com.palmergames.bukkit.util.Colors;
@@ -96,11 +105,13 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		"notforsale",
 		"nfs",
 		"evict",
+		"info",
 		"perm",
 		"set",
 		"toggle",
 		"clear",
 		"group",
+		"district",
 		"jailcell",
 		"trust"
 	);
@@ -117,6 +128,15 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		"perm",
 		"rename",
 		"trust"
+	);
+	
+	private static final List<String> districtTabCompletes = Arrays.asList(
+		"add",
+		"new",
+		"create",
+		"delete",
+		"remove",
+		"rename"
 	);
 	
 	private static final List<String> plotSetTabCompletes = Arrays.asList(
@@ -194,7 +214,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-		if (sender instanceof Player) {
+		if (sender instanceof Player player) {
 			switch (args[0].toLowerCase(Locale.ROOT)) {
 				case "set":
 					if (args.length == 2) {
@@ -226,6 +246,10 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 					if (args.length == 2)
 						return NameUtil.filterByStart(plotRectCircleCompletes, args[1]);
 					break;
+				case "evict":
+					if (args.length == 2)
+						return NameUtil.filterByStart(Collections.singletonList("forsale"), args[1]);
+					break;
 				case "forsale":
 				case "fs":
 					switch (args.length) {
@@ -236,6 +260,11 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 						default:
 							return Collections.emptyList();
 					}
+				case "district":
+					if (args.length == 2)
+						return NameUtil.filterByStart(districtTabCompletes, args[1]);
+					if (args.length < 2)
+						break;
 				case "group":
 					if (args.length == 2)
 						return NameUtil.filterByStart(plotGroupTabCompletes, args[1]);
@@ -244,6 +273,11 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 						break;
 					
 					switch (args[1].toLowerCase(Locale.ROOT)) {
+						case "set":
+							if (args.length == 3)
+								return NameUtil.filterByStart(Arrays.asList("perm", "maxjoindays", "minjoindays"), args[2]);
+							if (args.length > 3 && args[2].equalsIgnoreCase("perm"))
+								return permTabComplete(StringMgmt.remArgs(args, 3));
 						case "trust":
 							if (args.length == 3)
 								return NameUtil.filterByStart(Arrays.asList("add", "remove"), args[2]);
@@ -255,7 +289,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 							if (args.length == 4)
 								return NameUtil.filterByStart(getTownyStartingWith(args[3], "r"), args[3]);
 						default:
-							return permTabComplete(StringMgmt.remFirstArg(args));
+							return Collections.emptyList();
 					}
 
 				case "jailcell":
@@ -272,8 +306,16 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 				case "trust":
 					if (args.length == 2)
 						return NameUtil.filterByStart(Arrays.asList("add", "remove"), args[1]);
-					if (args.length == 3)
-						return getTownyStartingWith(args[2], "r");
+					if (args.length == 3) {
+						if ("remove".equalsIgnoreCase(args[1])) {
+							final TownBlock townBlock = WorldCoord.parseWorldCoord(player).getTownBlockOrNull();
+							if (townBlock != null) {
+								return townBlock.getTrustedResidents().stream().map(Resident::getName).toList();
+							}
+						} else {
+							return getTownyStartingWith(args[2], "r");
+						}
+					}
 				default:
 					if (args.length == 1)
 						return NameUtil.filterByStart(TownyCommandAddonAPI.getTabCompletes(CommandType.PLOT, plotTabCompletes), args[0]);
@@ -305,9 +347,10 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		switch(split[0].toLowerCase(Locale.ROOT)) {
 		case "claim" -> parsePlotClaim(player, StringMgmt.remFirstArg(split), resident, townBlock);
 		case "clear" -> parsePlotClear(resident, townBlock);
-		case "evict" -> parsePlotEvict(resident, townBlock);
+		case "evict" -> parsePlotEvict(resident, townBlock, StringMgmt.remFirstArg(split));
 		case "fs", "forsale" -> parsePlotForSale(player, StringMgmt.remFirstArg(split), resident, townBlock);
 		case "group" -> parsePlotGroup(StringMgmt.remFirstArg(split), resident, townBlock, player);
+		case "district" -> parseDistrict(StringMgmt.remFirstArg(split), resident, townBlock, player);
 		case "info" -> sendPlotInfo(player, StringMgmt.remFirstArg(split));
 		case "jailcell" -> parsePlotJailCell(player, resident, townBlock, StringMgmt.remFirstArg(split));
 		case "nfs", "notforsale" -> parsePlotNotForSale(player, StringMgmt.remFirstArg(split), resident, townBlock);
@@ -330,19 +373,21 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_CLAIM.getNode());
 		List<WorldCoord> selection = AreaSelectionUtil.selectWorldCoordArea(resident, WorldCoord.parseWorldCoord(player), args, true);
 
-		// Fast-fail if this is a single plot and it is already claimed.
-		if (selection.size() == 1 && selection.get(0).hasTownBlock() && selection.get(0).getTownBlock().hasResident() && !selection.get(0).getTownBlock().isForSale()) {
-			final Translatable message = Translatable.of("msg_already_claimed", selection.get(0).getTownBlock().getResidentOrNull());
-
-			// Add extra message if the player has permission to evict 
-			if (player.hasPermission(PermissionNodes.TOWNY_COMMAND_PLOT_EVICT.getNode())) {
-				try {
-					TownyAPI.getInstance().testPlotOwnerOrThrow(resident, townBlock);
-					message.append(Translatable.of("msg_plot_claim_consider_evict_instead"));
-				} catch (TownyException ignored) {}
+		// Fast-fail if this is a single plot and it is already claimed, or the resident already owns this plot.
+		if (selection.size() == 1 && selection.get(0).hasTownBlock() && selection.get(0).getTownBlock().hasResident()) { 
+			if (!selection.get(0).getTownBlock().isForSale()) {
+				final Translatable message = Translatable.of("msg_already_claimed", selection.get(0).getTownBlock().getResidentOrNull());
+				// Add extra message if the player has permission to evict 
+				if (player.hasPermission(PermissionNodes.TOWNY_COMMAND_PLOT_EVICT.getNode())) {
+					try {
+						TownyAPI.getInstance().testPlotOwnerOrThrow(resident, townBlock);
+						message.append(Translatable.of("msg_plot_claim_consider_evict_instead"));
+					} catch (TownyException ignored) {}
+				}
+				throw new TownyException(message);
+			} else if (selection.get(0).getTownBlock().hasResident(resident)) {
+				throw new TownyException(Translatable.of("msg_err_you_already_own_this_plot"));
 			}
-			
-			throw new TownyException(message);
 		}
 
 		// Filter to just plots that are for sale, which can actually be bought by the
@@ -382,6 +427,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 				}
 			})
 			.setTitle(Translatable.of("msg_you_must_join_this_town_to_claim_this_plot", town.getName()))
+			.setCancellableEvent(new TownPreAddResidentEvent(town, resident))
 			.sendTo(player);
 			return;
 		}
@@ -425,7 +471,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		BukkitTools.fireEvent(new PlotClearEvent(townBlock));
 	}
 
-	public void parsePlotEvict(Resident resident, TownBlock townBlock) throws TownyException {
+	public void parsePlotEvict(Resident resident, TownBlock townBlock, String[] split) throws TownyException {
 		checkPermOrThrow(resident.getPlayer(), PermissionNodes.TOWNY_COMMAND_PLOT_EVICT.getNode());
 
 		if (!townBlock.hasResident())
@@ -434,6 +480,8 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		// If this fails it will trigger a TownyException.
 		TownyAPI.getInstance().testPlotOwnerOrThrow(resident, townBlock);
 
+		boolean resell = split.length > 0 && split[0].equalsIgnoreCase("forsale");
+
 		if (townBlock.hasPlotObjectGroup()) {
 			townBlock.getPlotObjectGroup().getTownBlocks().stream().forEach(TownBlock::evictOwnerFromTownBlock);
 			TownyMessaging.sendMsg(resident, Translatable.of("msg_plot_evict_group", townBlock.getPlotObjectGroup().getName()));
@@ -441,7 +489,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		}
 
 		// Evict and save the townblock.
-		townBlock.evictOwnerFromTownBlock();
+		townBlock.evictOwnerFromTownBlock(resell);
 		TownyMessaging.sendMsg(resident, Translatable.of("msg_plot_evict"));
 	}
 
@@ -453,7 +501,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		if (town == null) //Shouldn't be able to happen but check anyways.
 			throw new TownyException(Translatable.of("msg_err_empty_area_selection"));
 
-		double plotPrice = town.getPlotTypePrice(townBlock.getType());
+		double plotPrice = Math.max(town.getPlotTypePrice(townBlock.getType()), 0);
 
 		if (split.length == 0) {
 			/*
@@ -1249,6 +1297,183 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		}
 	}
 
+	private void parseDistrict(String[] split, Resident resident, TownBlock townBlock, Player player) throws TownyException {
+
+		Town town = townBlock.getTownOrNull();
+		if (town == null)
+			throw new TownyException(Translatable.of("msg_not_claimed_1"));
+		
+		if (!town.hasResident(player))
+			throw new TownyException(Translatable.of("msg_err_not_part_town"));
+
+		try {
+			checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_ASMAYOR.getNode());
+		} catch (NoPermissionException e) {
+			throw new TownyException(Translatable.of("msg_not_mayor_ass"));
+		}
+
+		if (split.length <= 0 || split[0].equalsIgnoreCase("?")) {
+			HelpMenu.PLOT_DISTRICT_HELP.send(player);
+			if (townBlock.hasDistrict())
+				TownyMessaging.sendMsg(player, Translatable.of("status_district_name_and_size", townBlock.getDistrict().getName(), townBlock.getDistrict().getTownBlocks().size()));
+			return;
+		}
+
+		switch (split[0].toLowerCase(Locale.ROOT)) {
+		case "add", "new", "create" -> parseDistrictAdd(split, townBlock, player, town);
+		case "delete" -> parseDistrictDelete(townBlock, player, town);
+		case "remove" -> parseDistrictRemove(townBlock, player, town);
+		case "rename" ->  parseDistrictRename(split, townBlock, player);
+		default -> {
+			HelpMenu.PLOT_DISTRICT_HELP.send(player);
+			if (townBlock.hasDistrict())
+				TownyMessaging.sendMsg(player, Translatable.of("status_district_name_and_size", townBlock.getDistrict().getName(), townBlock.getDistrict().getTownBlocks().size()));
+		}
+		}
+	}
+
+	public void parseDistrictAdd(String[] split, TownBlock townBlock, Player player, Town town) throws TownyException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_DISTRICT_ADD.getNode());
+
+		Resident resident = getResidentOrThrow(player);
+
+		if (split.length != 2 && !resident.hasDistrictName())
+			throw new TownyException(Translatable.of("msg_err_district_name_required"));
+
+		String districtName = split.length == 2
+				? NameValidation.checkAndFilterDistrictNameOrThrow(split[1])
+				: resident.hasDistrictName()
+					? resident.getDistrictName()
+					: null;
+
+		if (townBlock.hasDistrict()) {
+			// Already has a District and it is the same name being used to re-add.
+			if (townBlock.getDistrict().getName().equalsIgnoreCase(districtName))
+				throw new TownyException(Translatable.of("msg_err_this_plot_is_already_part_of_the_district_x", districtName));
+
+			District oldDistrict = townBlock.getDistrict();
+			ProximityUtil.testAdjacentRemoveDistrictRulesOrThrow(townBlock.getWorldCoord(), town, oldDistrict, 1);
+
+			final String name = districtName;
+			// Already has a District, ask if they want to transfer from one district to another.
+			Confirmation.runOnAccept( ()-> {
+
+				oldDistrict.removeTownBlock(townBlock);
+				if (oldDistrict.getTownBlocks().isEmpty() && !BukkitTools.isEventCancelled(new DistrictDeletedEvent(oldDistrict, player, DistrictDeletedEvent.Cause.NO_TOWNBLOCKS))) {
+					String oldName = oldDistrict.getName();
+					town.removeDistrict(oldDistrict);
+					TownyUniverse.getInstance().getDataSource().removeDistrict(oldDistrict);
+					TownyMessaging.sendMsg(player, Translatable.of("msg_district_deleted", oldName));
+				} else 
+					oldDistrict.save();
+				
+				try {
+					createOrAddOnToDistrict(townBlock, town, player, name);
+					resident.setDistrictName(name);
+					TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_transferred_from_x_to_x_district", oldDistrict.getName(), townBlock.getDistrict().getName()));
+				} catch (TownyException e) {
+					TownyMessaging.sendErrorMsg(player, e.getMessage(player));
+				}
+			})
+			.setTitle(Translatable.of("msg_district_already_exists_did_you_want_to_transfer", townBlock.getDistrict().getName(), name))
+			.sendTo(player);
+		} else {
+			// Create a brand new district.
+			createOrAddOnToDistrict(townBlock, town, player, districtName);
+			resident.setDistrictName(districtName);
+			TownyMessaging.sendMsg(player, Translatable.of("msg_plot_was_put_into_district_x", townBlock.getX(), townBlock.getZ(), townBlock.getDistrict().getName()));
+		}
+	}
+
+	private void createOrAddOnToDistrict(TownBlock townBlock, Town town, Player player, String districtName) throws TownyException {
+		District newDistrict;
+		
+		// Don't add the district to the town data if it's already there.
+		if (town.hasDistrictName(districtName)) {
+			newDistrict = town.getDistrictFromName(districtName);
+
+			ProximityUtil.testAdjacentAddDistrictRulesOrThrow(townBlock.getWorldCoord(), town, newDistrict, 1);
+
+			BukkitTools.ifCancelledThenThrow(new DistrictAddEvent(newDistrict, townBlock, player));
+
+		} else {
+			// This is a brand new District, register it.
+			newDistrict = new District(UUID.randomUUID(), districtName, town);
+
+			BukkitTools.ifCancelledThenThrow(new DistrictCreatedEvent(newDistrict, townBlock, player));
+
+			TownyUniverse.getInstance().registerDistrict(newDistrict);
+		}
+
+		// Add district to townblock, this also adds the townblock to the district.
+		townBlock.setDistrict(newDistrict);
+
+		// Add the district to the town set.
+		town.addDistrict(newDistrict);
+
+		// Save changes.
+		newDistrict.save();
+		townBlock.save(); 
+	}
+
+	public void parseDistrictDelete(TownBlock townBlock, Player player, Town town) throws TownyException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_DISTRICT_DELETE.getNode());
+
+		District district = catchMissingDistrict(townBlock);
+
+		Confirmation.runOnAccept(()-> {
+			String name = district.getName();
+			if (!BukkitTools.isEventCancelled(new DistrictDeletedEvent(district, player, DistrictDeletedEvent.Cause.DELETED))) {
+				town.removeDistrict(district);
+				TownyUniverse.getInstance().getDataSource().removeDistrict(district);
+				TownyMessaging.sendMsg(player, Translatable.of("msg_district_deleted", name));
+			}
+		}).sendTo(player);
+	}
+
+	public void parseDistrictRemove(TownBlock townBlock, Player player, Town town) throws TownyException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_DISTRICT_REMOVE.getNode());
+
+		District district = catchMissingDistrict(townBlock);
+		String name = district.getName();
+		
+		try {
+			ProximityUtil.testAdjacentRemoveDistrictRulesOrThrow(townBlock.getWorldCoord(), town, district, 1);
+		} catch (TownyException e) {
+			throw new TownyException(Translatable.of("msg_err_cannot_remove_from_district_not_enough_adjacent_claims", name));
+		}
+		
+		// Remove the plot from the district.
+		district.removeTownBlock(townBlock);
+
+		// Detach district from townblock.
+		townBlock.removeDistrict();
+
+		// Save
+		townBlock.save();
+		TownyMessaging.sendMsg(player, Translatable.of("msg_plot_was_removed_from_district_x", townBlock.getX(), townBlock.getZ(), name));
+		
+		if (district.getTownBlocks().isEmpty() && !BukkitTools.isEventCancelled(new DistrictDeletedEvent(district, player, DistrictDeletedEvent.Cause.NO_TOWNBLOCKS))) {
+			town.removeDistrict(district);
+			TownyUniverse.getInstance().getDataSource().removeDistrict(district);
+			TownyMessaging.sendMsg(player, Translatable.of("msg_district_empty_deleted", name));
+		}
+	}
+	
+	public void parseDistrictRename(String[] split, TownBlock townBlock, Player player) throws TownyException, AlreadyRegisteredException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_DISTRICT_RENAME.getNode());
+
+		if (split.length == 1)
+			throw new TownyException(Translatable.of("msg_err_rename_district_name_required"));
+
+		District district = catchMissingDistrict(townBlock);
+		String newName= split[1];
+		String oldName = district.getName();
+		// Change name;
+		TownyUniverse.getInstance().getDataSource().renameDistrict(district, newName);
+		TownyMessaging.sendMsg(player, Translatable.of("msg_district_renamed_from_x_to_y", oldName, newName));
+	}
+
 	private void parsePlotGroup(String[] split, Resident resident, TownBlock townBlock, Player player) throws TownyException {
 
 		Town town = townBlock.getTownOrNull();
@@ -1315,42 +1540,55 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 			Confirmation.runOnAccept( ()-> {
 				PlotGroup oldGroup = townBlock.getPlotObjectGroup();
 				oldGroup.removeTownBlock(townBlock);
-				if (oldGroup.getTownBlocks().isEmpty()) {
+				if (oldGroup.getTownBlocks().isEmpty() && !BukkitTools.isEventCancelled(new PlotGroupDeletedEvent(oldGroup, player, PlotGroupDeletedEvent.Cause.NO_TOWNBLOCKS))) {
 					String oldName = oldGroup.getName();
 					town.removePlotGroup(oldGroup);
 					TownyUniverse.getInstance().getDataSource().removePlotGroup(oldGroup);
 					TownyMessaging.sendMsg(player, Translatable.of("msg_plotgroup_deleted", oldName));
 				} else 
 					oldGroup.save();
-				createOrAddOnToPlotGroup(townBlock, town, name);
-				resident.setPlotGroupName(name);
-				TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_transferred_from_x_to_x_group", oldGroup.getName(), townBlock.getPlotObjectGroup().getName()));
+				
+				try {
+					createOrAddOnToPlotGroup(townBlock, town, player, name);
+					resident.setPlotGroupName(name);
+					TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_transferred_from_x_to_x_group", oldGroup.getName(), townBlock.getPlotObjectGroup().getName()));
+				} catch (TownyException e) {
+					TownyMessaging.sendErrorMsg(player, e.getMessage(player));
+				}
 			})
 			.setTitle(Translatable.of("msg_plot_group_already_exists_did_you_want_to_transfer", townBlock.getPlotObjectGroup().getName(), split[1]))
 			.sendTo(player);
 		} else {
 			// Create a brand new plot group.
-			createOrAddOnToPlotGroup(townBlock, town, plotGroupName);
+			createOrAddOnToPlotGroup(townBlock, town, player, plotGroupName);
 			resident.setPlotGroupName(plotGroupName);
 			TownyMessaging.sendMsg(player, Translatable.of("msg_plot_was_put_into_group_x", townBlock.getX(), townBlock.getZ(), townBlock.getPlotObjectGroup().getName()));
 		}
 	}
 
-	private void createOrAddOnToPlotGroup(TownBlock townBlock, Town town, String plotGroupName) {
-		PlotGroup newGroup = null;
+	private void createOrAddOnToPlotGroup(TownBlock townBlock, Town town, Player player, String plotGroupName) throws TownyException {
+		PlotGroup newGroup;
 		
 		// Don't add the group to the town data if it's already there.
 		if (town.hasPlotGroupName(plotGroupName)) {
 			newGroup = town.getPlotObjectGroupFromName(plotGroupName);
+			
+			BukkitTools.ifCancelledThenThrow(new PlotGroupAddEvent(newGroup, townBlock, player));
+			
 			townBlock.setPermissions(newGroup.getPermissions().toString());
 			townBlock.setChanged(!townBlock.getPermissions().toString().equals(town.getPermissions().toString()));
-		} else {			
+			townBlock.setMaxTownMembershipDays(newGroup.getMaxTownMembershipDays());
+			townBlock.setMinTownMembershipDays(newGroup.getMinTownMembershipDays());
+		} else {
 			// This is a brand new PlotGroup, register it.
 			newGroup = new PlotGroup(UUID.randomUUID(), plotGroupName, town);
-			TownyUniverse.getInstance().registerGroup(newGroup);
 			newGroup.setPermissions(townBlock.getPermissions());
 			newGroup.setTrustedResidents(townBlock.getTrustedResidents());
 			newGroup.setPermissionOverrides(townBlock.getPermissionOverrides());
+			
+			BukkitTools.ifCancelledThenThrow(new PlotGroupCreatedEvent(newGroup, townBlock, player));
+
+			TownyUniverse.getInstance().registerGroup(newGroup);
 		}
 
 		// Add group to townblock, this also adds the townblock to the group.
@@ -1375,9 +1613,11 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 
 		Confirmation.runOnAccept(()-> {
 			String name = group.getName();
-			town.removePlotGroup(group);
-			TownyUniverse.getInstance().getDataSource().removePlotGroup(group);
-			TownyMessaging.sendMsg(player, Translatable.of("msg_plotgroup_deleted", name));
+			if (!BukkitTools.isEventCancelled(new PlotGroupDeletedEvent(group, player, PlotGroupDeletedEvent.Cause.DELETED))) {
+				town.removePlotGroup(group);
+				TownyUniverse.getInstance().getDataSource().removePlotGroup(group);
+				TownyMessaging.sendMsg(player, Translatable.of("msg_plotgroup_deleted", name));
+			}
 		}).sendTo(player);
 	}
 
@@ -1480,7 +1720,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		townBlock.save();
 		TownyMessaging.sendMsg(player, Translatable.of("msg_plot_was_removed_from_group_x", townBlock.getX(), townBlock.getZ(), name));
 		
-		if (group.getTownBlocks().isEmpty()) {
+		if (group.getTownBlocks().isEmpty() && !BukkitTools.isEventCancelled(new PlotGroupDeletedEvent(group, player, PlotGroupDeletedEvent.Cause.NO_TOWNBLOCKS))) {
 			town.removePlotGroup(group);
 			TownyUniverse.getInstance().getDataSource().removePlotGroup(group);
 			TownyMessaging.sendMsg(player, Translatable.of("msg_plotgroup_empty_deleted", name));
@@ -1509,32 +1749,37 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 
 		TownBlockOwner townBlockOwner = townBlock.getTownBlockOwner();
 		if (split.length < 2) {
-			TownyMessaging.sendMessage(player, ChatTools.formatTitle("/plot group set"));
-			if (townBlockOwner instanceof Town)
-				TownyMessaging.sendMessage(player, ChatTools.formatCommand("Level", "[resident/nation/ally/outsider]", "", ""));
-			if (townBlockOwner instanceof Resident)
-				TownyMessaging.sendMessage(player, ChatTools.formatCommand("Level", "[friend/town/ally/outsider]", "", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("Type", "[build/destroy/switch/itemuse]", "", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[on/off]", "Toggle all permissions"));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[level/type] [on/off]", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[level] [type] [on/off]", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "reset", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("Eg", "/plot group set perm", "friend build on", ""));
-			TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "[townblocktype]", "", "Farm, Wilds, Bank, Embassy, etc."));
+			showPlotGroupHelp(player, townBlockOwner);
 			return;
 		}
 
 		split = StringMgmt.remFirstArg(split);
 		switch(split[0].toLowerCase(Locale.ROOT)) {
-		case "perm":
-			parsePlotGroupSetPerm(split, townBlock, player, town, group, townBlockOwner);
-			break;
-		default:
-			/*
-			 * After all other set commands are tested for we attempt to set the townblocktype.
-			 */
-			parsePlotGroupSetTownBlockType(split, resident, townBlock, group, player, town);
+		case "perm" -> parsePlotGroupSetPerm(split, townBlock, player, town, group, townBlockOwner);
+		case "maxjoindays" -> parsePlotGroupSetMaxJoinDays(player, resident, townBlock, group, StringMgmt.remFirstArg(split));
+		case "minjoindays" -> parsePlotGroupSetMinJoinDays(player, resident, townBlock, group, StringMgmt.remFirstArg(split));
+
+		/*
+		 * After all other set commands are tested for we attempt to set the townblocktype.
+		 */
+		default -> parsePlotGroupSetTownBlockType(split, resident, townBlock, group, player, town);
+			
 		}
+	}
+
+	private void showPlotGroupHelp(Player player, TownBlockOwner townBlockOwner) {
+		HelpMenu.PLOT_GROUP_SET.send(player);
+		if (townBlockOwner instanceof Town)
+			TownyMessaging.sendMessage(player, ChatTools.formatCommand("Level", "[resident/nation/ally/outsider]", "", ""));
+		if (townBlockOwner instanceof Resident)
+			TownyMessaging.sendMessage(player, ChatTools.formatCommand("Level", "[friend/town/ally/outsider]", "", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("Type", "[build/destroy/switch/itemuse]", "", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[on/off]", "Toggle all permissions"));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[level/type] [on/off]", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "[level] [type] [on/off]", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "perm", "reset", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("Eg", "/plot group set perm", "friend build on", ""));
+		TownyMessaging.sendMessage(player, ChatTools.formatCommand("/plot group set", "[townblocktype]", "", "Farm, Wilds, Bank, Embassy, etc."));
 	}
 
 	public void parsePlotGroupSetPerm(String[] args, TownBlock townBlock, Player player, Town town, PlotGroup plotGroup, TownBlockOwner townBlockOwner) {
@@ -1591,6 +1836,60 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 		Confirmation.runOnAccept(permHandler)
 			.setTitle(Translatable.of("msg_plot_group_set_perm_confirmation", plotGroup.getTownBlocks().size()).append(" ").append(Translatable.of("are_you_sure_you_want_to_continue")))
 			.sendTo(player);
+	}
+
+	private void parsePlotGroupSetMinJoinDays(Player player, Resident resident, TownBlock townBlock, PlotGroup plotGroup, String[] args) throws TownyException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_ASMAYOR.getNode());
+		TownyAPI.getInstance().testPlotOwnerOrThrow(resident, townBlock); // Test we are allowed to work on this plot
+
+		if (args.length == 0 || args[0].equalsIgnoreCase("?")) {
+			showPlotGroupHelp(player, townBlock.getTownBlockOwner());
+			return;
+		}
+		if (args[0].equalsIgnoreCase("clear")) {
+			plotGroup.getTownBlocks().forEach(tb -> {
+				tb.setMinTownMembershipDays(-1);
+				tb.save();
+			});
+			TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_min_join_days_removed"));
+			return;
+		}
+
+		int days = MathUtil.getPositiveIntOrThrow(args[0]);
+		if (days == 0)
+			throw new TownyException(Translatable.of("msg_err_days_must_be_greater_than_0"));
+		plotGroup.getTownBlocks().forEach(tb -> {
+			tb.setMinTownMembershipDays(days);
+			tb.save();
+		});
+		TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_min_join_days_set_to", townBlock.getMinTownMembershipDays()));
+	}
+
+	private void parsePlotGroupSetMaxJoinDays(Player player, Resident resident, TownBlock townBlock, PlotGroup plotGroup, String[] args) throws TownyException {
+		checkPermOrThrow(player, PermissionNodes.TOWNY_COMMAND_PLOT_ASMAYOR.getNode());
+		TownyAPI.getInstance().testPlotOwnerOrThrow(resident, townBlock); // Test we are allowed to work on this plot
+
+		if (args.length == 0 || args[0].equalsIgnoreCase("?")) {
+			showPlotGroupHelp(player, townBlock.getTownBlockOwner());
+			return;
+		}
+		if (args[0].equalsIgnoreCase("clear")) {
+			plotGroup.getTownBlocks().forEach(tb -> {
+				tb.setMinTownMembershipDays(-1);
+				tb.save();
+			});
+			TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_max_join_days_removed"));
+			return;
+		}
+
+		int days = MathUtil.getPositiveIntOrThrow(args[0]);
+		if (days == 0)
+			throw new TownyException(Translatable.of("msg_err_days_must_be_greater_than_0"));
+		plotGroup.getTownBlocks().forEach(tb -> {
+			tb.setMinTownMembershipDays(days);
+			tb.save();
+		});
+		TownyMessaging.sendMsg(player, Translatable.of("msg_townblock_max_join_days_set_to", townBlock.getMaxTownMembershipDays()));
 	}
 
 	public void parsePlotGroupSetTownBlockType(String[] split, Resident resident, TownBlock townBlock, PlotGroup group, Player player, Town town) throws TownyException {
@@ -1751,6 +2050,7 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 				case "taxed":
 					 tryToggleTownBlockTaxed(player, groupBlock, split, choice);
 					 endingMessage = Translatable.of("msg_changed_plotgroup_taxed", groupBlock.isTaxed() ? Translatable.of("enabled") : Translatable.of("disabled"));
+					 break;
 				default:
 					TownyMessaging.sendErrorMsg(player, Translatable.of("msg_err_invalid_property", "plot"));
 					return;
@@ -1897,6 +2197,8 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 					
 					if (TownyEconomyHandler.isActive() && (!resident.getAccount().canPayFromHoldings(group.getPrice())))
 						throw new TownyException(Translatable.of("msg_no_funds_claim_plot_group", group.getTownBlocks().size(), prettyMoney(group.getPrice())));
+
+					tb.testTownMembershipAgePreventsThisClaimOrThrow(resident);
 
 					// Add the confirmation for claiming a plot group.
 					Confirmation.runOnAccept(() -> {
@@ -2052,5 +2354,13 @@ public class PlotCommand extends BaseCommand implements CommandExecutor {
 			throw new TownyException(Translatable.of("msg_err_plot_not_associated_with_a_group"));
 		
 		return townBlock.getPlotObjectGroup();
+	}
+	
+	private District catchMissingDistrict(TownBlock townBlock) throws TownyException {
+		// Make sure that the player is in a plotgroup.
+		if (!townBlock.hasDistrict())
+			throw new TownyException(Translatable.of("msg_err_plot_not_associated_with_a_district"));
+		
+		return townBlock.getDistrict();
 	}
 }
